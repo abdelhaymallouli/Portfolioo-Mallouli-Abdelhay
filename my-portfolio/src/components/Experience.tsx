@@ -1,33 +1,43 @@
 "use client";
 import { motion } from "framer-motion";
 
-const jobs = [
-  { company: "Tech Flow", role: "Senior Developer", year: "2023 - 24" },
-  { company: "Nova Agency", role: "Full Stack Engineer", year: "2021 - 23" },
-  { company: "Innotech", role: "Frontend Developer", year: "2019 - 21" },
+const experiences = [
+  {
+    company: "Tech Solutions",
+    role: "Senior Full-Stack Developer",
+    period: "2023 - Present",
+    description: "Leading the architectural shift to Next.js and Micro-frontends.",
+  },
+  {
+    company: "Innovation Lab",
+    role: "Software Engineer",
+    period: "2021 - 2023",
+    description: "Developed AI-integrated dashboards reducing data latency by 40%.",
+  },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="max-w-7xl mx-auto px-6 py-20">
-       <div className="flex items-center gap-4 mb-16">
-          <h2 className="text-3xl font-black tracking-tighter uppercase italic">History</h2>
-          <div className="h-[1px] flex-1 bg-[var(--card-border)]" />
-        </div>
-
-      <div className="space-y-4">
-        {jobs.map((job, i) => (
+    <section id="experience" className="max-w-7xl mx-auto px-6 py-24">
+      <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-12 font-bold opacity-80">
+        // Career Path
+      </h2>
+      
+      <div className="space-y-12">
+        {experiences.map((exp, i) => (
           <motion.div 
             key={i}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="group flex flex-col md:flex-row justify-between items-start md:items-center p-8 rounded-[2rem] hover:bg-[var(--card)] border border-transparent hover:border-[var(--card-border)] transition-all"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="flex flex-col md:flex-row gap-4 md:gap-20 border-l-2 border-slate-100 dark:border-white/5 pl-8 relative"
           >
+            <div className="absolute w-4 h-4 bg-accent rounded-full -left-[9px] top-1 shadow-[0_0_15px_rgba(99,102,241,0.5)]" />
+            <span className="text-sm font-mono opacity-50 w-32">{exp.period}</span>
             <div>
-              <span className="text-accent font-mono text-xs font-bold tracking-[0.2em]">{job.year}</span>
-              <h4 className="text-2xl font-bold mt-1 text-[var(--foreground)]">{job.company}</h4>
+              <h3 className="text-2xl font-bold">{exp.role}</h3>
+              <p className="text-accent font-medium mb-4">{exp.company}</p>
+              <p className="text-slate-500 max-w-2xl">{exp.description}</p>
             </div>
-            <p className="text-[var(--muted)] md:text-xl font-medium italic">{job.role}</p>
           </motion.div>
         ))}
       </div>

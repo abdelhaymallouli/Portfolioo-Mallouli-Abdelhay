@@ -1,58 +1,45 @@
 import { Project } from "@/types";
 import { Layout, Database, Terminal, Code2 } from "lucide-react";
 
-
 export const projects: Project[] = [
   {
     id: 1,
-    title: "Project Alpha",
-    description: "A high-performance system architecture using distributed nodes.",
-    tech: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"],
-    link: "https://demo.com",
-    github: "https://github.com",
-    image: "/p1.jpg",
+    title: "OmniOrder System",
+    description: "A comprehensive restaurant management architecture featuring real-time order processing and kitchen-to-table synchronization.",
+    tech: ["PHP", "Laravel", "MySQL", "Tailwind"],
+    link: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
+    github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
+    image: "/projects/omniorder.jpg",
     featured: true,
   },
   {
     id: 2,
-    title: "Neural Interface",
-    description: "AI-driven component generation engine with real-time feedback.",
-    tech: ["Python", "React", "Framer Motion"],
-    link: "https://demo.com",
-    github: "https://github.com",
-    image: "/p2.jpg",
+    title: "WeatherWise Engine",
+    description: "Data-driven weather analysis platform that leverages Python for processing meteorological APIs with a focus on UI/UX clarity.",
+    tech: ["Python", "Flask", "REST APIs", "Charts.js"],
+    link: "https://github.com/abdelhaymallouli/WeatherWise",
+    github: "https://github.com/abdelhaymallouli/WeatherWise",
+    image: "/projects/weatherwise.jpg",
     featured: true,
   },
-];
-
-
-export const skills = [
   {
-    name: "Frontend",
-    icon: Layout,
-    color: "text-blue-500",
-    className: "md:col-span-2 md:row-span-1",
-    items: ["React", "Next.js", "TypeScript", "Tailwind"],
+    id: 3,
+    title: "CartFlow Core",
+    description: "A high-performance state management implementation for e-commerce, focused on optimizing render cycles and user interaction latency.",
+    tech: ["JavaScript", "React", "LocalStorage API", "Tailwind"],
+    github: "https://github.com/abdelhaymallouli/cart-shopping",
+    link: "https://github.com/abdelhaymallouli/cart-shopping",
+    image: "/projects/cartflow.jpg",
+    featured: false,
   },
   {
-    name: "Backend",
-    icon: Database,
-    color: "text-emerald-500",
-    className: "md:col-span-1 md:row-span-2",
-    items: ["Node.js", "PostgreSQL", "Prisma"],
-  },
-  {
-    name: "Tools",
-    icon: Terminal,
-    color: "text-orange-500",
-    className: "md:col-span-1 md:row-span-1",
-    items: ["Git", "Docker", "Vercel"],
-  },
-  {
-    name: "Languages",
-    icon: Code2,
-    color: "text-purple-500",
-    className: "md:col-span-2 md:row-span-1",
-    items: ["JavaScript", "Python", "C++"],
-  },
+    id: 4,
+    title: "Tangier Gourmet Interface",
+    description: "A localized digital experience designed for high-end hospitality, focusing on accessibility and immersive visual storytelling.",
+    tech: ["HTML5", "CSS3", "JavaScript", "Animation Engine"],
+    github: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
+    link: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
+    image: "/projects/tangier.jpg",
+    featured: false,
+  }
 ];

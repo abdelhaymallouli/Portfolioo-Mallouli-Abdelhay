@@ -5,6 +5,7 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import { projects } from "@/data/projects";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -25,9 +26,7 @@ export default function Home() {
       <Experience />
       <Contact />
 
-      <footer className="py-20 text-center opacity-30 text-xs font-mono uppercase tracking-[0.4em]">
-        Designed with Precision &copy; 2026
-      </footer>
+      <Footer />
     </main>
   );
 }

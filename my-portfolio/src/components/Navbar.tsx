@@ -2,6 +2,7 @@
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ME } from "@/data/portfolio";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -10,10 +11,10 @@ export default function Navbar() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl">
+    <nav className="fixed top-0 w-full z-50 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl transition-all">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <span className="font-black tracking-tighter text-2xl italic text-[var(--foreground)] uppercase">
-          Dev.Sys
+          {ME.name.split(' ')[0]}<span className="text-accent">.{ME.name.split(' ')[1][0]}</span>
         </span>
         
         <div className="flex items-center gap-8">

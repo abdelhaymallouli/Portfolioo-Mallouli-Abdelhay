@@ -10,10 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        accent: "#6366f1", // Indigo
+        accent: "#6366f1",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
       },
     },
   },
   plugins: [],
 };
 export default config;
+

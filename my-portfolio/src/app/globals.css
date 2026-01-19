@@ -6,27 +6,26 @@
 }
 
 :root {
-  /* LIGHT MODE - Premium "Paper" Aesthetic */
   --background: #fdfdfd; 
-  --foreground: #09090b;
+  --foreground: #09090b; /* Dark text for light mode */
   --card: #ffffff;
-  --card-border: #e4e4e7;
-  --muted: #71717a;
-  --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --card-border: #e2e8f0;
+  --muted: #64748b;
+  --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
 }
 
 .dark {
-  /* DARK MODE - Deep "Obsidian" Aesthetic */
   --background: #030303;
-  --foreground: #fafafa;
+  --foreground: #fafafa; /* White text for dark mode */
   --card: #09090b;
-  --card-border: #27272a;
-  --muted: #a1a1aa;
-  --shadow: 0 0 0 0 transparent;
+  --card-border: #1e293b;
+  --muted: #94a3b8;
+  --shadow: 0 0 0 1px rgba(255,255,255,0.05);
 }
 
 body {
   background-color: var(--background);
-  color: var(--foreground);
-  transition: background-color 0.4s ease, color 0.4s ease;
+  color: var(--foreground); /* This ensures text follows the theme automatically */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
 }
