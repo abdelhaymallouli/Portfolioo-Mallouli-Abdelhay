@@ -21,26 +21,37 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform/main/screenshots/home.png",
   },
-  {
-    id: 2,
-    title: "Restaurant Ordering System",
-    description: "An E-commerce solution focused on the customer journey. Optimized for high conversion with secure authentication, real-time cart management, and a streamlined checkout process.",
-    tech: ["PHP", "MySQL", "JavaScript", "HTML/CSS"],
-    methodologies: ["Prototyping", "Database Normalization", "Agile Sprints"],
-    link: "",
-    github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
-    image: "", 
-  },
-  {
-    id: 3,
-    title: "Cultural Event Manager",
-    description: "A community-focused reservation system handling high-concurrency ticket bookings. Implements real-time availability checks and secure user profile management.",
-    tech: ["PHP", "MySQL", "JavaScript"],
-    methodologies: ["MVC Architecture", "Active Methodology", "System Analysis"],
-    link: "",
-    github: "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/Event-management-of-a-cultural-association/refs/heads/main/screenshots/homePage.png",
-  },
+{
+  id: 2,
+  title: "Restaurant Ordering System",
+  description: "A comprehensive digital ordering solution bridging the gap between customers and kitchen operations. Engineered with a PHP/MySQL backend to support dynamic menu management, real-time order status tracking, and secure user sessions. The system optimizes the food delivery workflow with an intuitive client interface and a data-driven admin dashboard.",
+  tech: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
+  methodologies: ["Relational Database Design", "Session Management", "CRUD Operations", "Responsive UI"],
+  link: "",
+  github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
+  image: "https://raw.githubusercontent.com/abdelhaymallouli/restaurant-ordering-system/main/screenshots/screenshot.png",
+},
+{
+  id: 3,
+  title: "Farha Cultural Event Platform",
+  description: "A comprehensive web-based ticketing and event management solution architected to streamline cultural association activities. The system features a secure end-to-end booking flow, dynamic event discovery with advanced filtering, and a robust user dashboard for ticket and invoice management. Built with a focus on data integrity and user experience.",
+  tech: [
+    "PHP 8 (OOP)",
+    "MySQL",
+    "JavaScript (ES6+)",
+    "HTML5 & CSS3",
+    "PDO Security"
+  ],
+  methodologies: [
+    "Relational Database Design",
+    "Secure Authentication (Bcrypt)",
+    "Responsive UI/UX",
+    "Page Controller Pattern"
+  ],
+  link: "",
+  github: "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
+  image: "https://raw.githubusercontent.com/abdelhaymallouli/Event-management-of-a-cultural-association/refs/heads/main/screenshots/homePage.png"
+},
   {
     id: 5,
     title: "Restaurant of Tangier",
@@ -61,14 +72,24 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/WeatherWise",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/WeatherWise/main/screenshots/logo.png",
   },
-  {
+{
     id: 6,
     title: "Cart Shopping (Dessert Shop)",
-    description: "A frontend performance case study. Implements persistent storage and state management using Vanilla JavaScript to ensure a seamless, zero-latency shopping experience.",
-    tech: ["JavaScript", "LocalStorage", "DOM Manipulation"],
-    methodologies: ["Behavior-Driven Development", "State Management"],
+    description: "A dynamic frontend case study. Implements efficient state management and DOM manipulation using Vanilla JavaScript to ensure a seamless, interactive shopping experience with real-time updates.",
+    tech: ["JavaScript", "DOM Manipulation", "CSS3", "HTML5"],
+    methodologies: ["Component-Based Styling", "State Management", "Event Handling"],
     link: "https://cart-shopping-pi.vercel.app/",
     github: "https://github.com/abdelhaymallouli/cart-shopping",
-    image: "",
-  },
+    image: "https://raw.githubusercontent.com/abdelhaymallouli/cart-shopping/main/assets/image.png" 
+},
+{
+    id: 8,
+    title: "Personal Finance Manager",
+    description: "A comprehensive personal finance and budget tracking application. Features a dynamic dashboard for real-time financial insights, visualized data with Chart.js, and secure transaction management using PHP & MySQL.",
+    tech: ["PHP", "MySQL", "JavaScript", "Chart.js", "CSS3", "HTML5"],
+    methodologies: ["MVC Architecture", "User Authentication", "CRUD Operations", "Data Visualization"],
+    link: "", 
+    github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
+    image: "https://raw.githubusercontent.com/abdelhaymallouli/personal-finance-app-php/main/screenshots/landing.png"
+}
 ];
