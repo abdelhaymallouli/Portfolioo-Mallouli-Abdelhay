@@ -6,14 +6,20 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dev Portfolio | Modern Engineer",
-  description: "High-end software engineering portfolio",
+  title: "Abdelhay Mallouli | Full Stack Developer",
+  description: "Portfolio of Abdelhay Mallouli - Full Stack Developer",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white dark:bg-[#030303] text-slate-900 dark:text-slate-100 transition-colors duration-300`}>
+      <body
+        className={`${inter.className} bg-white dark:bg-[#030303] text-slate-900 dark:text-slate-100 transition-colors duration-300`}
+      >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </ThemeProvider>

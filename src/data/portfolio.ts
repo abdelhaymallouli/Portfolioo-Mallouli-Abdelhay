@@ -13,7 +13,7 @@ import {
 
 export const ME = {
   name: "Abdelhay Mallouli",
-  role: "Full-Stack Engineer & Digital Architect",
+  role: "Full Stack Developer",
   location: "Tangier, Morocco / Remote",
   email: "abdelhay.mallouli@gmail.com",
   linkedin: "https://www.linkedin.com/in/abdelhaymallouli/",
