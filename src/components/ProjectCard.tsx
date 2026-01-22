@@ -40,15 +40,52 @@ export default function ProjectCard({ project }: any) {
           {project.description}
         </p>
 
-        <div className="flex gap-4 items-center">
-          <Github size={18} className="text-[var(--muted)] hover:text-accent transition-colors cursor-pointer" />
-          <ExternalLink size={18} className="text-[var(--muted)] hover:text-accent transition-colors cursor-pointer" />
-          <div className="ml-auto flex gap-2">
-            {project.tech?.slice(0, 2).map((t: string) => (
-              <span key={t} className="text-[10px] font-bold uppercase tracking-tighter opacity-40">{t}</span>
-            ))}
-          </div>
-        </div>
+<div className="flex gap-4 items-center">
+  {/* GitHub Link */}
+  <a 
+    href={project.github} 
+    target="_blank" 
+    rel="noopener noreferrer"
+    onClick={(e) => e.stopPropagation()} // Prevents opening the modal when clicking the icon
+    className="group/icon"
+  >
+    <Github 
+      size={18} 
+      className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer" 
+    />
+  </a>
+
+  {/* Live Preview Link */}
+  {project.link && project.link !== "#" ? (
+    <a 
+      href={project.link} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()} // Prevents opening the modal when clicking the icon
+      className="group/icon"
+    >
+      <ExternalLink 
+        size={18} 
+        className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer" 
+      />
+    </a>
+  ) : (
+    /* Disabled State if no link exists */
+    <ExternalLink 
+      size={18} 
+      className="text-[var(--muted)] opacity-20 cursor-not-allowed" 
+    />
+  )}
+
+  {/* Tech Tags */}
+  <div className="ml-auto flex gap-2">
+    {project.tech?.slice(0, 2).map((t: string) => (
+      <span key={t} className="text-[10px] font-bold uppercase tracking-tighter opacity-40">
+        {t}
+      </span>
+    ))}
+  </div>
+</div>
       </div>
     </motion.div>
   );
