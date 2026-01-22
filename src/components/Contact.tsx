@@ -3,6 +3,8 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Loader2 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { ME } from "@/data/portfolio";
+
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -60,7 +62,7 @@ const sendEmail = async (e: React.FormEvent) => {
               <div className="p-3 rounded-full bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] group-hover:border-accent transition-colors">
                 <Mail size={20} className="text-accent" />
               </div>
-              <span className="font-mono text-sm">your-email@example.com</span>
+              <span className="font-mono text-sm">{ME.email}</span>
             </div>
           </div>
         </div>
