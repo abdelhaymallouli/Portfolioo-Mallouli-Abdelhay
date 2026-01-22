@@ -4,6 +4,7 @@ export const EXPERIENCES = [
   {
     company: "Solicode Tangier",
     role: "Mobile Development Formation",
+    type: "school",
     period: "2025 - 2026",
     location: "Tangier, Morocco",
     description: "Specializing in native and cross-platform mobile architectures.",
@@ -17,6 +18,7 @@ export const EXPERIENCES = [
   {
     company: "German Tech Partner",
     role: "Software Engineer Intern",
+    type: "work",
     period: "2025 (1 Month)",
     location: "Germany / Remote",
     description: "Engineered automated communication tools and bots for Mattermost.",
@@ -30,6 +32,7 @@ export const EXPERIENCES = [
   {
     company: "Solicode Tangier",
     role: "Full-Stack Web Development",
+    type: "school",
     period: "2024 - 2025",
     location: "Tangier, Morocco",
     description: "Comprehensive training in modern web architectures and project management.",

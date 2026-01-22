@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Briefcase, Calendar, MapPin, CheckCircle2, ChevronRight } from "lucide-react";
+import { X, Briefcase, Calendar, MapPin, CheckCircle2, ChevronRight, School } from "lucide-react";
 import { EXPERIENCES } from "@/data/Experience";
 export default function Experience() {
   const [selectedExp, setSelectedExp] = useState<any>(null);
@@ -22,8 +22,12 @@ export default function Experience() {
             className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
           >
             {/* Timeline Dot */}
-            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--card-border)] bg-[var(--background)] text-accent shadow md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:left-1/2 -translate-x-1/2">
-              <Briefcase size={16} />
+            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--card-border)] bg-[var(--background)] text-accent shadow md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:left-1/2 -translate-x-1/2 z-10">
+              {exp.type === "school" ? (
+                <School size={16} />
+              ) : (
+                <Briefcase size={16} />
+              )}
             </div>
 
             {/* Content Card */}
