@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Github, ExternalLink, Code2 } from "lucide-react";
@@ -16,6 +17,20 @@ export default function ProjectCard({ project }: any) {
 
       {/* Image Area */}
       <div className="aspect-video bg-slate-100 dark:bg-white/5 rounded-[1.5rem] mb-6 overflow-hidden relative flex items-center justify-center pointer-events-none">
+        
+        {/* NEW: STATUS BADGE OVERLAY */}
+        {project.status && (
+          <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
+            </span>
+            <span className="text-[9px] font-black uppercase tracking-tighter text-white/90">
+              {project.status}
+            </span>
+          </div>
+        )}
+
         {project.image ? (
           <Image
             src={project.image}
@@ -23,7 +38,6 @@ export default function ProjectCard({ project }: any) {
             fill
             sizes="(max-width: 768px) 100vw, 400px"
             className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            // This handles broken links even if the string exists
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
@@ -72,7 +86,6 @@ export default function ProjectCard({ project }: any) {
               />
             </a>
           ) : (
-            /* Disabled State if no link exists */
             <ExternalLink 
               size={18} 
               className="text-[var(--muted)] opacity-20 cursor-not-allowed" 

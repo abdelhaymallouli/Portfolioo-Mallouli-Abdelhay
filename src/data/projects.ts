@@ -2,19 +2,25 @@ import { Project } from "@/types";
 
 export const projects: Project[] = [
   // 1. LEAD WITH IMPACT: Solving institutional problems with modern methodologies
-  {
-    id: 7,
+{
+    id: 1,
     title: "AttendanceFlow AMS",
-    description: "A digital transformation project for educational institutions. It eliminates manual paperwork by automating student attendance tracking, justification management, and administrative reporting using a user-centered design approach.",
-    tech: ["PHP", "JavaScript", "MySQL", "Tailwind CSS"],
-    methodologies: ["Scrum", "Design Thinking (Double Diamond)", "Agile", "User-Centered Design"],
-    link: "",
+    description: "An empathetic EdTech solution reducing 'Paper-to-Laptop' friction. By eliminating manual data-entry lags, this system automates the workflow for administrators, solving a 70% time-loss gap identified during the Empathy Phase of research.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL", "PHP", "Vite"],
+    methodologies: [
+      "Design Thinking (Empathy/Define)", 
+      "Agile/Scrum (Sprint 1)", 
+      "User Persona Mapping", 
+      "User-Centered Design (UCD)"
+    ],
+    link: "", // Pro-tip: Add 'Coming Soon' or a link to a Loom video here
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
-    image: "", 
+    image: "", // Use a screenshot of your Figma design or your initial dashboard here
+    status: "In Development - Sprint 1" // You can add a custom property if your UI supports it
   },
   // 2. MODERN STACK: Demonstrating React, TypeScript, and Marketplace logic
   {
-    id: 1,
+    id: 2,
     title: "Venuvibe Event Platform",
     description: "A professional full-stack marketplace bridging venue owners and event planners. Features automated booking workflows and a robust administrative control panel for vendor management.",
     tech: ["React", "TypeScript", "PHP", "MySQL", "Vite"],
@@ -25,7 +31,7 @@ export const projects: Project[] = [
   },
   // 3. ANALYTICAL SKILLS: Data visualization and financial logic are high-value to HR
   {
-    id: 8,
+    id: 3,
     title: "Personal Finance Manager",
     description: "A data-driven budget tracking application. Features a dynamic dashboard for real-time financial insights and visualized transaction data to help users manage capital effectively.",
     tech: ["PHP", "MySQL", "JavaScript", "Chart.js", "CSS3"],
@@ -36,7 +42,7 @@ export const projects: Project[] = [
   },
   // 4. BACKEND MATURITY: Shows security awareness and clean PHP 8 OOP
   {
-    id: 3,
+    id: 4,
     title: "Farha Cultural Event Platform",
     description: "A secure ticketing solution architected for high data integrity. Implements advanced filtering and a secure end-to-end booking flow for community organizations.",
     tech: ["PHP 8 (OOP)", "MySQL", "JavaScript (ES6+)", "PDO Security"],
@@ -47,7 +53,7 @@ export const projects: Project[] = [
   },
   // 5. OPERATIONAL LOGIC: Demonstrating workflow and kitchen-to-customer operations
   {
-    id: 2,
+    id: 5,
     title: "Restaurant Ordering System",
     description: "A comprehensive digital ordering solution optimizing food delivery workflows. Connects customer interfaces with data-driven admin dashboards for real-time order tracking.",
     tech: ["PHP", "MySQL", "JavaScript", "HTML5", "CSS3"],
@@ -58,7 +64,7 @@ export const projects: Project[] = [
   },
   // 6. SPECIALIZED: SEO and Local Business Focus
   {
-    id: 5,
+    id: 6,
     title: "Restaurant of Tangier",
     description: "A local-SEO directory application designed with a mobile-first approach. Focuses on dynamic data rendering and accessible design for local business growth.",
     tech: ["HTML", "CSS", "JavaScript", "PHP"],
@@ -69,7 +75,7 @@ export const projects: Project[] = [
   },
   // 7. API & INTEGRATION: Showing Python and Third-party Data skills
   {
-    id: 4,
+    id: 7,
     title: "WeatherWise",
     description: "A technical demonstration of API orchestration. Converts raw meteorological data into actionable user insights via a clean, desktop-optimized interface.",
     tech: ["Python", "Tkinter", "Requests API", "Geopy"],
@@ -80,7 +86,7 @@ export const projects: Project[] = [
   },
   // 8. FUNDAMENTALS: Pure JavaScript logic and state management
   {
-    id: 6,
+    id: 8,
     title: "Cart Shopping (Dessert Shop)",
     description: "A high-performance frontend case study. Implements efficient state management and DOM manipulation using Vanilla JavaScript for zero-latency interactions.",
     tech: ["JavaScript", "DOM Manipulation", "CSS3", "HTML5"],

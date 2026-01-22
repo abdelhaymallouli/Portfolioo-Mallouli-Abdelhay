@@ -3,7 +3,7 @@ import { projects } from "@/data/projects";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Github, ExternalLink, Code2, Sparkles, Layers } from "lucide-react";
+import { ArrowLeft, Github, ExternalLink, Code2, Sparkles, Activity } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ProjectPage() {
@@ -68,6 +68,22 @@ export default function ProjectPage() {
             <div className="sticky top-28 space-y-6">
               <div className="p-8 rounded-[2rem] bg-[var(--card)] border border-[var(--card-border)] shadow-xl">
                 
+                {/* PROJECT STATUS - NEW SECTION */}
+                {project.status && (
+                  <div className="mb-8">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Lifecycle Status</h4>
+                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-500/5 border border-blue-500/20">
+                      <div className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                      </div>
+                      <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                        {project.status}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Live Review */}
                 <div className="mb-8">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Live Review</h4>
