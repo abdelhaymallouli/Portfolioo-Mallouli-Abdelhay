@@ -44,28 +44,43 @@ export default function ProjectModal({ project, isOpen, onClose }: any) {
               <X size={20} />
             </button>
 
-            {/* 2. Visual Section (Left) */}
-            <div className="w-full md:w-3/5 bg-slate-50 dark:bg-white/[0.02] border-b md:border-b-0 md:border-r border-[var(--card-border)] relative flex items-center justify-center min-h-[300px] overflow-hidden">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                sizes="(max-width: 768px) 100vw, 800px"
-                className="object-cover object-top"
-                priority
-              />
-              <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,var(--accent)_0%,transparent_70%)] mix-blend-overlay" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)]/80 via-transparent to-transparent" />
+{/* 2. Visual Section (Left) */}
+<div className="w-full md:w-3/5 bg-slate-50 dark:bg-white/[0.02] border-b md:border-b-0 md:border-r border-[var(--card-border)] relative flex items-center justify-center min-h-[400px] overflow-hidden">
+  {project.image ? (
+    <>
+      <Image
+        src={project.image}
+        alt={project.title}
+        fill
+        sizes="(max-width: 768px) 100vw, 800px"
+        className="object-cover object-top"
+        priority
+      />
+      <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,var(--accent)_0%,transparent_70%)] mix-blend-overlay" />
+    </>
+  ) : (
+    <div className="flex flex-col items-center justify-center text-center p-12">
+      <div className="w-20 h-20 rounded-3xl bg-accent/10 flex items-center justify-center text-accent mb-4 animate-pulse">
+        <Code2 size={40} />
+      </div>
+      <h4 className="text-xl font-bold tracking-tight">Documentation in Progress</h4>
+      <p className="text-sm text-[var(--muted)] max-w-[250px] mt-2">
+        I'm currently preparing the visual case study for this architecture.
+      </p>
+    </div>
+  )}
+  
+  <div className="absolute inset-0 bg-gradient-to-t from-[var(--card)]/80 via-transparent to-transparent" />
 
-              {/* Tag Cloud overlay */}
-              <div className="absolute bottom-6 left-6 flex gap-2">
-                {project.tech.slice(0, 3).map((t: string) => (
-                  <span key={t} className="px-3 py-1 bg-white/80 dark:bg-black/40 backdrop-blur-md border border-[var(--card-border)] rounded-lg text-[10px] font-bold uppercase tracking-wider">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
+  {/* Tag Cloud overlay */}
+  <div className="absolute bottom-6 left-6 flex gap-2">
+    {project.tech.slice(0, 3).map((t: string) => (
+      <span key={t} className="px-3 py-1 bg-white/80 dark:bg-black/40 backdrop-blur-md border border-[var(--card-border)] rounded-lg text-[10px] font-bold uppercase tracking-wider">
+        {t}
+      </span>
+    ))}
+  </div>
+</div>
 
             {/* 3. Content Section (Right) */}
             <div className="w-full md:w-2/5 flex flex-col h-full overflow-hidden">
@@ -104,16 +119,23 @@ export default function ProjectModal({ project, isOpen, onClose }: any) {
               </div>
 
               {/* 4. Action Bar (Fixed at bottom) */}
-              <div className="p-8 border-t border-[var(--card-border)] bg-[var(--card)] flex flex-col sm:flex-row gap-3">
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-accent text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-accent/20"
-                >
-                  <ExternalLink size={18} />
-                  Live Preview
-                </a>
+<div className="p-8 border-t border-[var(--card-border)] bg-[var(--card)] flex flex-col sm:flex-row gap-3">
+  {project.link && project.link !== "#" ? (
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-accent text-white font-bold hover:opacity-90 transition-all shadow-lg shadow-accent/20"
+    >
+      <ExternalLink size={18} />
+      Live Preview
+    </a>
+  ) : (
+    <div className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl bg-slate-100 dark:bg-white/5 text-[var(--muted)] font-bold cursor-not-allowed border border-[var(--card-border)]">
+      <ExternalLink size={18} className="opacity-40" />
+      Preview Unavailable
+    </div>
+  )}
                 <a
                   href={project.github}
                   target="_blank"
