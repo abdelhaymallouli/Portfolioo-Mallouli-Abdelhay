@@ -24,38 +24,40 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   return (
-    <nav className="fixed top-0 w-full z-50 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl transition-all">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <span className="font-black tracking-tighter text-2xl italic text-[var(--foreground)] uppercase z-50 relative">
-          {ME.name.split(" ")[0]}
-          <span className="text-accent">.{ME.name.split(" ")[1][0]}</span>
-        </span>
+    <>
+      <nav className="fixed top-0 w-full z-50 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <span className="font-black tracking-tighter text-2xl italic text-[var(--foreground)] uppercase z-50 relative">
+            {ME.name.split(" ")[0]}
+            <span className="text-accent">.{ME.name.split(" ")[1][0]}</span>
+          </span>
 
-        <div className="flex items-center gap-8">
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
-          >
-            {!mounted ? (
-              <div className="w-5 h-5" />
-            ) : theme === "dark" ? (
-              <Sun size={20} />
-            ) : (
-              <Moon size={20} />
-            )}
-          </button>
+          <div className="flex items-center gap-8">
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
+            >
+              {!mounted ? (
+                <div className="w-5 h-5" />
+              ) : theme === "dark" ? (
+                <Sun size={20} />
+              ) : (
+                <Moon size={20} />
+              )}
+            </button>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
+            >
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Moved outside nav to avoid stacking context issues */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -73,7 +75,19 @@ export default function Navbar() {
                 <motion.a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default hash jump abruptly
+                    setIsMobileMenuOpen(false);
+                    // Smooth scroll after closing
+                    const element = document.querySelector(link.href);
+                    if (element) {
+                      setTimeout(() => {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
+                    } else {
+                      window.location.href = link.href; // Fallback
+                    }
+                  }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.1 }}
@@ -86,6 +100,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 }
