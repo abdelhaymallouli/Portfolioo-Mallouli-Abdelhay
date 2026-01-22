@@ -19,7 +19,12 @@ export default function Contact() {
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
     try {
-      await emailjs.sendForm(serviceId, templateId, formRef.current!, publicKey);
+      await emailjs.sendForm(
+        serviceId,
+        templateId,
+        formRef.current!,
+        publicKey,
+      );
       setStatus("success");
       formRef.current?.reset();
     } catch (error) {
@@ -34,55 +39,82 @@ export default function Contact() {
   return (
     <section id="contact" className="max-w-7xl mx-auto px-6 py-32">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-        
         {/* Contact Info (Left Side) */}
         <div>
-          <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-6 font-bold">// Contact</h2>
-          <h3 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 text-slate-950 dark:text-white leading-[0.9]">
+          <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-6 font-bold">
+            // Contact
+          </h2>
+          <h3 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 text-[var(--foreground)] leading-[0.9]">
             LET'S <span className="italic opacity-50">CONNECT</span>.
           </h3>
           <p className="text-[var(--muted)] text-lg mb-12 max-w-md leading-relaxed">
-            Interested in collaboration or just want to say hi? Reach out through the form or my social channels.
+            Interested in collaboration or just want to say hi? Reach out
+            through the form or my social channels.
           </p>
 
           <div className="space-y-4">
             {/* Email Link */}
-            <a href={`mailto:${ME.email}`} className="flex items-center gap-5 group w-fit">
+            <a
+              href={`mailto:${ME.email}`}
+              className="flex items-center gap-5 group w-fit"
+            >
               <div className="p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] group-hover:border-accent group-hover:bg-accent/5 transition-all duration-300">
                 <Mail size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Email Me</span>
-                <span className="font-mono text-sm group-hover:text-accent transition-colors">{ME.email}</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                  Email Me
+                </span>
+                <span className="font-mono text-sm group-hover:text-accent transition-colors">
+                  {ME.email}
+                </span>
               </div>
             </a>
 
             {/* LinkedIn Link */}
-            <a href={ME.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-5 group w-fit">
+            <a
+              href={ME.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-5 group w-fit"
+            >
               <div className="p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] group-hover:border-accent group-hover:bg-accent/5 transition-all duration-300">
                 <Linkedin size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">LinkedIn</span>
-                <span className="font-mono text-sm group-hover:text-accent transition-colors">/abdelhaymallouli</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                  LinkedIn
+                </span>
+                <span className="font-mono text-sm group-hover:text-accent transition-colors">
+                  /abdelhaymallouli
+                </span>
               </div>
             </a>
 
             {/* GitHub Link */}
-            <a href={ME.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-5 group w-fit">
+            <a
+              href={ME.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-5 group w-fit"
+            >
               <div className="p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] group-hover:border-accent group-hover:bg-accent/5 transition-all duration-300">
                 <Github size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">GitHub</span>
-                <span className="font-mono text-sm group-hover:text-accent transition-colors">/abdelhaymallouli</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">
+                  GitHub
+                </span>
+                <span className="font-mono text-sm group-hover:text-accent transition-colors">
+                  /abdelhaymallouli
+                </span>
               </div>
             </a>
           </div>
         </div>
 
         {/* Form (Right Side) */}
-        <motion.form 
+        <motion.form
           ref={formRef}
           onSubmit={sendEmail}
           initial={{ opacity: 0, x: 20 }}
@@ -92,31 +124,65 @@ export default function Contact() {
         >
           {/* Subtle Decorative Gradient */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 blur-3xl rounded-full" />
-          
+
           <div className="relative">
-            <input required name="from_name" type="text" placeholder=" " className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)]" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">YOUR NAME</label>
+            <input
+              required
+              name="from_name"
+              type="text"
+              placeholder=" "
+              className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)]"
+            />
+            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">
+              YOUR NAME
+            </label>
           </div>
 
           <div className="relative">
-            <input required name="from_email" type="email" placeholder=" " className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)]" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">EMAIL ADDRESS</label>
+            <input
+              required
+              name="from_email"
+              type="email"
+              placeholder=" "
+              className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)]"
+            />
+            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">
+              EMAIL ADDRESS
+            </label>
           </div>
 
           <div className="relative">
-            <textarea required name="message" placeholder=" " rows={4} className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer resize-none text-[var(--foreground)]" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">MESSAGE</label>
+            <textarea
+              required
+              name="message"
+              placeholder=" "
+              rows={4}
+              className="w-full bg-transparent border-b-2 border-[var(--card-border)] py-4 outline-none focus:border-accent transition-all peer resize-none text-[var(--foreground)]"
+            />
+            <label className="absolute left-0 top-4 text-[var(--muted)] transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-xs">
+              MESSAGE
+            </label>
           </div>
 
-          <button 
+          <button
             disabled={loading}
             type="submit"
             className="w-full py-5 bg-accent text-white rounded-2xl font-black tracking-[0.2em] uppercase flex items-center justify-center gap-3 shadow-lg hover:brightness-110 disabled:opacity-50 transition-all active:scale-[0.98]"
           >
-            {loading ? <Loader2 className="animate-spin" /> : status === "success" ? "Message Sent!" : "Send Message"}
+            {loading ? (
+              <Loader2 className="animate-spin" />
+            ) : status === "success" ? (
+              "Message Sent!"
+            ) : (
+              "Send Message"
+            )}
           </button>
 
-          {status === "error" && <p className="text-red-500 text-[10px] font-mono text-center uppercase tracking-widest">Something went wrong. Please try again.</p>}
+          {status === "error" && (
+            <p className="text-red-500 text-[10px] font-mono text-center uppercase tracking-widest">
+              Something went wrong. Please try again.
+            </p>
+          )}
         </motion.form>
       </div>
     </section>
