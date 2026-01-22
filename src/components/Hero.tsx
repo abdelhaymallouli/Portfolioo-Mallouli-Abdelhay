@@ -15,7 +15,7 @@ export default function Hero() {
       >
         <h1 className="text-6xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.85] text-[var(--foreground)] uppercase">
           FULL STACK <br /> 
-          <span className="text-accent italic font-light drop-shadow-sm">ENGINEER</span>.
+          <span className="text-accent italic font-light drop-shadow-sm">DEVELOPER</span>.
         </h1>
         
         <p className="text-lg md:text-2xl text-[var(--muted)] max-w-2xl mx-auto font-medium leading-relaxed mb-10">

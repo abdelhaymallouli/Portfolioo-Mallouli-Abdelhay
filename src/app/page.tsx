@@ -8,13 +8,10 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import { projects } from "@/data/projects";
 import Footer from "@/components/footer";
-import ProjectModal from "@/components/ProjectModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Github } from "lucide-react";
 
 export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-
   // Pagination Logic
   const PROJECTS_PER_PAGE = 6;
   const [visibleCount, setVisibleCount] = useState(PROJECTS_PER_PAGE);
@@ -67,7 +64,6 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: (index % PROJECTS_PER_PAGE) * 0.1 }}
-                onClick={() => setSelectedProject(p)}
                 className="cursor-pointer"
               >
                 <ProjectCard project={p} />
@@ -100,13 +96,6 @@ export default function Home() {
           </motion.div>
         )}
       </section>
-
-      {/* Modal */}
-      <ProjectModal 
-        project={selectedProject} 
-        isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-      />
 
       <Skills />
       <Experience />
