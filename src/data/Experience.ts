@@ -20,7 +20,7 @@ export const EXPERIENCES = [
   },
 {
     company: "pragmatic minds GmbH",
-    role: "Full Stack Development Intern",
+    role: "Software Development Intern",
     type: "work",
     period: "July 2025 - Aug 2025",
     location: "Germany / Remote",
