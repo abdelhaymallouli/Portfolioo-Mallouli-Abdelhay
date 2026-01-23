@@ -29,18 +29,21 @@ export const EXPERIENCES = [
     ],
     tech: ["Golang", "Mattermost API", "REST", "Automation"]
   },
-  {
-    company: "Solicode Tangier",
-    role: "Full-Stack Web Development",
-    type: "school",
-    period: "2024 - 2025",
-    location: "Tangier, Morocco",
-    description: "Comprehensive training in modern web architectures and project management.",
-    details: [
-      "Mastered the PHP/Laravel ecosystem.",
-      "Built dynamic frontends using React and Tailwind CSS.",
-      "Applied Scrum and Agile methodologies."
+{
+    "company": "Solicode Tangier",
+    "role": "Full-Stack Web Development Program",
+    "type": "school",
+    "period": "2024 - 2025",
+    "location": "Tangier, Morocco",
+    "description": "Comprehensive training following the 'Active Pedagogy' model, covering the full development lifecycle from UI/UX design to advanced back-end systems.",
+    "details": [
+      "Designed user-centric interfaces and wireframes using Figma, applying UX/UI principles and Design Thinking.",
+      "Developed dynamic back-end systems using Native PHP with Object-Oriented Programming (OOP) and PDO for secure database interactions.",
+      "Architected relational databases by creating MCD/MLD models and executing complex SQL queries and CRUD operations.",
+      "Built interactive front-end applications using Modern JavaScript (ES6+), React.js (Hooks, Router), and responsive CSS (Flexbox, Grid, Tailwind).",
+      "Managed project versioning and team collaboration using Git/GitHub, including branching, merging, and conflict resolution.",
+      "Implemented Agile/Scrum methodologies to manage project cycles, from initial wireframing to final deployment."
     ],
-    tech: ["Laravel", "React", "MySQL", "Scrum"]
+    "tech": ["PHP (OOP)", "React", "JavaScript (ES6)", "html", "css",  "MySQL", "Tailwind CSS", "Git/GitHub", "Figma", "WordPress"]
   }
 ];
