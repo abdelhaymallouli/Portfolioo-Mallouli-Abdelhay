@@ -53,8 +53,8 @@ A high-performance, responsive portfolio platform engineered to showcase full-st
    npm run dev
    ```
 
-## 👨‍💻 About the Engineer
-**Abdelhay Mallouli** is a Full Stack Developer specializing in building scalable, secure, and user-centric applications. With experience ranging from Go-based microservices at **pragmatic minds GmbH** to advanced Laravel architectures, he bridges the gap between hardware infrastructure (Networking/Linux) and cutting-edge software design.
+## 👨💻 About the developer
+**Abdelhay Mallouli** is a Full Stack Developer specializing in building scalable, secure, and user-centric applications. With experience ranging from Go-based microservices at 
 
 ## 📬 Contact & Collaboration
 - **LinkedIn**: [Abdelhay Mallouli](https://www.linkedin.com/in/abdelhaymallouli/)
