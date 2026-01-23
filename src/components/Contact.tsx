@@ -12,23 +12,39 @@ export default function Contact() {
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.error("EmailJS environment variables are missing!");
+      setStatus("error");
+      return;
+    }
+
     setLoading(true);
 
-    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
-
     try {
-      await emailjs.sendForm(
+      const result = await emailjs.sendForm(
         serviceId,
         templateId,
         formRef.current!,
-        publicKey,
+        {
+          publicKey: publicKey,
+        },
       );
+
+      console.log("EmailJS Success:", result.text);
       setStatus("success");
       formRef.current?.reset();
-    } catch (error) {
-      console.error("EmailJS Error:", error);
+    } catch (error: any) {
+      console.error("EmailJS Full Error:", error);
+      console.error("EmailJS Error Status:", error?.status);
+      console.error(
+        "EmailJS Error Text:",
+        error?.text || error?.message || "No error text provided",
+      );
       setStatus("error");
     } finally {
       setLoading(false);
