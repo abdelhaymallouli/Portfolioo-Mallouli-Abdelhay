@@ -45,7 +45,7 @@ export const projects: Project[] = [
     methodologies: ["Agile Development", "Component-Based Architecture", "State Management"],
     link: "https://venuvibe-deploy.vercel.app/",
     github: "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform/main/screenshots/home.png",
+    image: "/screenshots/Venuvibe.png",
   },
   // 4. ANALYTICAL SKILLS: Data visualization and financial logic are high-value to HR
   {
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     methodologies: ["MVC Architecture", "Data Visualization", "Secure CRUD Operations"],
     link: "",
     github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/personal-finance-app-php/main/screenshots/landing.png"
+    image: "/screenshots/PersonalFinance.png"
   },
   // 5. BACKEND MATURITY: Shows security awareness and clean PHP 8 OOP
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     methodologies: ["Relational Database Design", "Secure Authentication (Bcrypt)", "Page Controller Pattern"],
     link: "",
     github: "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/Event-management-of-a-cultural-association/refs/heads/main/screenshots/homePage.png"
+    image: "/screenshots/FarhaCultural.png"
   },
   // 6. OPERATIONAL LOGIC: Demonstrating workflow and kitchen-to-customer operations
   {
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     methodologies: ["Session Management", "Real-time Status Tracking", "Responsive UI"],
     link: "",
     github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/restaurant-ordering-system/main/screenshots/screenshot.png",
+    image: "/screenshots/RestaurantOrdering.png",
   },
   // 7. API & INTEGRATION: Showing Python and Third-party Data skills
   {
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     methodologies: ["API Integration", "Error Handling", "Object-Oriented Programming (OOP)"],
     link: "",
     github: "https://github.com/abdelhaymallouli/WeatherWise",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/WeatherWise/main/screenshots/logo.png",
+    image: "/screenshots/WeatherWise.png",
   },
   // 8. SPECIALIZED: SEO and Local Business Focus
   {
@@ -100,7 +100,7 @@ export const projects: Project[] = [
     methodologies: ["Responsive Web Design (RWD)", "Local SEO Optimization", "Mobile-First Design"],
     link: "https://restaurant-of-tangier.vercel.app/",
     github: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/Restaurant-of-Tangier/main/screenshots/homepage.png",
+    image: "/screenshots/RestaurantOfTangier.png",
   },
   // 9. FUNDAMENTALS: Pure JavaScript logic and state management
   {
@@ -111,6 +111,6 @@ export const projects: Project[] = [
     methodologies: ["State Management", "Event-Driven Programming", "Vanilla JS Architecture"],
     link: "https://cart-shopping-pi.vercel.app/",
     github: "https://github.com/abdelhaymallouli/cart-shopping",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/cart-shopping/main/assets/image.png"
+    image: "/screenshots/CartShopping.png"
   }
 ];
