@@ -17,7 +17,7 @@ export default function ProjectCard({ project }: any) {
 
       {/* Image Area */}
       <div className="aspect-video bg-slate-100 dark:bg-white/5 rounded-[1.5rem] mb-6 overflow-hidden relative flex items-center justify-center pointer-events-none">
-        
+
         {/* NEW: STATUS BADGE OVERLAY */}
         {project.status && (
           <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10">
@@ -60,35 +60,42 @@ export default function ProjectCard({ project }: any) {
 
         <div className="flex gap-4 items-center pointer-events-auto">
           {/* GitHub Link */}
-          <a 
-            href={project.github} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group/icon relative z-20"
-          >
-            <Github 
-              size={18} 
-              className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer" 
-            />
-          </a>
-
-          {/* Live Preview Link */}
-          {project.link && project.link !== "#" ? (
-            <a 
-              href={project.link} 
-              target="_blank" 
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
               rel="noopener noreferrer"
               className="group/icon relative z-20"
             >
-              <ExternalLink 
-                size={18} 
-                className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer" 
+              <Github
+                size={18}
+                className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer"
               />
             </a>
           ) : (
-            <ExternalLink 
-              size={18} 
-              className="text-[var(--muted)] opacity-20 cursor-not-allowed" 
+            <div className="flex items-center gap-1.5 opacity-40">
+              <Github size={16} className="text-[var(--muted)]" />
+              <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--muted)]">Private</span>
+            </div>
+          )}
+
+          {/* Live Preview Link */}
+          {project.link && project.link !== "#" ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/icon relative z-20"
+            >
+              <ExternalLink
+                size={18}
+                className="text-[var(--muted)] group-hover/icon:text-accent transition-colors cursor-pointer"
+              />
+            </a>
+          ) : (
+            <ExternalLink
+              size={18}
+              className="text-[var(--muted)] opacity-20 cursor-not-allowed"
             />
           )}
 

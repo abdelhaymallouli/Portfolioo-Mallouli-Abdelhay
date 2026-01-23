@@ -1,7 +1,25 @@
 import { Project } from "@/types";
 
 export const projects: Project[] = [
-  // 1. LEAD WITH IMPACT: Solving institutional problems with modern methodologies
+  // 1. COMPLEXITY & FRONTIER TECH: N-Tier, Laravel 12, RESTful API
+  {
+    id: 9,
+    title: "Blog Solicode",
+    description: "A centralized, scalable content platform engineered to solve institutional communication gaps. Built with a 7-sprint roadmap, transitioning from a robust Laravel N-Tier back-end to a RESTful API and integrated mobile experience. Developed using Design Thinking to ensure user-centric content discovery.",
+    tech: ["Laravel 12", "PHP (OOP)", "Blade Components", "Tailwind CSS", "Preline UI", "MySQL"],
+    methodologies: [
+      "Scrum (Sprint-based Delivery)",
+      "Design Thinking (Empathy/Ideation)",
+      "N-Tier Architecture",
+      "UML Modeling (Use Case & Class Diagrams)",
+      "GitFlow & PR Peer Review"
+    ],
+    link: "https://cobinatori.com/",
+    github: "",
+    image: "/screenshots/BlogSolicode.png",
+    status: "Production - Sprint 1 Complete"
+  },
+  // 2. LEAD WITH IMPACT: Solving institutional problems with modern methodologies
   {
     id: 1,
     title: "AttendanceFlow AMS",
@@ -18,7 +36,7 @@ export const projects: Project[] = [
     image: "/screenshots/AttendanceFlow.png",
     status: "In Development - Sprint 1"
   },
-  // 2. MODERN STACK: Demonstrating React, TypeScript, and Marketplace logic
+  // 3. MODERN STACK: Demonstrating React, TypeScript, and Marketplace logic
   {
     id: 2,
     title: "Venuvibe Event Platform",
@@ -29,7 +47,7 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform/main/screenshots/home.png",
   },
-  // 3. ANALYTICAL SKILLS: Data visualization and financial logic are high-value to HR
+  // 4. ANALYTICAL SKILLS: Data visualization and financial logic are high-value to HR
   {
     id: 3,
     title: "Personal Finance Manager",
@@ -40,7 +58,7 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/personal-finance-app-php/main/screenshots/landing.png"
   },
-  // 4. BACKEND MATURITY: Shows security awareness and clean PHP 8 OOP
+  // 5. BACKEND MATURITY: Shows security awareness and clean PHP 8 OOP
   {
     id: 4,
     title: "Farha Cultural Event Platform",
@@ -51,7 +69,7 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/Event-management-of-a-cultural-association/refs/heads/main/screenshots/homePage.png"
   },
-  // 5. OPERATIONAL LOGIC: Demonstrating workflow and kitchen-to-customer operations
+  // 6. OPERATIONAL LOGIC: Demonstrating workflow and kitchen-to-customer operations
   {
     id: 5,
     title: "Restaurant Ordering System",
@@ -61,17 +79,6 @@ export const projects: Project[] = [
     link: "",
     github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/restaurant-ordering-system/main/screenshots/screenshot.png",
-  },
-  // 6. SPECIALIZED: SEO and Local Business Focus
-  {
-    id: 6,
-    title: "Restaurant of Tangier",
-    description: "A local-SEO directory application designed with a mobile-first approach. Focuses on dynamic data rendering and accessible design for local business growth.",
-    tech: ["HTML", "CSS", "JavaScript", "PHP"],
-    methodologies: ["Responsive Web Design (RWD)", "Local SEO Optimization", "Mobile-First Design"],
-    link: "https://restaurant-of-tangier.vercel.app/",
-    github: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/Restaurant-of-Tangier/main/screenshots/homepage.png",
   },
   // 7. API & INTEGRATION: Showing Python and Third-party Data skills
   {
@@ -84,7 +91,18 @@ export const projects: Project[] = [
     github: "https://github.com/abdelhaymallouli/WeatherWise",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/WeatherWise/main/screenshots/logo.png",
   },
-  // 8. FUNDAMENTALS: Pure JavaScript logic and state management
+  // 8. SPECIALIZED: SEO and Local Business Focus
+  {
+    id: 6,
+    title: "Restaurant of Tangier",
+    description: "A local-SEO directory application designed with a mobile-first approach. Focuses on dynamic data rendering and accessible design for local business growth.",
+    tech: ["HTML", "CSS", "JavaScript", "PHP"],
+    methodologies: ["Responsive Web Design (RWD)", "Local SEO Optimization", "Mobile-First Design"],
+    link: "https://restaurant-of-tangier.vercel.app/",
+    github: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
+    image: "https://raw.githubusercontent.com/abdelhaymallouli/Restaurant-of-Tangier/main/screenshots/homepage.png",
+  },
+  // 9. FUNDAMENTALS: Pure JavaScript logic and state management
   {
     id: 8,
     title: "Cart Shopping (Dessert Shop)",

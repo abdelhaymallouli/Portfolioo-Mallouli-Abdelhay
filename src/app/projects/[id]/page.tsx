@@ -20,9 +20,11 @@ export default function ProjectPage() {
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[var(--foreground)]">Back</span>
         </Link>
-        <a href={project.github} target="_blank" className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10 hover:border-accent transition-all text-[var(--foreground)]">
-          <Github size={20} />
-        </a>
+        {project.github && (
+          <a href={project.github} target="_blank" className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10 hover:border-accent transition-all text-[var(--foreground)]">
+            <Github size={20} />
+          </a>
+        )}
       </nav>
 
       <section className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden">
@@ -43,7 +45,7 @@ export default function ProjectPage() {
 
       <section className="container mx-auto px-6 max-w-7xl relative z-20 pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           <div className="lg:col-span-8 space-y-10">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-[var(--card-border)] bg-[var(--card)] shadow-2xl relative">
               {project.image ? (
@@ -67,7 +69,7 @@ export default function ProjectPage() {
           <aside className="lg:col-span-4">
             <div className="sticky top-28 space-y-6">
               <div className="p-8 rounded-[2rem] bg-[var(--card)] border border-[var(--card-border)] shadow-xl">
-                
+
                 {/* PROJECT STATUS - NEW SECTION */}
                 {project.status && (
                   <div className="mb-8">
@@ -121,9 +123,15 @@ export default function ProjectPage() {
                 </div>
 
                 <div className="pt-6 border-t border-[var(--card-border)]">
-                  <a href={project.github} target="_blank" className="flex items-center justify-center gap-2 w-full text-xs font-bold text-[var(--muted)] hover:text-accent transition-colors uppercase tracking-widest">
-                    <Github size={14} /> GitHub Repository
-                  </a>
+                  {project.github ? (
+                    <a href={project.github} target="_blank" className="flex items-center justify-center gap-2 w-full text-xs font-bold text-[var(--muted)] hover:text-accent transition-colors uppercase tracking-widest">
+                      <Github size={14} /> GitHub Repository
+                    </a>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2 w-full text-xs font-bold text-[var(--muted)] opacity-50 uppercase tracking-widest italic">
+                      <Github size={14} /> Private Repository
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
