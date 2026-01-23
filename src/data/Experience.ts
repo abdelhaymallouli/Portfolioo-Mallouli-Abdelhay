@@ -18,19 +18,22 @@ export const EXPERIENCES = [
     ],
     tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Laravel", "Eloquent", "Retrofit", "GitFlow", "Linux/Apache"]
   },
-  {
+{
     company: "German Tech Partner",
     role: "Software Engineer Intern",
     type: "work",
     period: "2025 (1 Month)",
     location: "Germany / Remote",
-    description: "Engineered automated communication tools and bots for Mattermost.",
+    description: "Architected and deployed a suite of production-ready Mattermost plugins and Go-based microservices to automate enterprise workflows and HR compliance.",
     details: [
-      "Developed 'Moco-bot' to automate workflow controls.",
-      "Built custom plugins to bridge internal systems with team channels.",
-      "Worked with REST APIs for real-time data processing."
+      "Engineered 'Moco-bot', an automated time-tracking compliance system integrating Personio and MOCO APIs to detect hours deficits and send smart reminders.",
+      "Developed a real-time Outlook Calendar Sync plugin using Microsoft Graph API (OAuth2) to automatically update Mattermost user statuses based on live events.",
+      "Architected a GDPR-compliant 'Birthday Bot' featuring an interactive HR consent management system and secure KV-store for private wish collection.",
+      "Built 'MentorPulse', a mentoring feedback loop tool that automates bi-weekly pulse surveys and generates high-priority alerts for People & Culture teams.",
+      "Developed 'AbwesenheitsBot', a cross-platform synchronization tool that manages 'Out of Office' states by monitoring Personio and Outlook absence data.",
+      "Containerized all bot services using Docker and established local development environments with hot-reloading for rapid plugin iteration."
     ],
-    tech: ["Golang", "Mattermost API", "REST", "Automation"]
+    tech: ["Golang", "Mattermost Plugin API", "Microsoft Graph API", "REST APIs", "OAuth2", "Docker", "PostgreSQL", "Personio & MOCO SDKs"]
   },
 {
     company: "Solicode Tangier",
