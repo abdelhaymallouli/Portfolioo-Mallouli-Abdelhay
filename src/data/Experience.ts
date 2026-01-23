@@ -19,10 +19,10 @@ export const EXPERIENCES = [
     tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Laravel", "Eloquent", "Retrofit", "GitFlow", "Linux/Apache", "tailwind(Preline)","Alpine.js"]
   },
 {
-    company: "German Tech Partner",
-    role: "Software Engineer Intern",
+    company: "pragmatic minds GmbH",
+    role: "Full Stack Development Intern",
     type: "work",
-    period: "2025 (1 Month)",
+    period: "July 2025 - Aug 2025",
     location: "Germany / Remote",
     description: "Architected and deployed a suite of production-ready Mattermost plugins and Go-based microservices to automate enterprise workflows and HR compliance.",
     details: [
@@ -34,7 +34,7 @@ export const EXPERIENCES = [
       "Containerized all bot services using Docker and established local development environments with hot-reloading for rapid plugin iteration."
     ],
     tech: ["Golang", "Mattermost Plugin API", "Microsoft Graph API", "REST APIs", "OAuth2", "Docker", "PostgreSQL", "Personio & MOCO SDKs"]
-  },
+},
 {
     company: "Solicode Tangier",
     role: "Full-Stack Web Development Program",
