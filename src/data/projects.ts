@@ -2,21 +2,21 @@ import { Project } from "@/types";
 
 export const projects: Project[] = [
   // 1. LEAD WITH IMPACT: Solving institutional problems with modern methodologies
-{
+  {
     id: 1,
     title: "AttendanceFlow AMS",
     description: "An empathetic EdTech solution reducing 'Paper-to-Laptop' friction. By eliminating manual data-entry lags, this system automates the workflow for administrators, solving a 70% time-loss gap identified during the Empathy Phase of research.",
-    tech: ["Laravel", "Tailwind CSS", "MySQL", "PHP", "Vite"],
+    tech: ["Laravel", "Tailwind CSS", "MySQL", "PHP", "Vite", "Preline"],
     methodologies: [
-      "Design Thinking (Empathy/Define)", 
-      "Agile/Scrum (Sprint 1)", 
-      "User Persona Mapping", 
+      "Design Thinking (Empathy/Define)",
+      "Agile/Scrum",
+      "User Persona Mapping",
       "User-Centered Design (UCD)"
     ],
-    link: "", // Pro-tip: Add 'Coming Soon' or a link to a Loom video here
+    link: "",
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
-    image: "", // Use a screenshot of your Figma design or your initial dashboard here
-    status: "In Development - Sprint 1" // You can add a custom property if your UI supports it
+    image: "/screenshots/AttendanceFlow.png",
+    status: "In Development - Sprint 1"
   },
   // 2. MODERN STACK: Demonstrating React, TypeScript, and Marketplace logic
   {
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     description: "A data-driven budget tracking application. Features a dynamic dashboard for real-time financial insights and visualized transaction data to help users manage capital effectively.",
     tech: ["PHP", "MySQL", "JavaScript", "Chart.js", "CSS3"],
     methodologies: ["MVC Architecture", "Data Visualization", "Secure CRUD Operations"],
-    link: "", 
+    link: "",
     github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
     image: "https://raw.githubusercontent.com/abdelhaymallouli/personal-finance-app-php/main/screenshots/landing.png"
   },
@@ -93,6 +93,6 @@ export const projects: Project[] = [
     methodologies: ["State Management", "Event-Driven Programming", "Vanilla JS Architecture"],
     link: "https://cart-shopping-pi.vercel.app/",
     github: "https://github.com/abdelhaymallouli/cart-shopping",
-    image: "https://raw.githubusercontent.com/abdelhaymallouli/cart-shopping/main/assets/image.png" 
+    image: "https://raw.githubusercontent.com/abdelhaymallouli/cart-shopping/main/assets/image.png"
   }
 ];

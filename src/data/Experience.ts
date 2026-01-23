@@ -16,7 +16,7 @@ export const EXPERIENCES = [
       "Mastered professional collaboration workflows including GitFlow, Code Reviews, and structured Pull Request cycles within a Scrum framework.",
       "Gained infrastructure expertise in LAN addressing (IPv4/DNS/DHCP) and web server administration (Apache, VirtualHosts, and SSL/TLS configuration)."
     ],
-    tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Laravel", "Eloquent", "Retrofit", "GitFlow", "Linux/Apache"]
+    tech: ["Kotlin", "Jetpack Compose", "Android Studio", "Laravel", "Eloquent", "Retrofit", "GitFlow", "Linux/Apache", "tailwind(Preline)","Alpine.js"]
   },
 {
     company: "German Tech Partner",
