@@ -25,9 +25,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl">
+      <nav className="fixed top-0 w-full z-50 border-b border-card-border bg-background/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <span className="font-black tracking-tighter text-2xl italic text-[var(--foreground)] uppercase z-50 relative">
+          <span className="font-black tracking-tighter text-2xl italic text-foreground uppercase z-50 relative">
             {ME.name.split(" ")[0]}
             <span className="text-accent">.{ME.name.split(" ")[1][0]}</span>
           </span>
@@ -35,23 +35,23 @@ export default function Navbar() {
           <div className="flex items-center gap-8">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
+              className="p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-card-border hover:border-accent/50 transition-all text-foreground z-50 relative flex items-center justify-center"
             >
               {!mounted ? (
                 <div className="w-5 h-5" />
               ) : theme === "dark" ? (
-                <Sun size={20} />
+                <Sun size={20} strokeWidth={2.5} />
               ) : (
-                <Moon size={20} />
+                <Moon size={20} strokeWidth={2.5} />
               )}
             </button>
 
             {/* Mobile Menu Toggle */}
             <button
               onClick={toggleMenu}
-              className="md:hidden p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-[var(--card-border)] hover:border-accent/50 transition-all text-[var(--foreground)] z-50 relative"
+              className="md:hidden p-3 rounded-2xl bg-slate-100 dark:bg-white/5 border border-card-border hover:border-accent/50 transition-all text-foreground z-50 relative flex items-center justify-center"
             >
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMobileMenuOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
             </button>
           </div>
         </div>
@@ -64,9 +64,9 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 bg-[var(--background)] z-40 flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center md:hidden"
           >
-            <div className="flex flex-col gap-8 text-center">
+            <div className="flex flex-col gap-8 text-center px-6">
               {[
                 { name: "Projects", href: "#projects" },
                 { name: "Experience", href: "#experience" },
@@ -76,22 +76,21 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => {
-                    e.preventDefault(); // Prevent default hash jump abruptly
+                    e.preventDefault();
                     setIsMobileMenuOpen(false);
-                    // Smooth scroll after closing
                     const element = document.querySelector(link.href);
                     if (element) {
                       setTimeout(() => {
                         element.scrollIntoView({ behavior: "smooth" });
                       }, 100);
                     } else {
-                      window.location.href = link.href; // Fallback
+                      window.location.href = link.href;
                     }
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.1 }}
-                  className="text-4xl font-black tracking-tighter hover:text-accent transition-colors text-[var(--foreground)]"
+                  className="text-4xl font-black tracking-tighter hover:text-accent transition-colors text-foreground"
                 >
                   {link.name}
                 </motion.a>
