@@ -2,10 +2,18 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { ME } from "@/data/portfolio";
+import dynamic from "next/dynamic";
+
+const Hero3D = dynamic(() => import("@/components/3d/Hero3D"), {
+  ssr: false, // Client side only WebGL
+});
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen pt-48 pb-12 px-6 overflow-hidden flex flex-col items-center justify-between">
+    <section className="relative min-h-[100dvh] pt-48 pb-12 px-6 overflow-hidden flex flex-col items-center justify-between">
+      {/* 3D Hero Element layered securely behind text but above global background */}
+      <Hero3D />
+
       {/* Dynamic Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/15 dark:bg-accent/5 rounded-full blur-[120px] -z-10" />
 
@@ -25,18 +33,22 @@ export default function Hero() {
         <p className="text-lg md:text-2xl text-[var(--muted)] max-w-2xl mx-auto font-medium leading-relaxed mb-10">
           I’m{" "}
           <span className="text-[var(--foreground)] font-bold">{ME.name}</span>,
-          a professional {ME.role} based in {ME.location}. I craft
-           digital experiences by seamlessly blending robust
-          backend logic with premium, interactive design.
+          a professional {ME.role} based in {ME.location}. I craft digital
+          experiences by seamlessly blending robust backend logic with premium,
+          interactive design.
         </p>
       </motion.div>
 
       {/* Professional Minimalist Scroll Down */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() =>
+          document
+            .getElementById("projects")
+            ?.scrollIntoView({ behavior: "smooth" })
+        }
         className="flex flex-col items-center gap-3 cursor-pointer group mb-4"
       >
         <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[var(--muted)] group-hover:text-accent transition-colors">

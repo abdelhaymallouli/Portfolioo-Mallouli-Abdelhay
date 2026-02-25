@@ -8,6 +8,8 @@ export interface Project {
   github: string;
   image: string;
   status?: string;
+  technicalChallenges?: string[];
+  solutions?: string[];
 }
 
 export interface NavItem {
