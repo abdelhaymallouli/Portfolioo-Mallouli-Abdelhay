@@ -1,13 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { Providers } from "@/components/Providers";
 
-const inter = Inter({ subsets: ["latin"] });
+// ── Geist fonts (designed by Vercel — sharp, clean, technical) ──────────────
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Abdelhay Mallouli | Full Stack Developer",
-  description: "Portfolio of Abdelhay Mallouli - Full Stack Developer",
+  description:
+    "Portfolio of Abdelhay Mallouli — Full Stack Developer based in Tangier, Morocco.",
+  openGraph: {
+    title: "Abdelhay Mallouli | Full Stack Developer",
+    description: "Full Stack Developer — React, Next.js, Go, Laravel.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -16,13 +33,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body
-        className={`${inter.className} transition-colors duration-300`}
+        className="font-sans antialiased transition-colors duration-300 relative"
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
-export const EXPERIENCES = [
+import { Experience } from "@/types";
+export const EXPERIENCES: Experience[] = [
   {
     company: "Solicode Tangier",
 
     role: "Mobile & Full-Stack Development Program",
 
-    type: "school",
+    type: "school" as "school",
 
     period: "2025 - 2026",
 
@@ -49,7 +50,7 @@ export const EXPERIENCES = [
 
     role: "Software Development Intern",
 
-    type: "work",
+    type: "work" as "work",
 
     period: "July 2025 - Aug 2025",
 
@@ -89,7 +90,7 @@ export const EXPERIENCES = [
 
     role: "Full-Stack Web Development Program",
 
-    type: "school",
+    type: "school" as "school",
 
     period: "2024 - 2025",
 
@@ -129,27 +130,22 @@ export const EXPERIENCES = [
     ],
   },
   {
-  company: "Anoual High School",
-  role: "Baccalauréat in Physics-Chemistry",
-  type: "school",
-  period: "2023 - 2024",
-  location: "Tangier, Morocco",
-  description: "Completed the Moroccan National Baccalaureate with a focus on advanced mathematics and physical sciences.",
-  details: [
-    "Strong foundation in Mathematics including Calculus, Complex Numbers, and Statistics.",
-    "Studied core Physics modules: Mechanics, Electricity, and Nuclear Physics.",
-    "Developed rigorous analytical and problem-solving skills necessary for technical engineering.",
-    "Certified multilingual proficiency in Arabic, French, and English."
-  ],
-  tech: [
-    "Mathematics",
-    "Physics",
-    "Chemistry",
-    "Logic & Analysis"
-  ]
-}
+    company: "Anoual High School",
+    role: "Baccalauréat in Physics-Chemistry",
+    type: "school" as "school",
+    period: "2023 - 2024",
+    location: "Tangier, Morocco",
+    description:
+      "Completed the Moroccan National Baccalaureate with a focus on advanced mathematics and physical sciences.",
+    details: [
+      "Strong foundation in Mathematics including Calculus, Complex Numbers, and Statistics.",
+      "Studied core Physics modules: Mechanics, Electricity, and Nuclear Physics.",
+      "Developed rigorous analytical and problem-solving skills necessary for technical engineering.",
+      "Certified multilingual proficiency in Arabic, French, and English.",
+    ],
+    tech: ["Mathematics", "Physics", "Chemistry", "Logic & Analysis"],
+  },
 ];
-
 
 //  Standalone Certifications (Udemy, etc.)
 export const STANDALONE_CERTS = [
@@ -158,41 +154,41 @@ export const STANDALONE_CERTS = [
     issuer: "Udemy",
     date: "March 2025",
     url: "https://www.udemy.com/certificate/UC-22ef93dd-a17b-4a70-9c99-c6ce5f1a542c/",
-    tech: "Figma, UI/UX, Design Thinking, Prototyping"
+    tech: "Figma, UI/UX, Design Thinking, Prototyping",
   },
   {
     title: "React Complete Developer Course with Hands-On Projects",
     issuer: "Udemy",
     date: "August 2024",
     url: "https://www.udemy.com/certificate/UC-fbc2fe02-ffa6-4608-bf62-80220c410c0a/",
-    tech: "React.js, Hooks, State Management, API Integration"
+    tech: "React.js, Hooks, State Management, API Integration",
   },
   {
     title: "Linode: Deploy Scalable React Web Apps on the Cloud",
     issuer: "Udemy",
     date: "September 2024",
     url: "https://www.udemy.com/certificate/UC-a5d72512-d21f-4b63-ad91-ec000d730b3f/",
-    tech: "Cloud Computing, Linode, Deployment, Linux"
+    tech: "Cloud Computing, Linode, Deployment, Linux",
   },
   {
     title: "Mastering Selenium Web Automation Essentials",
     issuer: "Udemy",
     date: "July 2024",
     url: "https://www.udemy.com/certificate/UC-e1caa10f-61d7-4149-abc2-388e4987d3f2/",
-    tech: "Selenium, Automated Testing, QA, WebDriver"
+    tech: "Selenium, Automated Testing, QA, WebDriver",
   },
   {
     title: "Master Python Web Scraping & Automation (BS4 & Selenium)",
     issuer: "Udemy",
     date: "August 2024",
     url: "https://www.udemy.com/certificate/UC-aa53d92c-11c6-4f15-923e-7a39c0d41e8b/",
-    tech: "Python, BeautifulSoup, Selenium, Data Automation"
+    tech: "Python, BeautifulSoup, Selenium, Data Automation",
   },
   {
     title: "Bootstrap 5: Créer et lancer des sites web réactifs",
     issuer: "Udemy",
     date: "August 2024",
     url: "https://www.udemy.com/certificate/UC-ccd691bb-e081-4b7e-b04b-1fe706f39378/",
-    tech: "Bootstrap 5, Responsive Design, CSS Layouts"
-  }
+    tech: "Bootstrap 5, Responsive Design, CSS Layouts",
+  },
 ];
