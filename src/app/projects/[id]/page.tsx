@@ -1,144 +1,220 @@
-"use client";
+import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
-import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Github, ExternalLink, Code2, Sparkles, Activity } from "lucide-react";
-import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Github,
+  Cpu,
+  Layers,
+  CheckCircle2,
+  Wrench,
+} from "lucide-react";
+import type { Metadata } from "next";
 
-export default function ProjectPage() {
-  const params = useParams();
-  const id = Number(params?.id);
-  const project = projects.find((p) => p.id === id);
+interface Props {
+  params: Promise<{ id: string }>;
+}
 
-  if (!project) return notFound();
+export async function generateStaticParams() {
+  return projects.map((p) => ({ id: String(p.id) }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const project = projects.find((p) => String(p.id) === id);
+  if (!project) return { title: "Project Not Found" };
+  return {
+    title: `${project.title} | Abdelhay Mallouli`,
+    description: project.description,
+  };
+}
+
+export default async function ProjectPage({ params }: Props) {
+  const { id } = await params;
+  const project = projects.find((p) => String(p.id) === id);
+
+  if (!project) notFound();
 
   return (
-    <main className="min-h-screen bg-[var(--background)]">
-      <nav className="fixed top-0 left-0 right-0 z-[100] p-4 md:p-6 flex justify-between items-center">
-        <Link href="/#projects" className="group flex items-center gap-2 px-4 py-2 md:px-5 md:py-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl hover:bg-accent hover:text-white transition-all active:scale-95">
-          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-          <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[var(--foreground)]">Back</span>
-        </Link>
-        {project.github && (
-          <a href={project.github} target="_blank" className="p-3 rounded-full bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/10 hover:border-accent transition-all text-[var(--foreground)]">
-            <Github size={20} />
-          </a>
+    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+      {/* Hero */}
+      <div className="relative w-full aspect-[21/9] max-h-[520px] overflow-hidden bg-neutral-900">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            priority
+            className="object-cover object-top opacity-60"
+            sizes="100vw"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Cpu size={80} strokeWidth={0.8} className="text-white/10" />
+          </div>
         )}
-      </nav>
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-[var(--background)]/40 to-transparent" />
 
-      <section className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-accent/5" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] to-transparent" />
+        {/* Back button */}
+        <Link
+          href="/#projects"
+          className="absolute top-8 left-8 flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:border-accent/50 transition-all text-sm font-mono font-bold uppercase tracking-wider z-10"
+        >
+          <ArrowLeft size={14} />
+          Back
+        </Link>
+
+        {/* Status badge */}
+        {project.status && (
+          <div className="absolute top-8 right-8 flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/10 z-10">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+            </span>
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-white/90">
+              {project.status}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-6 pb-32 -mt-16 relative z-10">
+        {/* Title block */}
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-4">
+            {project.title}
+          </h1>
+          <p className="text-lg md:text-xl text-[var(--muted)] leading-relaxed max-w-2xl">
+            {project.description}
+          </p>
         </div>
-        <div className="relative z-10 container mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
-            <div className="flex items-center justify-center gap-2 text-accent">
-              <Sparkles size={16} />
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em]">Project Details</span>
-            </div>
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none uppercase">{project.title}</h1>
-          </motion.div>
+
+        {/* Action buttons */}
+        <div className="flex flex-wrap gap-4 mb-16">
+          {project.link && project.link !== "#" && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-2xl font-mono text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-[0.98]"
+            >
+              <ExternalLink size={14} /> Live Demo
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 bg-[var(--card)] border border-[var(--card-border)] rounded-2xl font-mono text-xs font-bold uppercase tracking-widest hover:border-accent/50 transition-all active:scale-[0.98]"
+            >
+              <Github size={14} /> View Source
+            </a>
+          )}
         </div>
-      </section>
 
-      <section className="container mx-auto px-6 max-w-7xl relative z-20 pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-
-          <div className="lg:col-span-8 space-y-10">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-[var(--card-border)] bg-[var(--card)] shadow-2xl relative">
-              {project.image ? (
-                <div className="relative w-full max-h-[600px] overflow-hidden group bg-slate-50 dark:bg-white/5">
-                  <img src={project.image} alt={project.title} className="w-full h-auto object-top transition-transform duration-700 group-hover:scale-105" />
-                </div>
-              ) : (
-                <div className="w-full h-[400px] flex flex-col items-center justify-center bg-[var(--card)]">
-                  <Code2 size={48} className="opacity-10 mb-4" />
-                  <span className="text-[10px] font-bold uppercase tracking-widest opacity-30">No Preview Available</span>
-                </div>
-              )}
-            </motion.div>
-
-            <div className="space-y-6 px-2">
-              <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight">Overview</h3>
-              <p className="text-lg text-[var(--muted)] leading-relaxed font-medium">{project.description}</p>
+        {/* Grid: Tech Stack + Methodologies */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {/* Tech Stack */}
+          <div className="p-6 rounded-3xl bg-[var(--card)] border border-[var(--card-border)]">
+            <h2 className="flex items-center gap-2 text-[11px] font-mono font-black uppercase tracking-[0.3em] text-accent mb-5">
+              <Cpu size={14} /> Tech Stack
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  className="px-3 py-1.5 rounded-full text-[11px] font-bold font-mono bg-accent/10 text-accent border border-accent/20 uppercase tracking-wider"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
 
-          <aside className="lg:col-span-4">
-            <div className="sticky top-28 space-y-6">
-              <div className="p-8 rounded-[2rem] bg-[var(--card)] border border-[var(--card-border)] shadow-xl">
-
-                {/* PROJECT STATUS - NEW SECTION */}
-                {project.status && (
-                  <div className="mb-8">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Lifecycle Status</h4>
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-500/5 border border-blue-500/20">
-                      <div className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                      </div>
-                      <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                        {project.status}
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Live Review */}
-                <div className="mb-8">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Live Review</h4>
-                  {project.link && project.link !== "#" ? (
-                    <a href={project.link} target="_blank" className="flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-accent text-white font-bold hover:scale-[1.02] transition-all shadow-lg shadow-accent/20">
-                      Visit Project <ExternalLink size={18} />
-                    </a>
-                  ) : (
-                    <div className="w-full py-4 rounded-xl bg-slate-100 dark:bg-white/5 text-center text-[var(--muted)] font-bold border border-[var(--card-border)] italic opacity-60">No Live Review</div>
-                  )}
-                </div>
-
-                {/* Methodologies / Strategy */}
-                {project.methodologies && (
-                  <div className="mb-8">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Engineering Strategy</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.methodologies.map((m: string) => (
-                        <span key={m} className="px-3 py-1.5 rounded-lg bg-emerald-500/5 border border-emerald-500/20 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-tight">
-                          {m}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Tech Stack */}
-                <div className="mb-8">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-accent mb-4">// Tech Stack</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span key={t} className="px-3 py-1.5 rounded-lg bg-[var(--background)] border border-[var(--card-border)] text-[10px] font-bold uppercase tracking-tight opacity-80">{t}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-[var(--card-border)]">
-                  {project.github ? (
-                    <a href={project.github} target="_blank" className="flex items-center justify-center gap-2 w-full text-xs font-bold text-[var(--muted)] hover:text-accent transition-colors uppercase tracking-widest">
-                      <Github size={14} /> GitHub Repository
-                    </a>
-                  ) : (
-                    <div className="flex items-center justify-center gap-2 w-full text-xs font-bold text-[var(--muted)] opacity-50 uppercase tracking-widest italic">
-                      <Github size={14} /> Private Repository
-                    </div>
-                  )}
-                </div>
+          {/* Methodologies */}
+          {project.methodologies?.length > 0 && (
+            <div className="p-6 rounded-3xl bg-[var(--card)] border border-[var(--card-border)]">
+              <h2 className="flex items-center gap-2 text-[11px] font-mono font-black uppercase tracking-[0.3em] text-accent mb-5">
+                <Layers size={14} /> Architecture
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {project.methodologies.map((m) => (
+                  <span
+                    key={m}
+                    className="px-3 py-1.5 rounded-full text-[11px] font-bold font-mono bg-[var(--card-border)]/50 text-[var(--foreground)] border border-[var(--card-border)] uppercase tracking-wider"
+                  >
+                    {m}
+                  </span>
+                ))}
               </div>
             </div>
-          </aside>
-
+          )}
         </div>
-      </section>
+
+        {/* Technical Challenges */}
+        {project.technicalChallenges &&
+          project.technicalChallenges.length > 0 && (
+            <div className="mb-8 p-8 rounded-3xl bg-[var(--card)] border border-[var(--card-border)]">
+              <h2 className="flex items-center gap-2 text-[11px] font-mono font-black uppercase tracking-[0.3em] text-accent mb-6">
+                <Wrench size={14} /> Technical Challenges
+              </h2>
+              <ul className="space-y-3">
+                {project.technicalChallenges.map((c, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-4 text-sm leading-relaxed text-[var(--muted)]"
+                  >
+                    <span className="font-mono text-accent font-black shrink-0 mt-0.5">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+        {/* Solutions */}
+        {project.solutions && project.solutions.length > 0 && (
+          <div className="p-8 rounded-3xl bg-[var(--card)] border border-[var(--card-border)]">
+            <h2 className="flex items-center gap-2 text-[11px] font-mono font-black uppercase tracking-[0.3em] text-accent mb-6">
+              <CheckCircle2 size={14} /> Solutions & Outcomes
+            </h2>
+            <ul className="space-y-3">
+              {project.solutions.map((s, i) => (
+                <li
+                  key={i}
+                  className="flex gap-4 text-sm leading-relaxed text-[var(--muted)]"
+                >
+                  <CheckCircle2
+                    size={16}
+                    className="text-accent shrink-0 mt-0.5"
+                  />
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Footer nav */}
+        <div className="mt-16 pt-8 border-t border-[var(--card-border)] flex items-center justify-between">
+          <Link
+            href="/#projects"
+            className="flex items-center gap-2 text-sm font-mono text-[var(--muted)] hover:text-accent transition-colors"
+          >
+            <ArrowLeft size={14} /> All Projects
+          </Link>
+          <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--muted)] opacity-40">
+            Abdelhay Mallouli · {new Date().getFullYear()}
+          </span>
+        </div>
+      </div>
     </main>
   );
 }

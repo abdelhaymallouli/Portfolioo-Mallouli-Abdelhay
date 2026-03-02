@@ -1,17 +1,24 @@
 export type Lang = "en" | "de";
 
-export interface TimelineItem {
-  year: string;
-  title: string;
-  subtitle: string;
-  description: string;
+export interface CertificateItem {
+  titleDE: string;
+  titleEN: string;
+  descriptionDE: string;
+  descriptionEN: string;
+  typeDE: string;
+  typeEN: string;
+  date: string;
+  file: string;
+  icon: string;
+  color: "blue" | "green" | "purple" | "orange";
 }
 
 export interface VaultItem {
-  title: string;
-  type: string;
+  titleDE: string;
+  titleEN: string;
+  subtitleDE: string;
+  subtitleEN: string;
   file: string;
-  description: string;
 }
 
 export interface BewerbungContent {
@@ -20,151 +27,166 @@ export interface BewerbungContent {
     pitch: string;
     cvButton: string;
     videoAction: string;
+    stats: { value: string; labelDE: string; labelEN: string }[];
   };
-  bento: {
-    techTitle: string;
-    techDescription: string;
-    languageTitle: string;
-    languageDescription: string;
-    languageLevel: string;
-    problemTitle: string;
-    problemDescription: string;
+  motivation: {
+    titleDE: string;
+    titleEN: string;
+    cards: {
+      icon: string;
+      color: "blue" | "purple" | "green" | "orange";
+      titleDE: string;
+      titleEN: string;
+      descDE: string;
+      descEN: string;
+      extra?: "lang" | null;
+    }[];
   };
-  timeline: {
-    title: string;
-    items: TimelineItem[];
+  certificates: {
+    items: CertificateItem[];
   };
   vault: {
-    title: string;
     items: VaultItem[];
   };
 }
 
-export const bewerbungData: Record<Lang, BewerbungContent> = {
-  en: {
-    hero: {
-      greeting: "Hi {company} Team, I'm Abdelhay.",
-      pitch:
-        "I am a dedicated Full-Stack Engineer specializing in React, Next.js, and modern backend architectures. I am actively seeking an Ausbildung (Apprenticeship) in Germany to combine my practical engineering experience with world-class German structured learning.",
-      cvButton: "Download Full CV (PDF)",
-      videoAction: "Watch Intro Video",
-    },
-    bento: {
-      techTitle: "Current Stack",
-      techDescription: "Production-ready expertise in modern web technologies.",
-      languageTitle: "German Language",
-      languageDescription:
-        "Actively studying towards B2 certification to ensure seamless integration into a German working environment.",
-      languageLevel: "B1/B2 In Progress",
-      problemTitle: "Problem-Solving Mindset",
-      problemDescription:
-        "I don't just write code; I design systems. Whether it's reducing an administrative time-loss gap by 70% or architecting N-Tier backends, I focus on the 'Why' before the 'How'.",
-    },
-    timeline: {
-      title: "My Journey",
-      items: [
-        {
-          year: "2023 - 2025",
-          title: "Full Stack Development Diploma",
-          subtitle: "OFPPT - Solicode, Tangier",
-          description:
-            "Intensive training in Web and Mobile engineering, Agile methodologies, and enterprise-grade application architecture.",
-        },
-        {
-          year: "2024",
-          title: "Blog Solicode - Flagship Project",
-          subtitle: "Lead Developer",
-          description:
-            "Engineered a centralized content platform transitioning from a robust Laravel N-Tier back-end to a RESTful API across a 7-sprint roadmap.",
-        },
-        {
-          year: "2022 - 2023",
-          title: "Baccalaureate in Physics Sciences",
-          subtitle: "Ministry of National Education",
-          description:
-            "Graduated with honors. Developed a strong foundation in analytical problem solving and scientific methodologies.",
-        },
-      ],
-    },
-    vault: {
-      title: "Document Vault",
-      items: [
-        {
-          title: "Full Stack Diploma",
-          type: "Education",
-          file: "/certificates/Certificate_Solicode_Tangier_Recated.pdf",
-          description: "Official OFPPT Solicode Degree",
-        },
-        {
-          title: "Curriculum Vitae",
-          type: "Resume",
-          file: "/cv/Abdelhay_Mallouli_CV.pdf",
-          description: "Detailed professional history",
-        },
-      ],
-    },
+export const CERTIFICATES: CertificateItem[] = [
+  {
+    titleDE: "Full-Stack Diplom · OFPPT Solicode",
+    titleEN: "Full-Stack Diploma · OFPPT Solicode",
+    descriptionDE:
+      "Staatlich anerkanntes Diplom in Web- und Mobile-Entwicklung — 2 Jahre praxisorientierte Ausbildung in Agile, Backend, Frontend & DevOps.",
+    descriptionEN:
+      "State-recognized diploma in Web & Mobile Development — 2 years of hands-on training in Agile, Backend, Frontend & DevOps.",
+    typeDE: "Offizieller Abschluss",
+    typeEN: "Official Degree",
+    date: "2024–2026",
+    file: "/certificates/Certificate_Solicode_Tangier_Redacted.pdf",
+    icon: "🎓",
+    color: "blue",
   },
-  de: {
-    hero: {
-      greeting: "Hallo {company} Team, ich bin Abdelhay.",
-      pitch:
-        "Ich bin ein engagierter Full-Stack-Entwickler mit Spezialisierung auf React, Next.js und moderne Backend-Architekturen. Ich suche aktiv nach einer Ausbildung als Fachinformatiker in Deutschland, um meine praktische Erfahrung mit dem erstklassigen deutschen dualen System zu verbinden.",
-      cvButton: "Lebenslauf herunterladen",
-      videoAction: "Intro-Video ansehen",
-    },
-    bento: {
-      techTitle: "Technologie-Stack",
-      techDescription: "Praxiserprobte Expertise in modernen Web-Technologien.",
-      languageTitle: "Deutschkenntnisse",
-      languageDescription:
-        "Ich lerne aktiv für das B2-Zertifikat, um eine reibungslose Integration in ein deutsches Arbeitsumfeld zu gewährleisten.",
-      languageLevel: "B1/B2 in Arbeit",
-      problemTitle: "Lösungsorientiertes Denken",
-      problemDescription:
-        "Ich schreibe nicht nur Code, ich entwerfe Systeme. Ob es darum geht, administrative Zeitverluste um 70 % zu reduzieren oder N-Tier-Backends zu entwerfen, ich konzentriere mich auf das 'Warum', bevor ich mich dem 'Wie' widme.",
-    },
-    timeline: {
-      title: "Mein Werdegang",
-      items: [
-        {
-          year: "2023 - 2025",
-          title: "Diplom in Full-Stack-Entwicklung",
-          subtitle: "OFPPT - Solicode, Tanger",
-          description:
-            "Intensive Ausbildung in Web- und Mobile-Engineering, agilen Methoden und erstklassiger Anwendungsarchitektur.",
-        },
-        {
-          year: "2024",
-          title: "Blog Solicode - Vorzeigeprojekt",
-          subtitle: "Lead Developer",
-          description:
-            "Entwicklung einer zentralisierten Content-Plattform. Umstellung eines robusten Laravel-N-Tier-Backends auf eine RESTful-API in einem 7-Sprints-Plan.",
-        },
-        {
-          year: "2022 - 2023",
-          title: "Abitur (Physikalische Wissenschaften)",
-          subtitle: "Bildungsministerium",
-          description:
-            "Abschluss mit Auszeichnung. Entwicklung einer starken Grundlage in analytischer Problemlösung.",
-        },
-      ],
-    },
-    vault: {
-      title: "Dokumente & Zertifikate",
-      items: [
-        {
-          title: "Full-Stack Diplom",
-          type: "Ausbildung",
-          file: "/certificates/Certificate_Solicode_Tangier_Recated.pdf",
-          description: "Offizieller OFPPT Solicode Abschluss",
-        },
-        {
-          title: "Lebenslauf",
-          type: "Bewerbung",
-          file: "/cv/Abdelhay_Mallouli_CV.pdf",
-          description: "Detaillierter Werdegang",
-        },
-      ],
-    },
+  {
+    titleDE: "Deploy Scalable React Web Apps on the Cloud",
+    titleEN: "Deploy Scalable React Web Apps on the Cloud",
+    descriptionDE:
+      "Linode Cloud Platform — Deployment, Skalierung und Verwaltung von React-Applikationen in produktionsnahen Cloud-Umgebungen.",
+    descriptionEN:
+      "Linode Cloud Platform — Deployment, scaling, and management of React apps in production-grade cloud environments.",
+    typeDE: "Cloud Zertifikat · Udemy",
+    typeEN: "Cloud Certificate · Udemy",
+    date: "Sept. 2024",
+    file: "#",
+    icon: "☁️",
+    color: "green",
   },
-};
+  {
+    titleDE: "React Complete Developer Course",
+    titleEN: "React Complete Developer Course",
+    descriptionDE:
+      "Hooks, State Management, Context API, Performance-Optimierung und moderne React-Architekturmuster.",
+    descriptionEN:
+      "Hooks, State Management, Context API, performance optimization and modern React architectural patterns.",
+    typeDE: "Frontend Zertifikat · Udemy",
+    typeEN: "Frontend Certificate · Udemy",
+    date: "Aug. 2024",
+    file: "#",
+    icon: "⚛️",
+    color: "purple",
+  },
+  {
+    titleDE: "Mastering Selenium Web Automation Essentials",
+    titleEN: "Mastering Selenium Web Automation Essentials",
+    descriptionDE:
+      "End-to-End Test-Automatisierung — Web-Scraping, UI-Testing und automatisierte QA-Workflows mit Selenium.",
+    descriptionEN:
+      "End-to-end test automation — web scraping, UI testing and automated QA workflows with Selenium.",
+    typeDE: "Testing Zertifikat · Udemy",
+    typeEN: "Testing Certificate · Udemy",
+    date: "Juli 2024",
+    file: "#",
+    icon: "🧪",
+    color: "orange",
+  },
+];
+
+export const VAULT_ITEMS: VaultItem[] = [
+  {
+    titleDE: "Lebenslauf / CV",
+    titleEN: "Curriculum Vitae / CV",
+    subtitleDE: "PDF · Aktuell 2025–2026",
+    subtitleEN: "PDF · Current 2025–2026",
+    file: "/cv/Abdelhay_Mallouli_CV.pdf",
+  },
+  {
+    titleDE: "Full-Stack Diplom",
+    titleEN: "Full-Stack Diploma",
+    subtitleDE: "PDF · OFPPT Solicode",
+    subtitleEN: "PDF · OFPPT Solicode",
+    file: "/certificates/Certificate_Solicode_Tangier_Redacted.pdf",
+  },
+  {
+    titleDE: "Udemy Zertifikate (3)",
+    titleEN: "Udemy Certificates (3)",
+    subtitleDE: "PDF · Cloud / React / Testing",
+    subtitleEN: "PDF · Cloud / React / Testing",
+    file: "#",
+  },
+];
+
+export const MOTIVATION_CARDS = [
+  {
+    icon: "🎯",
+    color: "blue" as const,
+    titleDE: "Lösungsorientiertes Denken",
+    titleEN: "Problem-Solving Mindset",
+    descDE:
+      "Ich schreibe nicht nur Code — ich entwerfe Systeme. Beim AttendanceFlow-Projekt erzielte ich eine 70% Zeitersparnis durch Design Thinking, bevor eine einzige Zeile Code geschrieben wurde.",
+    descEN:
+      "I don't just write code — I design systems. On AttendanceFlow, I achieved 70% time savings by applying Design Thinking before writing a single line of code.",
+    extra: null,
+  },
+  {
+    icon: "🇩🇪",
+    color: "green" as const,
+    titleDE: "Deutschkenntnisse",
+    titleEN: "German Language Skills",
+    descDE:
+      "Tägliches Lernen auf B1-Niveau, aktiver B2-Intensivkurs. Sprache ist nicht nur ein Zertifikat — es ist mein Werkzeug zur Integration in Ihr Team.",
+    descEN:
+      "Daily practice at B1, active B2 intensive course. Language is not just a certificate — it is my tool for deep integration into your team.",
+    extra: "lang" as const,
+  },
+  {
+    icon: "💼",
+    color: "purple" as const,
+    titleDE: "Deutsches Scrum-Team Erfahrung",
+    titleEN: "German Scrum Team Experience",
+    descDE:
+      "Praktikum bei pragmatic minds GmbH (Kirchheim u.T.) — Go-Microservices, DSGVO-konforme Bots, Code Reviews und Pull-Request-Zyklen in einem echten deutschen Team.",
+    descEN:
+      "Internship at pragmatic minds GmbH (Kirchheim u.T.) — Go microservices, GDPR-compliant bots, code reviews, and PR cycles in a real German dev team.",
+    extra: null,
+  },
+  {
+    icon: "⚡",
+    color: "orange" as const,
+    titleDE: "Hunger zu Lernen",
+    titleEN: "Drive to Learn",
+    descDE:
+      "In 2 Jahren habe ich Go, Kotlin, Docker, Linux-Administration und Cloud-Deployment selbstständig erlernt — bevor ich ein Praktikum in Deutschland absolviert habe.",
+    descEN:
+      "In 2 years I independently learned Go, Kotlin, Docker, Linux administration and cloud deployment — before completing an internship in Germany.",
+    extra: null,
+  },
+  {
+    icon: "🌍",
+    color: "blue" as const,
+    titleDE: "Interkulturelle Kompetenz",
+    titleEN: "Intercultural Competency",
+    descDE:
+      "Arabisch (Muttersprache), Englisch (B2/C1), Deutsch (B1→B2), Französisch (A2). Gewohnt, in diversen internationalen Teams zu arbeiten.",
+    descEN:
+      "Arabic (native), English (B2/C1), German (B1→B2), French (A2). Experienced working in diverse international teams.",
+    extra: null,
+  },
+];

@@ -5,8 +5,9 @@ export default function Footer() {
         <span className="font-black italic text-xl uppercase tracking-tighter">
           Abdelhay<span className="text-accent">.M</span>
         </span>
+        {/* Fix #1 — was rendering â€" and &copy; as broken UTF-8 */}
         <div className="text-[var(--muted)] text-[10px] font-mono uppercase tracking-[0.4em]">
-          Designed with Precision &copy; 2026 — Based in Tangier
+          Designed with Precision &copy; 2026 &mdash; Based in Tangier
         </div>
       </div>
     </footer>

@@ -2,260 +2,670 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { bewerbungData, Lang, TimelineItem, VaultItem } from "@/data/bewerbung";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe2,
   Download,
-  Code2,
-  Database,
-  Layout,
-  BrainCircuit,
-  Server,
+  Linkedin,
+  Github,
+  Globe,
+  ArrowRight,
   FileText,
-  ExternalLink,
-  GraduationCap,
-  Play,
 } from "lucide-react";
-import Image from "next/image";
-import { BentoCard } from "@/components/ui/BentoCard";
-import { TechIcon } from "@/components/ui/TechIcon";
-import { FadeIn } from "@/components/ui/FadeIn";
+import {
+  CERTIFICATES,
+  VAULT_ITEMS,
+  MOTIVATION_CARDS,
+  type Lang,
+} from "@/data/bewerbung";
+import BriefingVideo from "@/components/ui-kit/BriefingVideo";
+import { cn } from "@/lib/utils";
 
+// ── Fade-up animation variant ─────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 },
+  }),
+};
+
+// ── Color maps ────────────────────────────────────────────────────────────────
+const iconBg: Record<string, string> = {
+  blue: "bg-accent/10 text-accent",
+  green: "bg-emerald-500/10 text-emerald-400",
+  purple: "bg-violet-500/10 text-violet-400",
+  orange: "bg-orange-500/10 text-orange-400",
+};
+const topLine: Record<string, string> = {
+  blue: "from-transparent via-accent to-transparent",
+  green: "from-transparent via-emerald-500 to-transparent",
+  purple: "from-transparent via-violet-500 to-transparent",
+  orange: "from-transparent via-orange-500 to-transparent",
+};
+const certStatusColor: Record<string, string> = {
+  blue: "text-accent",
+  green: "text-emerald-400",
+  purple: "text-violet-400",
+  orange: "text-orange-400",
+};
+
+// ── Reusable section header ───────────────────────────────────────────────────
+function SectionHeader({ num, title }: { num: string; title: string }) {
+  return (
+    <div className="flex items-center gap-4 mb-10">
+      <span className="label-mono text-accent border border-accent/25 bg-accent/8 px-2.5 py-1 rounded-md">
+        {num}
+      </span>
+      <h2 className="text-[22px] font-bold tracking-tight text-[--foreground]">
+        {title}
+      </h2>
+      <div className="flex-1 h-px bg-gradient-to-r from-[--card-border] to-transparent" />
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 export default function BewerbungContent() {
   const searchParams = useSearchParams();
-  const companyParam = searchParams.get("company") || "Hiring";
+  const company = searchParams.get("company");
+  const hr = searchParams.get("hr");
   const [lang, setLang] = useState<Lang>("de");
+  const isDE = lang === "de";
 
-  const data = bewerbungData[lang];
-  const greeting = data.hero.greeting.replace("{company}", companyParam);
+  // Personalised greeting target
+  const addressee =
+    hr && company
+      ? `${hr} & ${company} Team`
+      : company
+        ? `${company} Team`
+        : hr
+          ? hr
+          : isDE
+            ? "Team"
+            : "Team";
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-accent/30 selection:text-accent font-sans overflow-hidden">
-      {/* Language Toggle & Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--card-border)]">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold tracking-tight text-lg">
-            A. Mallouli <span className="text-accent">/ Bewerbung</span>
+    <div className="min-h-screen bg-[--background] text-[--foreground] selection:bg-accent/25 font-sans">
+      {/* ── FIXED NAV ──────────────────────────────────────────────────────── */}
+      <nav
+        className="fixed top-0 inset-x-0 z-50 h-14 flex items-center justify-between px-6
+                      bg-[--background]/80 backdrop-blur-md border-b border-[--card-border]"
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+          <span className="label-mono text-[--muted]">
+            {isDE ? "Kandidaten-Profil · Aktiv" : "Candidate Profile · Active"}
           </span>
-          <div className="flex gap-2 p-1 bg-[var(--card)] border border-[var(--card-border)] rounded-full">
+        </div>
+        <div className="flex gap-1.5">
+          {(["de", "en"] as Lang[]).map((l) => (
             <button
-              onClick={() => setLang("de")}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${lang === "de" ? "bg-accent text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}
+              key={l}
+              onClick={() => setLang(l)}
+              className={cn(
+                "label-mono px-3 py-1 rounded-md border transition-colors",
+                lang === l
+                  ? "bg-accent/12 border-accent/30 text-accent"
+                  : "border-transparent text-[--muted] hover:text-[--foreground]",
+              )}
             >
-              DE
+              {l.toUpperCase()}
             </button>
-            <button
-              onClick={() => setLang("en")}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${lang === "en" ? "bg-accent text-white" : "text-[var(--muted)] hover:text-[var(--foreground)]"}`}
-            >
-              EN
-            </button>
-          </div>
+          ))}
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-6 pt-32 pb-24 space-y-24">
-        {/* PERSONALIZED HERO */}
-        <section className="relative grid md:grid-cols-[1fr,auto] gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-6"
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-medium border border-accent/20">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-              </span>
-              Available for Ausbildung 2024/2025
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tighter leading-[1.1]">
-              {greeting}
-            </h1>
-            <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl">
-              {data.hero.pitch}
-            </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a
-                href="/cv/Abdelhay_Mallouli_CV.pdf"
-                target="_blank"
-                className="flex items-center gap-2 px-6 py-3 bg-[var(--foreground)] text-[var(--background)] rounded-full font-medium hover:scale-105 active:scale-95 transition-all"
-              >
-                <Download size={18} />
-                {data.hero.cvButton}
-              </a>
-              <button className="flex items-center gap-2 px-6 py-3 bg-[var(--card)] border border-[var(--card-border)] rounded-full font-medium hover:border-accent/50 hover:text-accent transition-all group">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors">
-                  <Play size={12} className="text-accent fill-accent ml-0.5" />
-                </span>
-                {data.hero.videoAction}
-              </button>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative w-48 h-48 md:w-64 md:h-64 rounded-full p-2 border border-[var(--card-border)] bg-[var(--card)] shadow-2xl shrink-0 hidden md:block"
-          >
-            <div className="w-full h-full rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-800 relative">
-              {/* Replace with actual headshot path if available */}
-              <div className="absolute inset-0 flex items-center justify-center text-neutral-400">
-                Photo
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* THE "WHY ME" BENTO GRID */}
+      <main className="pt-24 pb-32 px-6 max-w-5xl mx-auto space-y-32">
+        {/* ── SECTION 0: HERO ─────────────────────────────────────────────── */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
-            {/* Tech Stack */}
-            <BentoCard className="md:col-span-2 overflow-hidden flex flex-col justify-between group">
-              <div>
-                <h3 className="text-2xl font-bold tracking-tight mb-2 group-hover:text-accent transition-colors">
-                  {data.bento.techTitle}
-                </h3>
-                <p className="text-[var(--muted)] max-w-md">
-                  {data.bento.techDescription}
-                </p>
-              </div>
-              <div className="flex gap-4 mt-4 relative z-10">
-                <TechIcon icon={<Code2 className="text-blue-500" />} />
-                <TechIcon icon={<Layout className="text-cyan-400" />} />
-                <TechIcon icon={<Database className="text-emerald-500" />} />
-                <TechIcon icon={<Server className="text-red-500" />} />
-              </div>
-              <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl group-hover:bg-accent/10 transition-colors pointer-events-none" />
-            </BentoCard>
+          {/* Badge */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0}
+            className="mb-6"
+          >
+            <span className="label-mono text-accent border border-accent/25 bg-accent/8 px-3 py-1.5 rounded-md inline-flex items-center gap-2">
+              <span className="w-1 h-1 rounded-full bg-accent" />
+              {isDE
+                ? "Bewerbung · Duale Ausbildung · Fachinformatiker"
+                : "Application · Dual Apprenticeship · Fachinformatiker"}
+            </span>
+          </motion.div>
 
-            {/* Language Level */}
-            <BentoCard
-              className="flex flex-col justify-between group"
-              delay={0.1}
-            >
-              <div>
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Globe2 className="text-accent" />
-                </div>
-                <h3 className="text-xl font-bold tracking-tight mb-2">
-                  {data.bento.languageTitle}
-                </h3>
-                <p className="text-sm text-[var(--muted)]">
-                  {data.bento.languageDescription}
-                </p>
-              </div>
-              <div className="mt-4 py-2 px-4 bg-[var(--background)] border border-[var(--card-border)] rounded-full text-center font-semibold text-accent">
-                {data.bento.languageLevel}
-              </div>
-            </BentoCard>
+          {/* Name headline */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={1}
+            className="mb-4"
+          >
+            <p className="label-mono text-accent mb-3">
+              {isDE
+                ? `Guten Tag, ${addressee} — Willkommen auf meiner Bewerbungsseite`
+                : `Hello, ${addressee} — Welcome to my application page`}
+            </p>
+            <h1 className="text-[clamp(42px,7vw,80px)] font-black tracking-[-0.05em] leading-[0.92] text-[--foreground]">
+              {isDE ? "Ich bin" : "I'm"}{" "}
+              <span className="bg-gradient-to-br from-accent via-violet-400 to-accent bg-clip-text text-transparent">
+                Abdelhay
+              </span>
+              <br />
+              <span className="text-[--muted]">Mallouli.</span>
+            </h1>
+          </motion.div>
 
-            {/* Problem Solving */}
-            <BentoCard
-              className="md:col-span-3 flex items-center gap-8 group"
-              delay={0.2}
+          {/* Role */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={2}
+            className="text-[18px] italic text-[--muted] mb-6 font-light tracking-[-0.01em]"
+            style={{ fontFamily: "var(--font-serif, Georgia, serif)" }}
+          >
+            {isDE
+              ? "Full-Stack Entwickler · Ausbildungsbewerber 2025/2026"
+              : "Full-Stack Developer · Ausbildung Candidate 2025/2026"}
+          </motion.p>
+
+          {/* Pitch */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={3}
+            className="text-[16px] text-[--muted] leading-[1.75] max-w-[600px] mb-10"
+          >
+            {isDE ? (
+              <>
+                Engagierter Full-Stack-Entwickler aus Tanger, Marokko —
+                spezialisiert auf{" "}
+                <strong className="text-[--foreground] font-semibold">
+                  React, Laravel, Go-Microservices
+                </strong>{" "}
+                und moderne Backend-Architekturen. Ich suche eine{" "}
+                <strong className="text-[--foreground] font-semibold">
+                  Ausbildung als Fachinformatiker für Anwendungsentwicklung
+                </strong>
+                , um meine Praxis mit dem deutschen dualen System zu verbinden.
+              </>
+            ) : (
+              <>
+                Dedicated Full-Stack Developer from Tangier, Morocco —
+                specializing in{" "}
+                <strong className="text-[--foreground] font-semibold">
+                  React, Laravel, Go microservices
+                </strong>{" "}
+                and modern backend architectures. Seeking an{" "}
+                <strong className="text-[--foreground] font-semibold">
+                  Ausbildung as Fachinformatiker für Anwendungsentwicklung
+                </strong>{" "}
+                to combine hands-on experience with Germany's dual system.
+              </>
+            )}
+          </motion.p>
+
+          {/* CTA buttons */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            className="flex flex-wrap gap-3 mb-14"
+          >
+            <a
+              href="/cv/Abdelhay_Mallouli_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white
+                         font-semibold text-[13px] shadow-[0_0_24px_rgba(59,130,246,0.35)]
+                         hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200"
             >
-              <div className="w-16 h-16 shrink-0 rounded-2xl bg-orange-500/10 flex items-center justify-center group-hover:rotate-6 transition-transform">
-                <BrainCircuit className="text-orange-500" size={32} />
+              <Download size={15} />
+              {isDE ? "Lebenslauf herunterladen" : "Download Full CV"}
+            </a>
+            <a
+              href="https://www.abdelhaymallouli.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass
+                         font-semibold text-[13px] text-[--foreground]
+                         hover:border-accent/30 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Globe size={15} />
+              Portfolio
+            </a>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={5}
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-[--card-border]"
+          >
+            {[
+              {
+                value: "2+",
+                labelDE: "Jahre Praxis",
+                labelEN: "Years Practice",
+              },
+              {
+                value: "10+",
+                labelDE: "Live-Projekte",
+                labelEN: "Live Projects",
+              },
+              {
+                value: "70%",
+                labelDE: "Zeit-Einsparung",
+                labelEN: "Time Saved (AMS)",
+              },
+              {
+                value: "B1→B2",
+                labelDE: "Deutschkenntnisse",
+                labelEN: "German Level",
+              },
+            ].map((s) => (
+              <div key={s.value} className="flex flex-col gap-1">
+                <span className="text-[28px] font-black tracking-[-0.04em] text-[--foreground]">
+                  {s.value}
+                </span>
+                <span className="label-mono text-[--muted]">
+                  {isDE ? s.labelDE : s.labelEN}
+                </span>
               </div>
-              <div>
-                <h3 className="text-2xl font-bold tracking-tight mb-2">
-                  {data.bento.problemTitle}
-                </h3>
-                <p className="text-[var(--muted)] text-lg max-w-3xl leading-relaxed">
-                  {data.bento.problemDescription}
-                </p>
-              </div>
-            </BentoCard>
-          </div>
+            ))}
+          </motion.div>
         </section>
 
-        {/* INTEGRATED TIMELINE */}
-        <FadeIn delay={0.3} className="py-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-12">
-            {data.timeline.title}
-          </h2>
-          <div className="relative border-l border-[var(--card-border)] ml-3 md:ml-6 space-y-12">
-            {data.timeline.items.map((item: TimelineItem, i: number) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative pl-8 md:pl-12"
-              >
-                <div className="absolute -left-[5px] top-1.5 w-[10px] h-[10px] rounded-full bg-[var(--card-border)] ring-4 ring-[var(--background)]" />
-                <span className="text-sm font-bold text-accent mb-1 block">
-                  {item.year}
-                </span>
-                <h3 className="text-xl font-bold tracking-tight text-[var(--foreground)]">
-                  {item.title}
+        {/* ── SECTION 01: VIDEO ───────────────────────────────────────────── */}
+        <section>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <SectionHeader
+              num="01"
+              title={isDE ? "Kandidaten-Intro" : "Candidate Introduction"}
+            />
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            custom={1}
+            viewport={{ once: true }}
+          >
+            <BriefingVideo />
+          </motion.div>
+        </section>
+
+        {/* ── SECTION 02: MOTIVATION ──────────────────────────────────────── */}
+        <section>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <SectionHeader
+              num="02"
+              title={isDE ? "Warum Ich? · Motivation" : "Why Me? · Motivation"}
+            />
+          </motion.div>
+
+          {/* Featured wide card: ROI + Scrum */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            custom={1}
+            viewport={{ once: true }}
+            className="glass rounded-2xl p-8 mb-4 relative overflow-hidden group
+                       hover:shadow-[0_0_40px_rgba(59,130,246,0.08)] transition-shadow duration-500"
+          >
+            {/* top beam */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="grid md:grid-cols-2 gap-10">
+              {/* Left: ROI story */}
+              <div>
+                <div
+                  className={cn(
+                    "w-11 h-11 rounded-xl flex items-center justify-center text-xl mb-5",
+                    iconBg.blue,
+                  )}
+                >
+                  🎯
+                </div>
+                <h3 className="text-[18px] font-bold text-[--foreground] mb-3">
+                  {isDE
+                    ? "Lösungsorientiertes Denken"
+                    : "Problem-Solving Mindset"}
                 </h3>
-                <span className="text-sm font-medium text-[var(--muted)] block mb-3">
-                  {item.subtitle}
-                </span>
-                <p className="text-[var(--muted)] max-w-2xl leading-relaxed">
-                  {item.description}
+                <p className="text-[14px] text-[--muted] leading-[1.75] mb-5">
+                  {isDE
+                    ? "Ich schreibe nicht nur Code — ich entwerfe Systeme. Beim AttendanceFlow-Projekt erzielte ich eine messbare Wirkung, bevor eine einzige Zeile Code geschrieben wurde."
+                    : "I don't just write code — I design systems. On AttendanceFlow, I achieved measurable impact before writing a single line of code."}
                 </p>
+                <div className="flex items-end gap-3">
+                  <span className="text-[52px] font-black tracking-[-0.05em] leading-none bg-gradient-to-br from-emerald-400 to-accent bg-clip-text text-transparent">
+                    70%
+                  </span>
+                  <span className="label-mono text-[--muted] mb-1">
+                    {isDE
+                      ? "Zeitersparnis · AttendanceFlow AMS"
+                      : "Time Saved · AttendanceFlow AMS"}
+                  </span>
+                </div>
+              </div>
+              {/* Right: Scrum experience */}
+              <div>
+                <div
+                  className={cn(
+                    "w-11 h-11 rounded-xl flex items-center justify-center text-xl mb-5",
+                    iconBg.purple,
+                  )}
+                >
+                  💼
+                </div>
+                <h3 className="text-[18px] font-bold text-[--foreground] mb-3">
+                  {isDE
+                    ? "Deutsches Scrum-Team Erfahrung"
+                    : "German Scrum Team Experience"}
+                </h3>
+                <p className="text-[14px] text-[--muted] leading-[1.75] mb-5">
+                  {isDE
+                    ? "Praktikum bei pragmatic minds GmbH (Kirchheim u.T.) — Go-Microservices, DSGVO-konforme Bots, echte Code Reviews und PR-Zyklen."
+                    : "Internship at pragmatic minds GmbH (Kirchheim u.T.) — Go microservices, GDPR-compliant bots, real code reviews and PR cycles."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Go · Microservices",
+                    "Docker",
+                    "Personio API",
+                    "MS Graph",
+                    "Scrum",
+                    "DSGVO",
+                  ].map((tag) => (
+                    <span
+                      key={tag}
+                      className="label-mono text-[--muted] bg-white/5 border border-[--card-border]
+                                 px-2.5 py-1 rounded-md hover:border-accent/30 hover:text-accent
+                                 transition-colors cursor-default"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Motivation Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-4">
+            {MOTIVATION_CARDS.slice(1).map((card, i) => (
+              <motion.div
+                key={isDE ? card.titleDE : card.titleEN}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                custom={i + 2}
+                viewport={{ once: true }}
+                className="glass rounded-2xl p-6 relative overflow-hidden group
+                           hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:-translate-y-1
+                           transition-all duration-300"
+              >
+                <div
+                  className={cn(
+                    "absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500",
+                    topLine[card.color],
+                  )}
+                />
+                <div
+                  className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center text-lg mb-4",
+                    iconBg[card.color],
+                  )}
+                >
+                  {card.icon}
+                </div>
+                <h3 className="text-[16px] font-bold text-[--foreground] mb-2">
+                  {isDE ? card.titleDE : card.titleEN}
+                </h3>
+                <p className="text-[13px] text-[--muted] leading-[1.7]">
+                  {isDE ? card.descDE : card.descEN}
+                </p>
+                {card.extra === "lang" && (
+                  <div className="mt-4 flex items-center gap-2">
+                    <div className="flex-1 h-1 bg-white/8 rounded-full overflow-hidden">
+                      <div className="h-full w-[72%] bg-gradient-to-r from-accent to-violet-400 rounded-full" />
+                    </div>
+                    <span className="label-mono text-accent">B1→B2</span>
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
-        </FadeIn>
+        </section>
 
-        {/* DOCUMENT VAULT */}
+        {/* ── SECTION 03: CERTIFICATES ────────────────────────────────────── */}
         <section>
-          <h2 className="text-3xl font-bold tracking-tight mb-8">
-            {data.vault.title}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {data.vault.items.map((doc: VaultItem, i: number) => (
-              <div
-                key={i}
-                className="flex items-center gap-4 p-4 border border-[var(--card-border)] bg-[var(--card)] rounded-2xl hover:border-accent/50 transition-colors group"
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <SectionHeader
+              num="03"
+              title={
+                isDE ? "Zertifikate & Abschlüsse" : "Certificates & Degrees"
+              }
+            />
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {CERTIFICATES.map((cert, i) => (
+              <motion.a
+                key={cert.titleEN}
+                href={cert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                custom={i}
+                viewport={{ once: true }}
+                className="glass rounded-2xl p-6 flex flex-col gap-4 group
+                           hover:border-accent/30 hover:-translate-y-1
+                           transition-all duration-300 cursor-pointer"
               >
-                <div className="w-12 h-12 bg-accent/5 rounded-xl flex items-center justify-center shrink-0">
-                  <FileText className="text-accent" />
+                {/* top */}
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={cn(
+                        "w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0",
+                        iconBg[cert.color],
+                      )}
+                    >
+                      {cert.icon}
+                    </div>
+                    <span className="label-mono text-[--muted]">
+                      {isDE ? cert.typeDE : cert.typeEN}
+                    </span>
+                  </div>
+                  <span className="label-mono text-[--muted]">{cert.date}</span>
                 </div>
-                <div className="flex-grow">
-                  <h4 className="font-bold tracking-tight text-[var(--foreground)]">
-                    {doc.title}
+
+                {/* title + desc */}
+                <div>
+                  <h4 className="text-[15px] font-bold text-[--foreground] mb-1.5 group-hover:text-accent transition-colors leading-snug">
+                    {isDE ? cert.titleDE : cert.titleEN}
                   </h4>
-                  <p className="text-xs text-[var(--muted)]">
-                    {doc.description}
+                  <p className="text-[13px] text-[--muted] leading-[1.65]">
+                    {isDE ? cert.descriptionDE : cert.descriptionEN}
                   </p>
                 </div>
-                <a
-                  href={doc.file}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--background)] border border-[var(--card-border)] text-[var(--muted)] hover:text-accent hover:border-accent transition-colors shrink-0"
-                >
-                  <ExternalLink size={16} />
-                </a>
-              </div>
+
+                {/* footer */}
+                <div className="mt-auto flex items-center justify-between pt-4 border-t border-[--card-border]">
+                  <span
+                    className={cn("label-mono", certStatusColor[cert.color])}
+                  >
+                    ✓ {isDE ? "Verifiziert" : "Verified"}
+                  </span>
+                  <div
+                    className="w-7 h-7 rounded-lg bg-accent/8 border border-accent/15 flex items-center justify-center
+                                  text-accent text-[13px] group-hover:bg-accent/18 group-hover:translate-x-0.5 transition-all"
+                  >
+                    →
+                  </div>
+                </div>
+              </motion.a>
             ))}
+
+            {/* Placeholder for upcoming certs */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              custom={4}
+              viewport={{ once: true }}
+              className="sm:col-span-2 rounded-2xl border border-dashed border-[--card-border] p-6
+                         flex items-center justify-center"
+            >
+              <span className="label-mono text-[--muted]">
+                //{" "}
+                {isDE
+                  ? "Weitere Zertifikate folgen"
+                  : "More certificates coming soon"}
+              </span>
+            </motion.div>
           </div>
+        </section>
+
+        {/* ── SECTION 04: DOWNLOADS & SOCIALS ─────────────────────────────── */}
+        <section>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            <SectionHeader
+              num="04"
+              title={isDE ? "Dokumente herunterladen" : "Download Documents"}
+            />
+          </motion.div>
+
+          {/* Document cards */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            custom={1}
+            viewport={{ once: true }}
+            className="grid sm:grid-cols-3 gap-4 mb-8"
+          >
+            {VAULT_ITEMS.map((item) => (
+              <a
+                key={item.file}
+                href={item.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass rounded-2xl p-5 flex items-center gap-4 group
+                           hover:border-accent/30 hover:-translate-y-1 transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-xl bg-accent/8 border border-accent/15 flex items-center justify-center flex-shrink-0">
+                  <FileText size={18} className="text-accent" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[14px] font-bold text-[--foreground] truncate group-hover:text-accent transition-colors">
+                    {isDE ? item.titleDE : item.titleEN}
+                  </p>
+                  <p className="label-mono text-[--muted]">
+                    {isDE ? item.subtitleDE : item.subtitleEN}
+                  </p>
+                </div>
+                <ArrowRight
+                  size={15}
+                  className="text-[--muted] ml-auto flex-shrink-0 group-hover:text-accent group-hover:translate-x-0.5 transition-all"
+                />
+              </a>
+            ))}
+          </motion.div>
+
+          {/* Social links */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            custom={2}
+            viewport={{ once: true }}
+            className="flex flex-wrap gap-3"
+          >
+            <a
+              href="/cv/Abdelhay_Mallouli_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white
+                         font-semibold text-[13px] shadow-[0_0_24px_rgba(59,130,246,0.3)]
+                         hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              <Download size={15} />
+              {isDE ? "Lebenslauf herunterladen" : "Download CV"}
+            </a>
+            <a
+              href="https://linkedin.com/in/abdelhaymallouli"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass
+                         font-semibold text-[13px] text-[--muted]
+                         hover:text-[--foreground] hover:border-accent/25 transition-all duration-200"
+            >
+              <Linkedin size={15} />
+              LinkedIn
+            </a>
+            <a
+              href="https://github.com/abdelhaymallouli"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass
+                         font-semibold text-[13px] text-[--muted]
+                         hover:text-[--foreground] hover:border-accent/25 transition-all duration-200"
+            >
+              <Github size={15} />
+              GitHub
+            </a>
+            <a
+              href="https://www.abdelhaymallouli.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass
+                         font-semibold text-[13px] text-[--muted]
+                         hover:text-[--foreground] hover:border-accent/25 transition-all duration-200"
+            >
+              <Globe size={15} />
+              Portfolio
+            </a>
+          </motion.div>
         </section>
       </main>
 
-      {/* FAB - sticky CV download button */}
-      <motion.a
-        href="/cv/Abdelhay_Mallouli_CV.pdf"
-        target="_blank"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-[var(--foreground)] text-[var(--background)] rounded-full shadow-2xl font-medium tracking-tight hover:shadow-accent/20 transition-all border border-white/10"
-      >
-        <Download size={18} />
-        <span className="hidden sm:inline">{data.hero.cvButton}</span>
-      </motion.a>
+      {/* ── FOOTER ─────────────────────────────────────────────────────────── */}
+      <footer className="relative z-10 border-t border-[--card-border] py-7 text-center">
+        <span className="label-mono text-[--muted]">
+          // Abdelhay Mallouli · Bewerbung 2025/2026 · Tangier, Morocco
+        </span>
+      </footer>
     </div>
   );
 }

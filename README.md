@@ -10,12 +10,14 @@ A high-performance, responsive portfolio platform engineered to showcase full-st
 ## 🚀 Key Engineering Highlights
 
 ### 🛠 Technical Architecture
+
 - **Framework**: Next.js 15 (App Router) for optimized rendering and routing.
 - **Styling**: Tailwind CSS 4.0 with customized CSS variable orchestration for theme consistency.
 - **Components**: Radical UI approach with Framer Motion for sophisticated micro-interactions.
 - **Data Layer**: Centralized data management in `src/data/` for scalable project and experience tracking.
 
 ### 💎 Featured Solutions
+
 - **Enterprise-Grade UI**: Implementations like "Blog Solicode" showcase N-Tier back-end logic and RESTful API integration.
 - **Empathetic EdTech**: "AttendanceFlow AMS" demonstrates the application of Design Thinking (Empathy/Define) to solve real-world institutional friction.
 - **Robust Theming**: Seamless Dark/Light mode transitions using `next-themes`, optimized for mobile visibility.
@@ -36,10 +38,12 @@ A high-performance, responsive portfolio platform engineered to showcase full-st
 ## ⚙️ Development Environment
 
 ### Prerequisites
+
 - Node.js 18.x or higher
 - npm or pnpm
 
 ### Setup
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/abdelhaymallouli/Portfolioo-Mallouli-Abdelhay.git
@@ -54,12 +58,15 @@ A high-performance, responsive portfolio platform engineered to showcase full-st
    ```
 
 ## 👨💻 About the developer
-**Abdelhay Mallouli** is a Full Stack Developer specializing in building scalable, secure, and user-centric applications. With experience ranging from Go-based microservices at 
+
+**Abdelhay Mallouli** is a Full Stack Developer specializing in building scalable, secure, and user-centric applications. With experience ranging from Go-based microservices at
 
 ## 📬 Contact & Collaboration
+
 - **LinkedIn**: [Abdelhay Mallouli](https://www.linkedin.com/in/abdelhaymallouli/)
 - **GitHub**: [@abdelhaymallouli](https://github.com/abdelhaymallouli)
 - **Portfolio**: [Live Preview](https://portoflio-abdelhay.vercel.app/)
 
 ---
-*Created with passion and strict engineering standards.*
+
+_Created with passion and strict engineering standards._

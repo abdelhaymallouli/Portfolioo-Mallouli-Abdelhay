@@ -1,64 +1,157 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Icosahedron, MeshDistortMaterial, Float } from "@react-three/drei";
+import { Float, Sphere, Torus, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-const InteractiveMesh = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const { mouse, viewport } = useThree();
+// ─── Ambient Star Field ────────────────────────────────────────────────────────
+const StarField = () => {
+  const ref = useRef<THREE.Points>(null);
+  const positions = useMemo(() => {
+    const pos = new Float32Array(2500 * 3);
+    for (let i = 0; i < 2500; i++) {
+      pos[i * 3]     = (Math.random() - 0.5) * 22;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 22;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 22;
+    }
+    return pos;
+  }, []);
 
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const time = state.clock.getElapsedTime();
-
-    // Base rotation
-    meshRef.current.rotation.x = time * 0.2;
-    meshRef.current.rotation.y = time * 0.3;
-
-    // Interactive rotation based on mouse or device tilt (handled by R3F's normalized pointer coordinates)
-    // We use a lerp to make the movement silky smooth
-    const targetX = (mouse.x * viewport.width) / 4;
-    const targetY = (mouse.y * viewport.height) / 4;
-
-    meshRef.current.position.x = THREE.MathUtils.lerp(
-      meshRef.current.position.x,
-      targetX,
-      0.05,
-    );
-    meshRef.current.position.y = THREE.MathUtils.lerp(
-      meshRef.current.position.y,
-      targetY,
-      0.05,
-    );
+  useFrame((s) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = s.clock.getElapsedTime() * 0.008;
   });
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <Icosahedron ref={meshRef} args={[1, 4]}>
-        <MeshDistortMaterial
-          color="#6366f1" // Accent color
-          envMapIntensity={1}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-          metalness={0.8}
-          roughness={0.2}
-          distort={0.4}
-          speed={3}
-          wireframe={true}
-        />
-      </Icosahedron>
-    </Float>
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+      </bufferGeometry>
+      <pointsMaterial size={0.007} color="#94a3b8" transparent opacity={0.35} sizeAttenuation depthWrite={false} />
+    </points>
   );
 };
 
+// ─── Orbit Ring of Particles ──────────────────────────────────────────────────
+const OrbitParticles = ({ radius, count, speed, color, tilt = 0 }: {
+  radius: number; count: number; speed: number; color: string; tilt?: number;
+}) => {
+  const ref = useRef<THREE.Points>(null);
+
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const angle = (i / count) * Math.PI * 2;
+      const spread = (Math.random() - 0.5) * 0.12;
+      pos[i * 3]     = Math.cos(angle) * (radius + spread);
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 0.18;
+      pos[i * 3 + 2] = Math.sin(angle) * (radius + spread);
+    }
+    return pos;
+  }, [count, radius]);
+
+  useFrame((s) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = s.clock.getElapsedTime() * speed;
+    ref.current.rotation.x = tilt;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.016} color={color} transparent opacity={0.75}
+        sizeAttenuation blending={THREE.AdditiveBlending} depthWrite={false}
+      />
+    </points>
+  );
+};
+
+// ─── Glowing Torus Rings ──────────────────────────────────────────────────────
+const GlowRings = () => {
+  const r1 = useRef<THREE.Mesh>(null);
+  const r2 = useRef<THREE.Mesh>(null);
+  const r3 = useRef<THREE.Mesh>(null);
+
+  useFrame((s) => {
+    const t = s.clock.getElapsedTime();
+    if (r1.current) { r1.current.rotation.x = t * 0.28; r1.current.rotation.z = t * 0.08; }
+    if (r2.current) { r2.current.rotation.y = t * 0.18; r2.current.rotation.x = t * -0.12; }
+    if (r3.current) { r3.current.rotation.z = t * 0.22; r3.current.rotation.y = t * -0.09; }
+  });
+
+  return (
+    <>
+      <Torus ref={r1} args={[1.45, 0.007, 32, 220]}>
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.55} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </Torus>
+      <Torus ref={r2} args={[1.85, 0.005, 32, 220]}>
+        <meshBasicMaterial color="#60a5fa" transparent opacity={0.32} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </Torus>
+      <Torus ref={r3} args={[2.25, 0.003, 32, 220]}>
+        <meshBasicMaterial color="#93c5fd" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </Torus>
+    </>
+  );
+};
+
+// ─── Central Distorted Sphere ─────────────────────────────────────────────────
+const CoreSphere = () => {
+  const ref = useRef<THREE.Mesh>(null);
+  const { mouse } = useThree();
+
+  useFrame((s) => {
+    if (!ref.current) return;
+    const t = s.clock.getElapsedTime();
+    ref.current.rotation.y = t * 0.12 + THREE.MathUtils.lerp(0, mouse.x * 0.25, 0.05);
+    ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, mouse.y * 0.25, 0.04);
+  });
+
+  return (
+    <Sphere ref={ref} args={[0.72, 80, 80]}>
+      <MeshDistortMaterial
+        color="#1d4ed8"
+        emissive="#3b82f6"
+        emissiveIntensity={0.7}
+        roughness={0.05}
+        metalness={0.9}
+        distort={0.32}
+        speed={1.8}
+        transparent
+        opacity={0.92}
+      />
+    </Sphere>
+  );
+};
+
+// ─── Scene ────────────────────────────────────────────────────────────────────
+const Scene = () => (
+  <>
+    <ambientLight intensity={0.15} />
+    <pointLight position={[4, 4, 4]} intensity={2.2} color="#3b82f6" />
+    <pointLight position={[-5, -3, -4]} intensity={0.9} color="#1e40af" />
+    <pointLight position={[0, -4, 2]} intensity={0.4} color="#0ea5e9" />
+
+    <StarField />
+
+    <Float speed={1.1} rotationIntensity={0.15} floatIntensity={0.9}>
+      <GlowRings />
+      <CoreSphere />
+      <OrbitParticles radius={1.15} count={130} speed={0.45}  color="#60a5fa" tilt={0.1} />
+      <OrbitParticles radius={1.65} count={85}  speed={-0.28} color="#3b82f6" tilt={0.4} />
+      <OrbitParticles radius={2.1}  count={55}  speed={0.16}  color="#93c5fd" tilt={-0.3} />
+    </Float>
+  </>
+);
+
+// ─── Export ───────────────────────────────────────────────────────────────────
 export default function Hero3D() {
   return (
-    <div className="w-full h-full min-h-[300px] md:min-h-[500px] absolute inset-0 -z-10 pointer-events-none opacity-50 dark:opacity-80 mix-blend-screen">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 10]} intensity={1.5} />
-        <InteractiveMesh />
+    <div className="w-full h-full min-h-[300px] md:min-h-[500px] absolute inset-0 -z-10 pointer-events-none opacity-90 mix-blend-screen">
+      <Canvas camera={{ position: [0, 0, 5.5], fov: 54 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
+        <Scene />
       </Canvas>
     </div>
   );
