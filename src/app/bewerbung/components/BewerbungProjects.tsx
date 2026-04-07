@@ -7,6 +7,7 @@ import { GC, SecHead, Pill, RingChart, risev } from "./shared/BewerbungUI";
 
 export function BewerbungProjects({ lang }: { lang: string }) {
   const t = (de: string, en: string) => (lang === "de" ? de : en);
+  const colors = ["#3b82f6", "#a78bfa", "#34d399", "#fbbf24", "#f43f5e"];
 
   return (
     <section style={{ marginBottom: "96px" }}>
@@ -17,13 +18,18 @@ export function BewerbungProjects({ lang }: { lang: string }) {
         />
       </motion.div>
       <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-        {PROJECTS.map((proj, i) => (
-          <motion.div key={proj.num} {...risev(i)}>
+        {PROJECTS.map((proj, i) => {
+          const accent = colors[i % colors.length];
+          const kpiNumberMatch = proj.kpi ? proj.kpi.match(/\d+/) : null;
+          const kpiValue = kpiNumberMatch ? parseInt(kpiNumberMatch[0]) : 100;
+          
+          return (
+          <motion.div key={proj.id} {...risev(i)}>
             <GC style={{ overflow: "hidden" }}>
               <div
                 style={{
                   height: "2px",
-                  background: `linear-gradient(to right, ${proj.accent}, ${proj.accent}44, transparent)`,
+                  background: `linear-gradient(to right, ${accent}, ${accent}44, transparent)`,
                 }}
               />
               <div
@@ -44,12 +50,12 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                     justifyContent: "center",
                     padding: "24px 12px",
                     gap: "6px",
-                    background: `${proj.accent}06`,
+                    background: `${accent}06`,
                   }}
                 >
                   <RingChart
-                    pct={proj.kpi === "PROD" ? 100 : parseInt(proj.kpi)}
-                    color={proj.accent}
+                    pct={kpiValue}
+                    color={accent}
                     size={54}
                     stroke={4}
                   />
@@ -57,25 +63,13 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                     <div
                       style={{
                         fontFamily: "var(--font-mono,monospace)",
-                        fontSize: "12px",
+                        fontSize: "10px",
                         fontWeight: 900,
-                        color: proj.accent,
+                        color: accent,
                         letterSpacing: "-0.03em",
                       }}
                     >
-                      {proj.kpi}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-mono,monospace)",
-                        fontSize: "8px",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "rgba(255,255,255,0.35)",
-                        marginTop: "2px",
-                      }}
-                    >
-                      {proj.kpiSub}
+                      {proj.kpi || "N/A"}
                     </div>
                   </div>
                 </div>
@@ -104,7 +98,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         color: "rgba(255,255,255,0.3)",
                       }}
                     >
-                      {proj.num}
+                      0{proj.id}
                     </span>
                     <span
                       style={{
@@ -113,12 +107,12 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         padding: "2px 8px",
                         borderRadius: "4px",
                         letterSpacing: "0.07em",
-                        background: `${proj.accent}12`,
-                        color: proj.accent,
-                        border: `1px solid ${proj.accent}25`,
+                        background: `${accent}12`,
+                        color: accent,
+                        border: `1px solid ${accent}25`,
                       }}
                     >
-                      {proj.tag}
+                      {proj.status || "Completed"}
                     </span>
                   </div>
                   <h3
@@ -132,6 +126,31 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                   >
                     {proj.title}
                   </h3>
+                  {proj.image && (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        marginBottom: "16px",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                        border: "1px solid rgba(255,255,255,0.05)",
+                      }}
+                    >
+                      <img
+                        src={proj.image}
+                        alt={proj.title}
+                        loading="lazy"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "top", // anchors image to the top
+                          opacity: 0.85,
+                        }}
+                      />
+                    </div>
+                  )}
                   <p
                     style={{
                       fontSize: "13px",
@@ -140,7 +159,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                       margin: "0 0 16px",
                     }}
                   >
-                    {t(proj.de, proj.en)}
+                    {proj.description}
                   </p>
                   <div
                     style={{
@@ -150,13 +169,14 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                     }}
                   >
                     {proj.tech.map((tt) => (
-                      <Pill key={tt} label={tt} color={proj.accent} />
+                      <Pill key={tt} label={tt} color={accent} />
                     ))}
                   </div>
                 </div>
 
-                {/* method + challenge */}
+                {/* method + challenge + solutions */}
                 <div style={{ padding: "26px" }}>
+                  {(proj.methodologies && proj.methodologies.length > 0) && (
                   <div style={{ marginBottom: "22px" }}>
                     <span
                       style={{
@@ -177,7 +197,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         gap: "6px",
                       }}
                     >
-                      {proj.method.map((m) => (
+                      {proj.methodologies.map((m) => (
                         <div
                           key={m}
                           style={{
@@ -206,6 +226,9 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                       ))}
                     </div>
                   </div>
+                  )}
+                  
+                  {(proj.technicalChallenges && proj.technicalChallenges.length > 0) && (
                   <div>
                     <span
                       style={{
@@ -226,7 +249,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         gap: "6px",
                       }}
                     >
-                      {proj.challenge.map((ch) => (
+                      {proj.technicalChallenges.map((ch) => (
                         <div
                           key={ch}
                           style={{
@@ -255,11 +278,13 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                       ))}
                     </div>
                   </div>
+                  )}
                 </div>
               </div>
             </GC>
           </motion.div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

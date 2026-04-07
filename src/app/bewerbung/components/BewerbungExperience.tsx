@@ -25,7 +25,7 @@ export function BewerbungExperience({ lang }: { lang: string }) {
         className="grid-2-1"
       >
         {EXPERIENCES.map((exp, i) => (
-          <motion.div key={exp.company} {...risev(i)}>
+          <motion.div key={exp.id} {...risev(i)}>
             <GC
               style={{
                 padding: "28px",
@@ -128,7 +128,7 @@ export function BewerbungExperience({ lang }: { lang: string }) {
               >
                 {(Array.isArray(exp.highlights)
                   ? exp.highlights
-                  : t(exp.highlights.de as any, exp.highlights.en as any)
+                  : (lang === "de" ? exp.highlights.de : exp.highlights.en)
                 ).map((h: string) => (
                   <li
                     key={h}

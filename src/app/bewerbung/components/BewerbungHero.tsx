@@ -24,7 +24,8 @@ export function BewerbungHero({ lang }: { lang: string }) {
         style={{
           width: "460px",
           flexShrink: 0,
-          position: "sticky",
+          position: "fixed",
+          left: 0,
           top: 0,
           height: "100vh",
           overflow: "hidden",
@@ -146,7 +147,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
         className="hero-content"
         style={{
           flex: 1,
-          padding: "120px 56px 80px",
+          padding: "120px 56px 80px 516px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
