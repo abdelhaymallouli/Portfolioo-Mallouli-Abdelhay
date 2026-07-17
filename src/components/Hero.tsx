@@ -46,11 +46,18 @@ export default function Hero() {
             .
           </h1>
 
-<p className="text-lg md:text-xl text-[var(--muted)] max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed mb-10">
-  I&apos;m{" "}
-  <span className="text-[var(--foreground)] font-bold">{ME.name}</span>
-  , a Full Stack Developer based in Tangier. I bridge the gap between pixel-perfect UI/UX design and robust backend engineering. Backed by <span className="text-[var(--foreground)] font-bold">2 years of hands-on project experience</span>, I specialize in building scalable ecosystems with React, Laravel, and Go—currently engineering at Mooroot and previously developing automation services in Germany.
-</p>
+          <p className="text-lg md:text-xl text-[var(--muted)] max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed mb-10">
+            I&apos;m{" "}
+            <span className="text-[var(--foreground)] font-bold">{ME.name}</span>
+            , a Full Stack Developer based in Tangier. I bridge the gap between
+            pixel-perfect UI/UX design and robust backend engineering. Backed
+            by <span className="text-[var(--foreground)] font-bold">
+              2 years of hands-on project experience
+            </span>
+            , I specialize in building scalable ecosystems with React, Laravel,
+            and Go—currently engineering at Mooroot and previously developing
+            automation services in Germany.
+          </p>
 
           {/* CTA Buttons */}
           <motion.div
