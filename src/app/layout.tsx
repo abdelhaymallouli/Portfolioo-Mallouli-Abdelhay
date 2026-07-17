@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   title: "Abdelhay Mallouli | Full Stack Developer",
   description:
     "Portfolio of Abdelhay Mallouli — Full Stack Developer based in Tangier, Morocco.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: { url: "/favicon.png", sizes: "180x180" },
+  },
   openGraph: {
     title: "Abdelhay Mallouli | Full Stack Developer",
     description: "Full Stack Developer — React, Next.js, Go, Laravel.",

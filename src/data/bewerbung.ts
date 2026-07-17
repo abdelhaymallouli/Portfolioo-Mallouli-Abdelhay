@@ -1,192 +1,347 @@
-export type Lang = "en" | "de";
+import {
+  TrendingUp,
+  Zap,
+  Award,
+  Users,
+  Server,
+  Cloud,
+  Layers,
+  Wrench,
+} from "lucide-react";
 
-export interface CertificateItem {
-  titleDE: string;
-  titleEN: string;
-  descriptionDE: string;
-  descriptionEN: string;
-  typeDE: string;
-  typeEN: string;
-  date: string;
-  file: string;
+export type Color = "#3b82f6" | "#34d399" | "#a78bfa" | "#fbbf24";
+
+export interface StatItem {
+  value: string | number;
+  suffix: string;
+  label: string;
+  color: Color;
+  icon: any;
+  ring: number;
+}
+
+export interface ExperienceItem {
+  id: number;
+  role: string | { de: string; en: string };
+  company: string;
+  location: string;
+  period: string;
+  type: string;
+  color: Color;
+  description?: { de: string; en: string };
+  highlights: string[] | { de: string[]; en: string[] };
+  tech: string[];
+}
+
+export interface ProjectItem {
+  id: number;
+  title: string;
+  description: string;
+  tech: string[];
+  methodologies?: string[];
+  technicalChallenges?: string[];
+  solutions?: string[];
+  link?: string;
+  github?: string;
+  image?: string;
+  status?: string;
+  kpi?: string;
+}
+
+export interface SkillItem {
+  label: string;
+  color: Color;
+  icon: any;
+  star: boolean;
+  items: string[];
+}
+
+export interface CertItem {
   icon: string;
-  color: "blue" | "green" | "purple" | "orange";
-}
-
-export interface VaultItem {
-  titleDE: string;
-  titleEN: string;
-  subtitleDE: string;
-  subtitleEN: string;
+  title: string;
+  type: string;
+  date: string;
+  color: Color;
+  desc: string;
   file: string;
+  image?: string;
 }
 
-export interface BewerbungContent {
-  hero: {
-    greeting: string;
-    pitch: string;
-    cvButton: string;
-    videoAction: string;
-    stats: { value: string; labelDE: string; labelEN: string }[];
-  };
-  motivation: {
-    titleDE: string;
-    titleEN: string;
-    cards: {
-      icon: string;
-      color: "blue" | "purple" | "green" | "orange";
-      titleDE: string;
-      titleEN: string;
-      descDE: string;
-      descEN: string;
-      extra?: "lang" | null;
-    }[];
-  };
-  certificates: {
-    items: CertificateItem[];
-  };
-  vault: {
-    items: VaultItem[];
-  };
+export interface LanguageItem {
+  name: string;
+  lvl: string;
+  pct: number;
+  color: Color;
 }
 
-export const CERTIFICATES: CertificateItem[] = [
+export interface WhyItem {
+  icon: string;
+  color: Color;
+  t: string;
+  de: string;
+  en: string;
+}
+
+export const STATS: StatItem[] = [
   {
-    titleDE: "Full-Stack Diplom · OFPPT Solicode",
-    titleEN: "Full-Stack Diploma · OFPPT Solicode",
-    descriptionDE:
-      "Staatlich anerkanntes Diplom in Web- und Mobile-Entwicklung — 2 Jahre praxisorientierte Ausbildung in Agile, Backend, Frontend & DevOps.",
-    descriptionEN:
-      "State-recognized diploma in Web & Mobile Development — 2 years of hands-on training in Agile, Backend, Frontend & DevOps.",
-    typeDE: "Offizieller Abschluss",
-    typeEN: "Official Degree",
-    date: "2024–2026",
-    file: "/certificates/Certificate_Solicode_Tangier_Redacted.pdf",
+    value: 2,
+    suffix: "+",
+    label: "Jahre\nPraxis",
+    color: "#3b82f6",
+    icon: TrendingUp,
+    ring: 75,
+  },
+  {
+    value: 12,
+    suffix: "+",
+    label: "Live\nProjekte",
+    color: "#34d399",
+    icon: Zap,
+    ring: 90,
+  },
+  {
+    value: 70,
+    suffix: "%",
+    label: "Effizienz\nSteigerung",
+    color: "#a78bfa",
+    icon: Award,
+    ring: 80,
+  },
+  {
+    value: "B1",
+    suffix: "+",
+    label: "Deutsch\n(Prüfung bestanden)",
+    color: "#fbbf24",
+    icon: Users,
+    ring: 70,
+  },
+];
+
+export const EXPERIENCES: ExperienceItem[] = [
+  {
+    id: 1,
+    role: { de: "Praktikant Software-Entwicklung", en: "Software Development Intern" },
+    company: "pragmatic minds GmbH",
+    location: "Kirchheim unter Teck, Deutschland (Remote)",
+    period: "Juli – August 2025",
+    type: "PRAKTIKUM",
+    color: "#a78bfa",
+    description: {
+      de: "Entwicklung produktionsreifer Microservices und HR-Automatisierungstools in einem deutschen Scrum-Team.",
+      en: "Developed production-ready microservices and HR automation tools in a German Scrum team.",
+    },
+    highlights: {
+      de: [
+        "Entwicklung von Moco-bot und AbwesenheitsBot mit Go und Microsoft Graph API (OAuth2)",
+        "Containerisierung aller Dienste mit Docker",
+        "Tägliche Code-Reviews und technische Abstimmungen auf Deutsch",
+        "Integration von Personio- und Outlook-Systemen",
+      ],
+      en: [
+        "Built Moco-bot and AbwesenheitsBot using Go and Microsoft Graph API (OAuth2)",
+        "Containerized services with Docker",
+        "Daily code reviews and technical discussions in German",
+        "Integrated Personio and Outlook systems",
+      ],
+    },
+    tech: ["Go", "Docker", "Microsoft Graph API", "OAuth2", "Mattermost"],
+  },
+  {
+    id: 2,
+    role: { de: "Mobile & Full-Stack Development (Jahr 2)", en: "Mobile & Full-Stack Development (Year 2)" },
+    company: "Solicode",
+    location: "Tanger, Marokko",
+    period: "2025 – 2026",
+    type: "AUSBILDUNG",
+    color: "#3b82f6",
+    description: {
+      de: "Fortgeschrittene Spezialisierung in Enterprise Web- und Mobile-Entwicklung.",
+      en: "Advanced specialization in enterprise web and mobile development.",
+    },
+    highlights: {
+      de: [
+        "Native Android-Apps mit Kotlin und Jetpack Compose",
+        "Komplexe Laravel-Backends mit RESTful APIs",
+        "Docker und Webserver-Administration (Apache, SSL/TLS)",
+        "GitFlow und Scrum in Teamprojekten",
+      ],
+      en: [
+        "Native Android apps with Kotlin and Jetpack Compose",
+        "Complex Laravel backends with RESTful APIs",
+        "Docker and web server administration",
+        "GitFlow and Scrum in team projects",
+      ],
+    },
+    tech: ["Kotlin", "Jetpack Compose", "Laravel", "Docker", "React", "TypeScript"],
+  },
+  {
+    id: 3,
+    role: { de: "Full-Stack Web Development (Jahr 1)", en: "Full-Stack Web Development (Year 1)" },
+    company: "Solicode",
+    location: "Tanger, Marokko",
+    period: "2024 – 2025",
+    type: "AUSBILDUNG",
+    color: "#34d399",
+    description: {
+      de: "Grundlage in moderner Webentwicklung mit Fokus auf PHP, React und Datenbanken.",
+      en: "Foundation in modern web development with focus on PHP, React and databases.",
+    },
+    highlights: {
+      de: [
+        "React-Frontends mit TypeScript und Tailwind CSS",
+        "PHP (OOP) und Laravel Backends",
+        "Datenbankmodellierung (MySQL)",
+        "Agile/Scrum und Git/GitHub",
+      ],
+      en: [
+        "React frontends with TypeScript and Tailwind",
+        "PHP (OOP) and Laravel backends",
+        "Database modeling (MySQL)",
+        "Agile/Scrum and Git/GitHub",
+      ],
+    },
+    tech: ["React", "PHP", "MySQL", "Tailwind CSS", "Figma"],
+  },
+];
+
+export const PROJECTS: ProjectItem[] = [
+ {
+    id: 1,
+    title: "AttendanceFlow AMS",
+    description: "Automatisierung administrativer Workflows mit 70% Zeitersparnis. EdTech-Lösung zur Reduzierung von manuellen 'Paper-to-Laptop'-Prozessen.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL", "Vite", "React"],
+    methodologies: ["Design Thinking", "Agile/Scrum", "MVC"],
+    technicalChallenges: ["70% Zeitverlust durch manuelle Dateneingabe", "Komplexe und variable Workflows"],
+    solutions: ["Modulare Backend-Architektur", "Empathisches und benutzerfreundliches UI"],
+    link: "",
+    github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
+    image: "/screenshots/AttendanceFlow.png",
+    status: "In Development",
+    kpi: "70% Zeitersparnis",
+  },
+  {
+    id: 2,
+    title: "Venuvibe Event Platform",
+    description: "Full-Stack Event-Marktplatz mit automatisierter Buchung und Admin-Panel für Venue-Partner.",
+    tech: ["React", "TypeScript", "PHP", "MySQL", "Vite"],
+    methodologies: ["Component Architecture", "State Management", "Agile"],
+    technicalChallenges: ["Komplexes State-Management", "Sichere Vendor-Dashboards"],
+    solutions: ["Custom React Hooks", "Optimierte MySQL-Abfragen (<100ms)"],
+    link: "https://venuvibe-deploy.vercel.app/",
+    github: "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
+    image: "/screenshots/Venuvibe.png",
+    status: "Live",
+    kpi: "<100ms Query Speed",
+  },
+  {
+    id: 4,
+    title: "Personal Finance Manager",
+    description: "Datengetriebenes Budget-Tracking mit Echtzeit-Dashboard und Chart.js Visualisierung.",
+    tech: ["PHP", "MySQL", "Chart.js", "JavaScript"],
+    methodologies: ["MVC", "Data Visualization"],
+    github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
+    image: "/screenshots/PersonalFinance.png",
+    status: "Abgeschlossen",
+  },
+  {
+    id: 5,
+    title: "WeatherWise",
+    description: "API-Orchestrierung mit externen Wetter-Daten und benutzerfreundlicher Oberfläche.",
+    tech: ["Python", "Requests", "Tkinter", "OOP"],
+    github: "https://github.com/abdelhaymallouli/WeatherWise",
+    image: "/screenshots/WeatherWise.png",
+    status: "Abgeschlossen",
+  },
+];
+
+export const SKILLS: SkillItem[] = [
+  {
+    label: "Backend",
+    color: "#3b82f6",
+    icon: Server,
+    star: true,
+    items: ["Laravel", "Go (Golang)", "PHP (OOP)", "RESTful APIs", "PostgreSQL / MySQL"],
+  },
+  {
+    label: "Frontend & Mobile",
+    color: "#a78bfa",
+    icon: Layers,
+    star: true,
+    items: ["React 19", "Next.js", "TypeScript", "Kotlin + Jetpack Compose", "Tailwind CSS"],
+  },
+  {
+    label: "DevOps & Infrastructure",
+    color: "#34d399",
+    icon: Cloud,
+    star: false,
+    items: ["Docker", "Linux / Apache", "GitFlow", "Cloud Deployment (Linode)", "SSL/TLS"],
+  },
+  {
+    label: "Methoden",
+    color: "#fbbf24",
+    icon: Wrench,
+    star: true,
+    items: ["Agile / Scrum", "Clean Code", "Unit & Integration Testing", "Design Thinking"],
+  },
+];
+
+export const CERTS: CertItem[] = [
+  {
     icon: "🎓",
-    color: "blue",
+    title: "Full-Stack & Mobile Development",
+    type: "Solicode Diplom",
+    date: "2024 – 2026",
+    color: "#3b82f6",
+    desc: "Zweijährige berufsbildende Ausbildung in Full-Stack Web- und Mobile-Entwicklung.",
+    file: "/certificates/Solicode_Diplom.pdf",
   },
   {
-    titleDE: "Deploy Scalable React Web Apps on the Cloud",
-    titleEN: "Deploy Scalable React Web Apps on the Cloud",
-    descriptionDE:
-      "Linode Cloud Platform — Deployment, Skalierung und Verwaltung von React-Applikationen in produktionsnahen Cloud-Umgebungen.",
-    descriptionEN:
-      "Linode Cloud Platform — Deployment, scaling, and management of React apps in production-grade cloud environments.",
-    typeDE: "Cloud Zertifikat · Udemy",
-    typeEN: "Cloud Certificate · Udemy",
-    date: "Sept. 2024",
-    file: "#",
     icon: "☁️",
-    color: "green",
+    title: "Deploy Scalable React Apps on Cloud",
+    type: "Udemy Zertifikat",
+    date: "Sept. 2024",
+    color: "#34d399",
+    desc: "Praktische Cloud-Deployment mit Linode, Apache und Docker.",
+    file: "#",
   },
   {
-    titleDE: "React Complete Developer Course",
-    titleEN: "React Complete Developer Course",
-    descriptionDE:
-      "Hooks, State Management, Context API, Performance-Optimierung und moderne React-Architekturmuster.",
-    descriptionEN:
-      "Hooks, State Management, Context API, performance optimization and modern React architectural patterns.",
-    typeDE: "Frontend Zertifikat · Udemy",
-    typeEN: "Frontend Certificate · Udemy",
-    date: "Aug. 2024",
-    file: "#",
     icon: "⚛️",
-    color: "purple",
-  },
-  {
-    titleDE: "Mastering Selenium Web Automation Essentials",
-    titleEN: "Mastering Selenium Web Automation Essentials",
-    descriptionDE:
-      "End-to-End Test-Automatisierung — Web-Scraping, UI-Testing und automatisierte QA-Workflows mit Selenium.",
-    descriptionEN:
-      "End-to-end test automation — web scraping, UI testing and automated QA workflows with Selenium.",
-    typeDE: "Testing Zertifikat · Udemy",
-    typeEN: "Testing Certificate · Udemy",
-    date: "Juli 2024",
-    file: "#",
-    icon: "🧪",
-    color: "orange",
-  },
-];
-
-export const VAULT_ITEMS: VaultItem[] = [
-  {
-    titleDE: "Lebenslauf / CV",
-    titleEN: "Curriculum Vitae / CV",
-    subtitleDE: "PDF · Aktuell 2025–2026",
-    subtitleEN: "PDF · Current 2025–2026",
-    file: "/cv/Abdelhay_Mallouli_CV.pdf",
-  },
-  {
-    titleDE: "Full-Stack Diplom",
-    titleEN: "Full-Stack Diploma",
-    subtitleDE: "PDF · OFPPT Solicode",
-    subtitleEN: "PDF · OFPPT Solicode",
-    file: "/certificates/Certificate_Solicode_Tangier_Redacted.pdf",
-  },
-  {
-    titleDE: "Udemy Zertifikate (3)",
-    titleEN: "Udemy Certificates (3)",
-    subtitleDE: "PDF · Cloud / React / Testing",
-    subtitleEN: "PDF · Cloud / React / Testing",
+    title: "React Complete Developer Course",
+    type: "Udemy Zertifikat",
+    date: "Aug. 2024",
+    color: "#a78bfa",
+    desc: "Fortgeschrittene React-Entwicklung mit modernen Patterns.",
     file: "#",
   },
 ];
 
-export const MOTIVATION_CARDS = [
-  {
-    icon: "🎯",
-    color: "blue" as const,
-    titleDE: "Lösungsorientiertes Denken",
-    titleEN: "Problem-Solving Mindset",
-    descDE:
-      "Ich schreibe nicht nur Code — ich entwerfe Systeme. Beim AttendanceFlow-Projekt erzielte ich eine 70% Zeitersparnis durch Design Thinking, bevor eine einzige Zeile Code geschrieben wurde.",
-    descEN:
-      "I don't just write code — I design systems. On AttendanceFlow, I achieved 70% time savings by applying Design Thinking before writing a single line of code.",
-    extra: null,
-  },
+export const LANGUAGES: LanguageItem[] = [
+  { name: "Arabisch", lvl: "Muttersprache", pct: 100, color: "#3b82f6" },
+  { name: "Englisch", lvl: "B2 / C1", pct: 85, color: "#34d399" },
+  { name: "Deutsch", lvl: "B1 (B2-Kurs laufend)", pct: 70, color: "#a78bfa" },
+  { name: "Französisch", lvl: "A2", pct: 30, color: "#fbbf24" },
+];
+
+export const WHY: WhyItem[] = [
   {
     icon: "🇩🇪",
-    color: "green" as const,
-    titleDE: "Deutschkenntnisse",
-    titleEN: "German Language Skills",
-    descDE:
-      "Tägliches Lernen auf B1-Niveau, aktiver B2-Intensivkurs. Sprache ist nicht nur ein Zertifikat — es ist mein Werkzeug zur Integration in Ihr Team.",
-    descEN:
-      "Daily practice at B1, active B2 intensive course. Language is not just a certificate — it is my tool for deep integration into your team.",
-    extra: "lang" as const,
+    color: "#3b82f6",
+    t: "Technisches Deutsch",
+    de: "Ich habe mein technisches Deutsch bereits im Praktikum bei einem deutschen Unternehmen täglich angewendet (Code-Reviews, Meetings, Dokumentation).",
+    en: "I already used technical German daily during my internship at a German company.",
   },
   {
-    icon: "💼",
-    color: "purple" as const,
-    titleDE: "Deutsches Scrum-Team Erfahrung",
-    titleEN: "German Scrum Team Experience",
-    descDE:
-      "Praktikum bei pragmatic minds GmbH (Kirchheim u.T.) — Go-Microservices, DSGVO-konforme Bots, Code Reviews und Pull-Request-Zyklen in einem echten deutschen Team.",
-    descEN:
-      "Internship at pragmatic minds GmbH (Kirchheim u.T.) — Go microservices, GDPR-compliant bots, code reviews, and PR cycles in a real German dev team.",
-    extra: null,
+    icon: "🚀",
+    color: "#34d399",
+    t: "Praxis + Theorie",
+    de: "Ich bringe echte Projekterfahrung mit und möchte diese mit einer offiziellen deutschen Ausbildung zum Fachinformatiker kombinieren.",
+    en: "I bring real project experience and want to combine it with a recognized German apprenticeship.",
   },
   {
-    icon: "⚡",
-    color: "orange" as const,
-    titleDE: "Hunger zu Lernen",
-    titleEN: "Drive to Learn",
-    descDE:
-      "In 2 Jahren habe ich Go, Kotlin, Docker, Linux-Administration und Cloud-Deployment selbstständig erlernt — bevor ich ein Praktikum in Deutschland absolviert habe.",
-    descEN:
-      "In 2 years I independently learned Go, Kotlin, Docker, Linux administration and cloud deployment — before completing an internship in Germany.",
-    extra: null,
-  },
-  {
-    icon: "🌍",
-    color: "blue" as const,
-    titleDE: "Interkulturelle Kompetenz",
-    titleEN: "Intercultural Competency",
-    descDE:
-      "Arabisch (Muttersprache), Englisch (B2/C1), Deutsch (B1→B2), Französisch (A2). Gewohnt, in diversen internationalen Teams zu arbeiten.",
-    descEN:
-      "Arabic (native), English (B2/C1), German (B1→B2), French (A2). Experienced working in diverse international teams.",
-    extra: null,
+    icon: "🏠",
+    color: "#a78bfa",
+    t: "Umzugsbereit",
+    de: "Ich bin voll umzugsbereit und werde meinen Lebensmittelpunkt pünktlich zum Ausbildungsstart nach Deutschland verlegen.",
+    en: "I am fully prepared to relocate to Germany for the start of the apprenticeship.",
   },
 ];

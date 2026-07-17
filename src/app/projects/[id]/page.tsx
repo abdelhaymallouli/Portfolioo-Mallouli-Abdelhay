@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -12,6 +11,7 @@ import {
   Wrench,
 } from "lucide-react";
 import type { Metadata } from "next";
+import ProjectShowcase from "@/components/ProjectShowcase";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -39,50 +39,14 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      {/* Hero */}
-      <div className="relative w-full aspect-[21/9] max-h-[520px] overflow-hidden bg-neutral-900">
-        {project.image ? (
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            priority
-            className="object-cover object-top opacity-60"
-            sizes="100vw"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Cpu size={80} strokeWidth={0.8} className="text-white/10" />
-          </div>
-        )}
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-[var(--background)]/40 to-transparent" />
-
-        {/* Back button */}
-        <Link
-          href="/#projects"
-          className="absolute top-8 left-8 flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:border-accent/50 transition-all text-sm font-mono font-bold uppercase tracking-wider z-10"
-        >
-          <ArrowLeft size={14} />
-          Back
-        </Link>
-
-        {/* Status badge */}
-        {project.status && (
-          <div className="absolute top-8 right-8 flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 backdrop-blur-md border border-white/10 z-10">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-            </span>
-            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-white/90">
-              {project.status}
-            </span>
-          </div>
-        )}
-      </div>
+      <ProjectShowcase
+        image={project.image}
+        title={project.title}
+        status={project.status}
+      />
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 pb-32 -mt-16 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 pb-32 relative z-10">
         {/* Title block */}
         <div className="mb-12">
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-4">

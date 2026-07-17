@@ -21,7 +21,7 @@ graph TD
     classDef asset fill:#334155,stroke:#94a3b8,stroke-width:1px,color:#fff
 
     %% Application Core
-    App["Next.js 15 App Router"]:::main
+    App["Next.js 16 App Router"]:::main
 
     %% Routes
     subgraph Routes
@@ -60,17 +60,25 @@ graph TD
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack & Patterns
 
-| Category         | Technology                               |
-| :--------------- | :--------------------------------------- |
-| **Framework**    | Next.js 15 (React 19)                    |
-| **Styling**      | Tailwind CSS (Glassmorphism 2.0)         |
-| **Animations**   | Framer Motion (Scroll-linked & Viewport) |
-| **3D Rendering** | React Three Fiber / Three.js             |
-| **Icons**        | Lucide React                             |
-| **Type Safety**  | TypeScript (Strict Mode)                 |
-| **Deployment**   | Vercel                                   |
+### Core Technologies
+
+| Category         | Technology                         |
+| :--------------- | :--------------------------------- |
+| **Framework**    | Next.js 16 (React 19)              |
+| **Styling**      | Tailwind CSS 4 (Glassmorphism 2.0) |
+| **Animations**   | Framer Motion 12 (Scroll-linked)   |
+| **3D Rendering** | React Three Fiber / Three.js       |
+| **Icons**        | Lucide React                       |
+| **Type Safety**  | TypeScript (Strict Mode)           |
+
+### Modern Patterns
+
+- **React 19 Server Components:** Default for all routes to minimize client-side JS.
+- **Next.js 16 App Router:** Utilizing specialized layouts and loading states.
+- **Glassmorphism 2.0:** Deeply nested backdrop filters combined with CSS variables for dynamic themes.
+- **Performance:** Using `React.memo` and `useMemo` for heavy 3D calculations.
 
 ---
 
@@ -78,24 +86,24 @@ graph TD
 
 ### 1. The "Midnight Pro" UI
 
-- **Glassmorphism:** High-performance backdrop filters on all cards.
-- **Micro-interactions:** Smooth hover effects, glow states, and transition-transparency.
-- **Global 3D Canvas:** A performant 3D environment rendered globally to provide depth.
+- **Dynamic Glow:** Subtle cursor-following or scroll-linked glow effects on containers.
+- **Micro-interactions:** Interactive hover states using Framer Motion's `whileHover`.
+- **Global 3D Canvas:** A performant 3D environment rendered as a background layer.
 
 ### 2. Digital Bewerbungsmappe (`/bewerbung`)
 
-An interactive application folder designed for the German market:
+This is the "Executive Briefing" mode of the portfolio:
 
-- **Candidate Identity:** Bento-grid profiling with direct German connections.
-- **ROI Focus:** Project cards emphasize business value (e.g., "70% Time Saved").
-- **Contextual Translation:** Moroccan diplomas are explained in German equivalent terms to assist HR.
-- **Multilingual:** Seamless toggle between German (DE) and English (EN).
+- **Bento Grid Layout:** Modular information display for certificates, skills, and languages.
+- **Dual-Language Logic:** Content is toggled between German (DE) and English (EN) using local state, with German as the primary target for recruiters.
+- **Technical Briefing Video:** A specialized UI component for video introductions with a terminal-like aesthetic.
+- **ROI-Driven Content:** Focuses on business value, highlighting specific achievements and time savings.
 
 ### 3. Engineering Culture
 
-- **Scrum Focus:** Project descriptions include sprint roadmaps and methodologies.
-- **Tech Prioritization:** Skills are clustered by "DevOps & Infrastructure" and "Backend Architecture".
-- **Documentation:** Built-in Markdown documentation for system architecture.
+- **Clean Code:** Separation of concerns between UI (`components/`) and Content (`data/`).
+- **DevOps Emphasis:** Highlighting Docker, Linux, and CI/CD skills.
+- **Professional Presence:** Integrated CV download and LinkedIn connection.
 
 ---
 
@@ -103,25 +111,24 @@ An interactive application folder designed for the German market:
 
 ```text
 /
-├── public/                 # Static assets (images, pdfs)
+├── public/                 # Static assets (images, pdfs, videos)
 ├── src/
-│   ├── app/                # Routes and Layouts
-│   │   ├── bewerbung/      # Application Folder Route
-│   │   └── projects/       # Detailed Project Pages
-│   ├── components/         # Reusable UI & 3D components
-│   │   ├── 3d/             # Three.js / R3F logic
-│   │   └── ui/             # Atomic UI elements
-│   ├── data/               # The "Source of Truth" for all content
-│   ├── lib/                # Utility functions (cn, etc.)
-│   └── types/              # Global TypeScript interfaces
-├── bewerbung_code.txt      # Reference code for recruiters
-└── project_data.txt        # Full project data snapshot
+│   ├── app/                # Next.js App Router (Routes & Layouts)
+│   │   ├── bewerbung/      # Dedicated recruiter landing page
+│   │   └── globals.css     # Global styles & design system tokens
+│   ├── components/         # Reusable UI components
+│   │   ├── 3d/             # Three.js / R3F scenes
+│   │   ├── ui/             # Reusable UI elements (Buttons, Inputs)
+│   │   └── ui-kit/         # Complex UI molecules (BriefingVideo, etc.)
+│   ├── data/               # The "Source of Truth" (JSON-like TS files)
+│   ├── lib/                # Shared utilities (Tailwind Merge, Helpers)
+│   └── types/              # Global TS interfaces & definitions
 ```
 
 ---
 
 ## 📈 Performance & SEO
 
-- **Image Optimization:** Uses specialized aspect ratios and object-fit for professional results.
-- **Lazy Loading:** 3D components and heavy sections are viewport-triggered.
-- **SEO Ready:** Proper heading hierarchy and semantic HTML for crawlability.
+- **Lighthouse Focus:** Optimized for 100/100 scores in Performance and Accessibility.
+- **Semantic HTML:** Using `<section>`, `<article>`, and proper ARIA labels.
+- **Zero CLS:** Pre-defined aspect ratios for all images and 3D containers.

@@ -1,33 +1,6 @@
 import { Project } from "@/types";
 
 export const projects: Project[] = [
-  // 1. THE FLAGSHIP: This proves you can work in a professional engineering team.
-  {
-    id: 9,
-    title: "Blog Solicode",
-    description:
-      "A centralized content platform solving institutional communication gaps. Engineered with a 7-sprint roadmap, transitioning from a robust Laravel N-Tier back-end to a RESTful API. Developed using Design Thinking to ensure user-centric discovery.",
-    tech: ["Laravel 12", "PHP (OOP)", "MySQL", "Tailwind CSS", "Preline UI"],
-    methodologies: [
-      "Scrum (7-Sprint Roadmap)",
-      "N-Tier Architecture",
-      "GitFlow & PR Peer Review",
-      "UML Modeling (Use Case/Class Diagrams)",
-    ],
-    technicalChallenges: [
-      "Transitioning a robust N-Tier backend to a scalable RESTful API without downtime.",
-      "Coordinating a complex 7-sprint roadmap with multiple stakeholders.",
-    ],
-    solutions: [
-      "Implemented strict API versioning and a decoupled architecture.",
-      "Utilized Design Thinking to prioritize user discovery and align engineering with business goals.",
-    ],
-    link: "https://cobinatori.com/",
-    github: "",
-    image: "/screenshots/BlogSolicode.png",
-    status: "Production - Sprint 1 Complete",
-  },
-
   // 2. THE BUSINESS CASE: This proves you understand ROI (Return on Investment).
   {
     id: 1,
@@ -52,7 +25,7 @@ export const projects: Project[] = [
     link: "",
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
     image: "/screenshots/AttendanceFlow.png",
-    status: "In Development - Sprint 1",
+    status: "",
   },
 
   // 3. THE MODERN FULL-STACK: This checks the React/TypeScript box.
