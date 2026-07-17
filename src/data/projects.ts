@@ -25,7 +25,7 @@ export const projects: Project[] = [
     link: "",
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
     image: "/screenshots/AttendanceFlow.png",
-    status: "In Development - Sprint 1",
+    status: "",
   },
 
   // 3. THE MODERN FULL-STACK: This checks the React/TypeScript box.

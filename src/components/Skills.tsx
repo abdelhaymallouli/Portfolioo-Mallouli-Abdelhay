@@ -1,6 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-import { SKILLS } from "@/data/portfolio";
+import { SKILL_GROUPS, PRACTICES } from "@/data/portfolio";
+
+// Logos that are white / near-white would vanish in light mode — let them
+// inherit the theme foreground color instead of their brand color.
+const THEME_COLORED = new Set(["Next.js", "GitHub"]);
 
 export default function Skills() {
   return (
@@ -12,46 +16,66 @@ export default function Skills() {
         className="mb-16"
       >
         <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-4 font-bold opacity-80">
-          // Technical Stack
+          // Skills
         </h2>
-        <h3 className="text-4xl font-black tracking-tighter">Tools & Technologies</h3>
+        <h3 className="text-4xl font-black tracking-tighter">What I work with</h3>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {SKILLS.map((skill, i) => {
-          const Icon = skill.icon;
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className={`group p-8 rounded-[2.5rem] bg-[var(--card)] border border-[var(--card-border)] flex flex-col justify-between transition-all hover:shadow-2xl hover:shadow-accent/5 ${skill.span}`}
-            >
-              <div>
-                <div className="p-4 bg-slate-100 dark:bg-white/5 rounded-2xl w-fit mb-6 group-hover:bg-accent/10 transition-colors">
-                  <Icon className={`w-6 h-6 ${skill.color}`} />
-                </div>
-                <h3 className="text-2xl font-bold tracking-tight mb-6 text-[var(--foreground)]">
-                  {skill.name}
-                </h3>
-              </div>
+      <div className="space-y-14">
+        {SKILL_GROUPS.map((group) => (
+          <div key={group.category}>
+            <h4 className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--muted)] mb-6 flex items-center gap-3">
+              <span className="h-px w-6 bg-accent/40" />
+              {group.category}
+            </h4>
 
-              <div className="flex flex-wrap gap-2">
-                {skill.items.map((item) => (
-                  <span
-                    key={item}
-                    className="text-[11px] font-bold px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 text-[var(--muted)] uppercase border border-transparent hover:border-accent/30 hover:text-accent transition-all cursor-default"
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {group.items.map((item, i) => {
+                const Icon = item.icon;
+                const themeColored = THEME_COLORED.has(item.name);
+                return (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.04 }}
+                    whileHover={{ y: -4 }}
+                    className="group flex flex-col items-center justify-center gap-3 p-6 rounded-2xl bg-[var(--card)] border border-[var(--card-border)] hover:border-accent/40 transition-colors"
                   >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          );
-        })}
+                    <Icon
+                      size={34}
+                      className={themeColored ? "text-[var(--foreground)]" : ""}
+                      style={themeColored ? undefined : { color: item.color }}
+                      aria-hidden
+                    />
+                    <span className="text-xs font-semibold text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors text-center leading-tight">
+                      {item.name}
+                    </span>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Methodologies / practices — no brand logo, shown as plain tags */}
+      <div className="mt-16">
+        <h4 className="text-xs font-mono uppercase tracking-[0.25em] text-[var(--muted)] mb-6 flex items-center gap-3">
+          <span className="h-px w-6 bg-accent/40" />
+          Practices & Methods
+        </h4>
+        <div className="flex flex-wrap gap-2">
+          {PRACTICES.map((practice) => (
+            <span
+              key={practice}
+              className="text-[11px] font-medium px-4 py-2 rounded-full bg-[var(--card)] border border-[var(--card-border)] text-[var(--muted)]"
+            >
+              {practice}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );

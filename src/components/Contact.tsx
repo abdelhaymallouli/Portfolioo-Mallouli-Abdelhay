@@ -36,10 +36,10 @@ export default function Contact() {
         const result = await emailjs.send(serviceId, templateId, templateParams as Record<string, unknown>, publicKey);
         console.log("EmailJS Success:", result.text);
         if (formRef.current) formRef.current.reset();
-        return { status: "success", message: "Message securely encrypted and sent!" };
+        return { status: "success", message: "Thanks — your message was sent. I'll reply soon." };
       } catch (error: any) {
         console.error("EmailJS Error:", error);
-        return { status: "error", message: "Transmission failed. Please try again." };
+        return { status: "error", message: "Something went wrong. Please email me directly." };
       }
     },
     { status: "idle", message: "" },
@@ -51,14 +51,14 @@ export default function Contact() {
         {/* Contact Info */}
         <div>
           <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-6 font-bold">
-            // Secure Comms Channel
+            // Get in touch
           </h2>
           <h3 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 text-[var(--foreground)] leading-[0.9]">
-            INITIATE <span className="italic opacity-50">CONTACT</span>.
+            Let&apos;s <span className="italic opacity-50">talk</span>.
           </h3>
           <p className="text-[var(--muted)] text-lg mb-12 max-w-md leading-relaxed">
-            Interested in collaboration or just want to say hi? Reach out
-            through the secure form or my professional channels.
+            Whether it&apos;s a job, a freelance project, or just a question —
+            send me a message or reach me directly.
           </p>
 
           <div className="space-y-4">
@@ -67,7 +67,7 @@ export default function Contact() {
                 <Mail size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Direct Email</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">Email</span>
                 <span className="font-mono text-sm group-hover:text-accent transition-colors">{ME.email}</span>
               </div>
             </a>
@@ -77,7 +77,7 @@ export default function Contact() {
                 <Linkedin size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">LinkedIn Network</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">LinkedIn</span>
                 <span className="font-mono text-sm group-hover:text-accent transition-colors">/abdelhaymallouli</span>
               </div>
             </a>
@@ -87,7 +87,7 @@ export default function Contact() {
                 <Github size={22} className="text-accent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">GitHub Archive</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.2em]">GitHub</span>
                 <span className="font-mono text-sm group-hover:text-accent transition-colors">/abdelhaymallouli</span>
               </div>
             </a>
@@ -101,59 +101,62 @@ export default function Contact() {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="space-y-8 glass p-8 md:p-12 rounded-[3rem] border-beam shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden h-fit"
+          className="space-y-6 bg-[var(--card)] border border-[var(--card-border)] p-6 md:p-8 rounded-3xl shadow-sm h-fit"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 blur-3xl rounded-full pointer-events-none" />
-
-          <div className="relative">
-            <input required name="from_name" type="text" placeholder=" "
-              className="w-full bg-transparent border-b-2 border-white/10 py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)] font-mono" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] font-mono tracking-widest transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]">
-              IDENTIFIER (NAME)
+          <div>
+            <label htmlFor="from_name" className="block mb-2 text-sm font-semibold text-[var(--foreground)]">
+              Your name
             </label>
+            <input
+              id="from_name" name="from_name" type="text" required placeholder="John Doe"
+              className="w-full rounded-xl bg-[var(--background)] border border-[var(--card-border)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted)]/60 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/20"
+            />
           </div>
 
-          <div className="relative">
-            <input required name="from_email" type="email" placeholder=" "
-              className="w-full bg-transparent border-b-2 border-white/10 py-4 outline-none focus:border-accent transition-all peer text-[var(--foreground)] font-mono" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] font-mono tracking-widest transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]">
-              RETURN ADDRESS (EMAIL)
+          <div>
+            <label htmlFor="from_email" className="block mb-2 text-sm font-semibold text-[var(--foreground)]">
+              Email
             </label>
+            <input
+              id="from_email" name="from_email" type="email" required placeholder="you@email.com"
+              className="w-full rounded-xl bg-[var(--background)] border border-[var(--card-border)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted)]/60 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/20"
+            />
           </div>
 
-          <div className="relative">
-            <textarea required name="message" placeholder=" " rows={4}
-              className="w-full bg-transparent border-b-2 border-white/10 py-4 outline-none focus:border-accent transition-all peer resize-none text-[var(--foreground)] font-mono" />
-            <label className="absolute left-0 top-4 text-[var(--muted)] font-mono tracking-widest transition-all peer-focus:-top-4 peer-focus:text-[10px] peer-focus:text-accent peer-[:not(:placeholder-shown)]:-top-4 peer-[:not(:placeholder-shown)]:text-[10px]">
-              ENCRYPTED MESSAGE
+          <div>
+            <label htmlFor="message" className="block mb-2 text-sm font-semibold text-[var(--foreground)]">
+              Message
             </label>
+            <textarea
+              id="message" name="message" rows={5} required
+              placeholder="Tell me about your project, role, or question…"
+              className="w-full rounded-xl bg-[var(--background)] border border-[var(--card-border)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted)]/60 outline-none transition-all resize-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+            />
           </div>
 
           <button
             disabled={isPending} type="submit"
-            className="w-full py-5 bg-accent text-white rounded-2xl font-mono text-sm tracking-[0.2em] font-bold uppercase flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(59,130,246,0.5)] hover:brightness-110 disabled:opacity-50 transition-all active:scale-[0.98]"
+            className="w-full py-4 bg-accent text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:brightness-110 disabled:opacity-50 transition-all active:scale-[0.98]"
           >
             {isPending ? (
-              <Loader2 className="animate-spin" />
+              <Loader2 size={18} className="animate-spin" />
             ) : state.status === "success" ? (
-              <span className="flex items-center gap-2"><Send size={16} /> TRANSMITTED</span>
+              <><Send size={16} /> Sent!</>
             ) : (
-              <span className="flex items-center gap-2"><Send size={16} /> INITIALIZE TRANSMISSION</span>
+              <><Send size={16} /> Send message</>
             )}
           </button>
 
           {state.status === "error" && (
-            <p className="text-red-400 text-[10px] font-mono flex items-center justify-center gap-2 uppercase tracking-widest">
-              <AlertCircle size={14} /> {state.message}
+            <p className="text-red-500 text-sm flex items-center gap-2">
+              <AlertCircle size={16} className="shrink-0" /> {state.message}
             </p>
           )}
           {state.status === "success" && (
-            <p className="text-emerald-400 text-[10px] font-mono flex items-center justify-center gap-2 uppercase tracking-widest">
-              <Send size={14} /> {state.message}
+            <p className="text-emerald-500 text-sm flex items-center gap-2">
+              <Send size={16} className="shrink-0" /> {state.message}
             </p>
           )}
-
-          <div className="beam" />
         </motion.form>
       </div>
     </section>

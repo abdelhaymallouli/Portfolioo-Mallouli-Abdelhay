@@ -37,7 +37,7 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="max-w-7xl mx-auto px-6 py-24">
       <h2 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-12 font-bold opacity-80">
-        // Professional Journey
+        // Experience
       </h2>
 
       {/* Timeline */}
@@ -76,7 +76,7 @@ export default function ExperienceSection() {
                 onClick={() => setSelectedExp(exp as any)}
                 className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:brightness-125 transition-colors group/btn"
               >
-                [ Access Records ]{" "}
+                View details{" "}
                 <ChevronRight
                   size={14}
                   className="group-hover/btn:translate-x-1 transition-transform"
@@ -91,7 +91,7 @@ export default function ExperienceSection() {
       <div className="mt-32">
         <h3 className="text-sm font-mono text-accent uppercase tracking-[0.3em] mb-12 font-bold opacity-80 flex items-center gap-4">
           <span className="h-px w-8 bg-accent/30" />
-          // Technical Specializations
+          // Certifications
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -196,7 +196,7 @@ export default function ExperienceSection() {
                           </div>
                           <div>
                             <p className="text-[10px] font-black uppercase tracking-widest opacity-40">
-                              Verified Credential
+                              Certificate
                             </p>
                             <p className="text-sm font-bold leading-tight">
                               {selectedExp.certificate.name}

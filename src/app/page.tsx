@@ -27,7 +27,7 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden">
       <Navbar />
       <Hero />
-      
+
       {/* Work Section */}
       <section id="projects" className="max-w-7xl mx-auto px-6 py-24">
         {/* Section Header */}
@@ -37,7 +37,7 @@ export default function Home() {
               // Selected Work
             </h2>
             <h3 className="text-4xl font-black tracking-tighter">
-              Featured Projects 
+              Things I&apos;ve built
               <span className="text-[var(--muted)] text-xl font-normal ml-3 opacity-40">
                 ({projects.length})
               </span>
@@ -54,7 +54,7 @@ export default function Home() {
         </div>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <AnimatePresence mode="popLayout">
             {visibleProjects.map((p, index) => (
               <motion.div 
