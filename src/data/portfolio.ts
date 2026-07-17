@@ -40,7 +40,7 @@ export const STATUS = {
 
 // Chiffres logiques, concrets et percutants pour ton profil
 export const STATS = [
-  { value: "1st", label: "Regional Hackathon Winner (OFPPT 2026)" },
+  { value: "1st", label: "Regional Hackathon Winner" },
   { value: "10+", label: "Full-Stack Projects Shipped" },
   { value: "100%", label: "SOLID & Test-Driven Development (TDD)" },
 ];
