@@ -31,6 +31,22 @@ export const ME = {
   email: "abdelhay.mallouli@gmail.com",
   linkedin: "https://www.linkedin.com/in/abdelhaymallouli/",
   github: "https://github.com/abdelhaymallouli",
+  // Value-driven hero headline (two lines) + supporting identity line.
+  headline: ["I build products", "people actually use."],
+  tagline: "Full Stack Developer · React · Laravel · Go",
+  bio: "I'm Abdelhay, a full-stack developer based in Tangier. I bridge pixel-perfect UI/UX and robust backend engineering — turning complex ideas into scalable products people enjoy using. Backed by 2 years of hands-on experience, currently engineering at Mooroot after building automation services in Germany.",
+};
+
+// About / "How I work" — one storytelling section, data-driven.
+export const ABOUT = {
+  mindset:
+    "I care about the whole product, not just the code. Before writing a line, I dig into the problem and the person who has it — then design the simplest architecture that solves it well and ships fast. Clean, tested, maintainable code is the baseline, not the goal.",
+  process: [
+    { step: "Discover", desc: "Understand the real problem and the people behind it." },
+    { step: "Design", desc: "Shape the UX and architecture before building." },
+    { step: "Build", desc: "Ship clean, SOLID, test-driven code, iteratively." },
+    { step: "Deliver", desc: "Deploy, measure, and refine what actually matters." },
+  ],
 };
 
 export const STATUS = {

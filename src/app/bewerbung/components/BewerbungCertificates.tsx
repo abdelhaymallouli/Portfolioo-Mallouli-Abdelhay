@@ -16,7 +16,7 @@ export function BewerbungCertificates({ lang }: { lang: string }) {
           num="06"
           title={
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <Folder size={18} style={{ color: "#3b82f6" }} />
+              <Folder size={18} style={{ color: "#c9a227" }} />
               <span>
                 {t("Zertifikate & Abschlüsse", "Certificates & Degrees")}
               </span>
@@ -32,15 +32,15 @@ export function BewerbungCertificates({ lang }: { lang: string }) {
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          background: "rgba(59,130,246,0.08)",
-          border: "1px solid rgba(59,130,246,0.15)",
+          background: "rgba(201,162,39,0.08)",
+          border: "1px solid rgba(201,162,39,0.15)",
           borderBottom: "none",
           borderRadius: "8px 8px 0 0",
           padding: "8px 14px",
           width: "fit-content",
           fontFamily: "var(--font-mono,monospace)",
           fontSize: "9px",
-          color: "#3b82f6",
+          color: "#c9a227",
           letterSpacing: "0.1em",
           zIndex: 1,
           position: "relative",

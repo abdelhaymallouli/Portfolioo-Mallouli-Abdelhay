@@ -80,7 +80,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
               fontSize: "9px",
               letterSpacing: "0.22em",
               textTransform: "uppercase",
-              color: "#3b82f6",
+              color: "#c9a227",
               display: "block",
               marginBottom: "10px",
             }}
@@ -125,7 +125,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
                 key={`${v}-${idx}`}
                 style={{ display: "flex", alignItems: "center", gap: "8px" }}
               >
-                <Icon size={11} style={{ color: "#3b82f6", flexShrink: 0 }} />
+                <Icon size={11} style={{ color: "#c9a227", flexShrink: 0 }} />
                 <span
                   style={{
                     fontFamily: "var(--font-mono,monospace)",
@@ -174,7 +174,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
                 border: "1px solid rgba(255,255,255,0.08)",
                 position: "relative",
                 boxShadow:
-                  "0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(59,130,246,0.1)",
+                  "0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(201,162,39,0.1)",
               }}
             >
               <img
@@ -216,8 +216,8 @@ export function BewerbungHero({ lang }: { lang: string }) {
                     width: "6px",
                     height: "6px",
                     borderRadius: "50%",
-                    background: "#34d399",
-                    boxShadow: "0 0 8px #34d399",
+                    background: "#10b981",
+                    boxShadow: "0 0 8px #10b981",
                   }}
                 />
                 <span
@@ -265,8 +265,8 @@ export function BewerbungHero({ lang }: { lang: string }) {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "rgba(59,130,246,0.08)",
-              border: "1px solid rgba(59,130,246,0.22)",
+              background: "rgba(201,162,39,0.08)",
+              border: "1px solid rgba(201,162,39,0.22)",
               borderRadius: "6px",
               padding: "6px 14px",
               marginBottom: "36px",
@@ -274,7 +274,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
               fontSize: "10px",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#3b82f6",
+              color: "#c9a227",
             }}
           >
             <span
@@ -282,7 +282,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
                 width: "4px",
                 height: "4px",
                 borderRadius: "50%",
-                background: "#3b82f6",
+                background: "#c9a227",
                 display: "inline-block",
               }}
             />
@@ -316,19 +316,19 @@ export function BewerbungHero({ lang }: { lang: string }) {
           >
             {lang === "de" ? (
               <>
-                <span style={{ color: "#3b82f6" }}>Architektur</span> denken,
+                <span style={{ color: "#c9a227" }}>Architektur</span> denken,
                 <br />
-                <span style={{ color: "#a78bfa" }}>Lösungen</span> finden,
+                <span style={{ color: "#a1a1aa" }}>Lösungen</span> finden,
                 <br />
-                <span style={{ color: "#34d399" }}>Teamarbeit</span> leben.
+                <span style={{ color: "#10b981" }}>Teamarbeit</span> leben.
               </>
             ) : (
               <>
-                <span style={{ color: "#3b82f6" }}>Architecture</span> first,
+                <span style={{ color: "#c9a227" }}>Architecture</span> first,
                 <br />
-                <span style={{ color: "#a78bfa" }}>Solutions</span> found,
+                <span style={{ color: "#a1a1aa" }}>Solutions</span> found,
                 <br />
-                <span style={{ color: "#34d399" }}>Teamwork</span> driven.
+                <span style={{ color: "#10b981" }}>Teamwork</span> driven.
               </>
             )}
           </h2>
@@ -346,7 +346,7 @@ export function BewerbungHero({ lang }: { lang: string }) {
               background: "rgba(15,23,42,0.65)",
               backdropFilter: "blur(20px) saturate(1.8)",
               border: "1px solid rgba(255,255,255,0.07)",
-              borderLeft: "3px solid #3b82f6",
+              borderLeft: "3px solid #c9a227",
               borderRadius: "0 14px 14px 0",
             }}
           >
@@ -370,10 +370,10 @@ export function BewerbungHero({ lang }: { lang: string }) {
                   digitale Infrastrukturen. Mit zwei Jahren intensiver Praxis
                   bei Solicode und Praxiserfahrung aus der Remote-Zusammenarbeit
                   tiefes Verständnis für{" "}
-                  <strong style={{ color: "#3b82f6" }}>
+                  <strong style={{ color: "#c9a227" }}>
                     Teamarbeit
                   </strong> und{" "}
-                  <strong style={{ color: "#a78bfa" }}>
+                  <strong style={{ color: "#a1a1aa" }}>
                     lösungsorientiertes Denken
                   </strong>{" "}
                   mit. Mein Ziel: Als angehender Fachinformatiker Ihre
@@ -392,10 +392,10 @@ export function BewerbungHero({ lang }: { lang: string }) {
                   Solicode and practical experience from remote collaboration
                   during my internship at pragmatic minds, I bring a deep
                   understanding of{" "}
-                  <strong style={{ color: "#3b82f6" }}>
+                  <strong style={{ color: "#c9a227" }}>
                     teamwork
                   </strong> and{" "}
-                  <strong style={{ color: "#a78bfa" }}>
+                  <strong style={{ color: "#a1a1aa" }}>
                     solution-oriented thinking
                   </strong>
                   . My goal: To strengthen your system landscape with precision
@@ -515,13 +515,13 @@ export function BewerbungHero({ lang }: { lang: string }) {
               gap: "8px",
               padding: "12px 24px",
               borderRadius: "10px",
-              background: "#3b82f6",
+              background: "#c9a227",
               color: "white",
               fontWeight: 700,
               fontSize: "13px",
               textDecoration: "none",
               boxShadow:
-                "0 0 30px rgba(59,130,246,0.28), 0 0 60px rgba(59,130,246,0.08)",
+                "0 0 30px rgba(201,162,39,0.28), 0 0 60px rgba(201,162,39,0.08)",
               letterSpacing: "-0.01em",
             }}
           >

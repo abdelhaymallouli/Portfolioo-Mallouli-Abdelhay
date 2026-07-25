@@ -75,10 +75,10 @@ export default function BewerbungContent() {
             boxShadow: isScrolled ? "0 4px 20px rgba(0,0,0,0.3)" : "none",
             transition: "all 0.3s ease",
           }}
-          whileHover={{ scale: 1.05, background: "rgba(59, 130, 246, 0.15)" }}
+          whileHover={{ scale: 1.05, background: "rgba(201,162,39, 0.15)" }}
           whileTap={{ scale: 0.95 }}
         >
-          <LangIcon size={14} style={{ color: "#3b82f6" }} />
+          <LangIcon size={14} style={{ color: "#c9a227" }} />
           <span style={{ opacity: lang === "de" ? 1 : 0.4 }}>DE</span>
           <span style={{ opacity: 0.2 }}>/</span>
           <span style={{ opacity: lang === "en" ? 1 : 0.4 }}>EN</span>

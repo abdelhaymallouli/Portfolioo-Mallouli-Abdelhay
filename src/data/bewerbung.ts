@@ -9,7 +9,7 @@ import {
   Wrench,
 } from "lucide-react";
 
-export type Color = "#3b82f6" | "#34d399" | "#a78bfa" | "#fbbf24";
+export type Color = "#c9a227" | "#10b981" | "#a1a1aa" | "#fbbf24";
 
 export interface StatItem {
   value: string | number;
@@ -87,7 +87,7 @@ export const STATS: StatItem[] = [
     value: 2,
     suffix: "+",
     label: "Jahre\nPraxis",
-    color: "#3b82f6",
+    color: "#c9a227",
     icon: TrendingUp,
     ring: 75,
   },
@@ -95,7 +95,7 @@ export const STATS: StatItem[] = [
     value: 12,
     suffix: "+",
     label: "Live\nProjekte",
-    color: "#34d399",
+    color: "#10b981",
     icon: Zap,
     ring: 90,
   },
@@ -103,7 +103,7 @@ export const STATS: StatItem[] = [
     value: 70,
     suffix: "%",
     label: "Effizienz\nSteigerung",
-    color: "#a78bfa",
+    color: "#a1a1aa",
     icon: Award,
     ring: 80,
   },
@@ -125,7 +125,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     location: "Kirchheim unter Teck, Deutschland (Remote)",
     period: "Juli – August 2025",
     type: "PRAKTIKUM",
-    color: "#a78bfa",
+    color: "#a1a1aa",
     description: {
       de: "Entwicklung produktionsreifer Microservices und HR-Automatisierungstools in einem deutschen Scrum-Team.",
       en: "Developed production-ready microservices and HR automation tools in a German Scrum team.",
@@ -153,7 +153,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     location: "Tanger, Marokko",
     period: "2025 – 2026",
     type: "AUSBILDUNG",
-    color: "#3b82f6",
+    color: "#c9a227",
     description: {
       de: "Fortgeschrittene Spezialisierung in Enterprise Web- und Mobile-Entwicklung.",
       en: "Advanced specialization in enterprise web and mobile development.",
@@ -181,7 +181,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     location: "Tanger, Marokko",
     period: "2024 – 2025",
     type: "AUSBILDUNG",
-    color: "#34d399",
+    color: "#10b981",
     description: {
       de: "Grundlage in moderner Webentwicklung mit Fokus auf PHP, React und Datenbanken.",
       en: "Foundation in modern web development with focus on PHP, React and databases.",
@@ -215,7 +215,7 @@ export const PROJECTS: ProjectItem[] = [
     solutions: ["Modulare Backend-Architektur", "Empathisches und benutzerfreundliches UI"],
     link: "",
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
-    image: "/screenshots/AttendanceFlow.png",
+    image: "/screenshots/AttendanceFlow.webp",
     status: "In Development",
     kpi: "70% Zeitersparnis",
   },
@@ -229,7 +229,7 @@ export const PROJECTS: ProjectItem[] = [
     solutions: ["Custom React Hooks", "Optimierte MySQL-Abfragen (<100ms)"],
     link: "https://venuvibe-deploy.vercel.app/",
     github: "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
-    image: "/screenshots/Venuvibe.png",
+    image: "/screenshots/Venuvibe.webp",
     status: "Live",
     kpi: "<100ms Query Speed",
   },
@@ -240,7 +240,7 @@ export const PROJECTS: ProjectItem[] = [
     tech: ["PHP", "MySQL", "Chart.js", "JavaScript"],
     methodologies: ["MVC", "Data Visualization"],
     github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
-    image: "/screenshots/PersonalFinance.png",
+    image: "/screenshots/PersonalFinance.webp",
     status: "Abgeschlossen",
   },
   {
@@ -249,7 +249,7 @@ export const PROJECTS: ProjectItem[] = [
     description: "API-Orchestrierung mit externen Wetter-Daten und benutzerfreundlicher Oberfläche.",
     tech: ["Python", "Requests", "Tkinter", "OOP"],
     github: "https://github.com/abdelhaymallouli/WeatherWise",
-    image: "/screenshots/WeatherWise.png",
+    image: "/screenshots/WeatherWise.webp",
     status: "Abgeschlossen",
   },
 ];
@@ -257,21 +257,21 @@ export const PROJECTS: ProjectItem[] = [
 export const SKILLS: SkillItem[] = [
   {
     label: "Backend",
-    color: "#3b82f6",
+    color: "#c9a227",
     icon: Server,
     star: true,
     items: ["Laravel", "Go (Golang)", "PHP (OOP)", "RESTful APIs", "PostgreSQL / MySQL"],
   },
   {
     label: "Frontend & Mobile",
-    color: "#a78bfa",
+    color: "#a1a1aa",
     icon: Layers,
     star: true,
     items: ["React 19", "Next.js", "TypeScript", "Kotlin + Jetpack Compose", "Tailwind CSS"],
   },
   {
     label: "DevOps & Infrastructure",
-    color: "#34d399",
+    color: "#10b981",
     icon: Cloud,
     star: false,
     items: ["Docker", "Linux / Apache", "GitFlow", "Cloud Deployment (Linode)", "SSL/TLS"],
@@ -291,7 +291,7 @@ export const CERTS: CertItem[] = [
     title: "Full-Stack & Mobile Development",
     type: "Solicode Diplom",
     date: "2024 – 2026",
-    color: "#3b82f6",
+    color: "#c9a227",
     desc: "Zweijährige berufsbildende Ausbildung in Full-Stack Web- und Mobile-Entwicklung.",
     file: "/certificates/Solicode_Diplom.pdf",
   },
@@ -300,7 +300,7 @@ export const CERTS: CertItem[] = [
     title: "Deploy Scalable React Apps on Cloud",
     type: "Udemy Zertifikat",
     date: "Sept. 2024",
-    color: "#34d399",
+    color: "#10b981",
     desc: "Praktische Cloud-Deployment mit Linode, Apache und Docker.",
     file: "#",
   },
@@ -309,37 +309,37 @@ export const CERTS: CertItem[] = [
     title: "React Complete Developer Course",
     type: "Udemy Zertifikat",
     date: "Aug. 2024",
-    color: "#a78bfa",
+    color: "#a1a1aa",
     desc: "Fortgeschrittene React-Entwicklung mit modernen Patterns.",
     file: "#",
   },
 ];
 
 export const LANGUAGES: LanguageItem[] = [
-  { name: "Arabisch", lvl: "Muttersprache", pct: 100, color: "#3b82f6" },
-  { name: "Englisch", lvl: "B2 / C1", pct: 85, color: "#34d399" },
-  { name: "Deutsch", lvl: "B1 (B2-Kurs laufend)", pct: 70, color: "#a78bfa" },
+  { name: "Arabisch", lvl: "Muttersprache", pct: 100, color: "#c9a227" },
+  { name: "Englisch", lvl: "B2 / C1", pct: 85, color: "#10b981" },
+  { name: "Deutsch", lvl: "B1 (B2-Kurs laufend)", pct: 70, color: "#a1a1aa" },
   { name: "Französisch", lvl: "A2", pct: 30, color: "#fbbf24" },
 ];
 
 export const WHY: WhyItem[] = [
   {
     icon: "🇩🇪",
-    color: "#3b82f6",
+    color: "#c9a227",
     t: "Technisches Deutsch",
     de: "Ich habe mein technisches Deutsch bereits im Praktikum bei einem deutschen Unternehmen täglich angewendet (Code-Reviews, Meetings, Dokumentation).",
     en: "I already used technical German daily during my internship at a German company.",
   },
   {
     icon: "🚀",
-    color: "#34d399",
+    color: "#10b981",
     t: "Praxis + Theorie",
     de: "Ich bringe echte Projekterfahrung mit und möchte diese mit einer offiziellen deutschen Ausbildung zum Fachinformatiker kombinieren.",
     en: "I bring real project experience and want to combine it with a recognized German apprenticeship.",
   },
   {
     icon: "🏠",
-    color: "#a78bfa",
+    color: "#a1a1aa",
     t: "Umzugsbereit",
     de: "Ich bin voll umzugsbereit und werde meinen Lebensmittelpunkt pünktlich zum Ausbildungsstart nach Deutschland verlegen.",
     en: "I am fully prepared to relocate to Germany for the start of the apprenticeship.",

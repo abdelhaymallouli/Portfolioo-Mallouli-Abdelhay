@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "about": "Über mich",
+    "work": "Projekte",
+    "skills": "Fähigkeiten",
+    "experience": "Erfahrung",
+    "contact": "Kontakt",
+    "resume": "Lebenslauf"
+  },
+  "sections": {
+    "selectedWork": "Ausgewählte Projekte",
+    "thingsIveBuilt": "Was ich gebaut habe",
+    "fullArchive": "Vollständiges Archiv",
+    "loadMore": "Mehr Projekte laden",
+    "showing": "{count} von {total} Repositories",
+    "companies": "Unternehmen, mit denen ich gearbeitet habe",
+    "process": "Engineering-Prozess",
+    "expertise": "Technische Expertise",
+    "openSource": "Open Source",
+    "certifications": "Zertifikate",
+    "education": "Ausbildung",
+    "testimonials": "Referenzen",
+    "blog": "Artikel",
+    "now": "Aktuell",
+    "toolbox": "Werkzeuge",
+    "achievements": "In Zahlen",
+    "caseStudy": "Fallstudie",
+    "comingSoon": "Demnächst"
+  },
+  "contact": {
+    "title": "Lass uns etwas bauen",
+    "cta": "Kontakt aufnehmen"
+  },
+  "seo": {
+    "title": "Abdelhay Mallouli — Software-Ingenieur & Product Builder",
+    "description": "Software-Ingenieur, Product Builder und KI-Entwickler mit Sitz in Tanger. Ich entwerfe und entwickle skalierbare digitale Produkte — von intuitiven Oberflächen bis zu robusten Backends."
+  }
+}

@@ -1,18 +1,49 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { ME, STATUS, STATS } from "@/data/portfolio";
 import dynamic from "next/dynamic";
+import { useEffect, useRef } from "react";
 
 const Hero3D = dynamic(() => import("@/components/3d/Hero3D"), {
   ssr: false,
 });
 
 export default function Hero() {
+  // Cursor-following radial light (throttled via rAF; disabled under reduced-motion).
+  const mx = useMotionValue(50);
+  const my = useMotionValue(50);
+  const glow = useMotionTemplate`radial-gradient(600px circle at ${mx}% ${my}%, rgba(201,162,39,0.10), transparent 70%)`;
+  const frame = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const onMove = (e: MouseEvent) => {
+      if (frame.current) return;
+      frame.current = requestAnimationFrame(() => {
+        mx.set((e.clientX / window.innerWidth) * 100);
+        my.set((e.clientY / window.innerHeight) * 100);
+        frame.current = null;
+      });
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      if (frame.current) cancelAnimationFrame(frame.current);
+    };
+  }, [mx, my]);
+
   return (
     <section className="relative min-h-[100dvh] pt-40 pb-16 px-6 overflow-hidden flex items-center">
       <Hero3D />
+
+      {/* Cursor-following light */}
+      <motion.div
+        aria-hidden
+        style={{ background: glow }}
+        className="pointer-events-none absolute inset-0 -z-10"
+      />
 
       {/* Dynamic Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-accent/15 dark:bg-accent/5 rounded-full blur-[120px] -z-10" />
@@ -38,25 +69,17 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter mb-8 leading-[0.85] text-[var(--foreground)] uppercase">
-            FULL STACK <br />
+          <h1 className="text-5xl md:text-7xl xl:text-8xl font-black tracking-tighter mb-6 leading-[0.9] text-[var(--foreground)]">
+            {ME.headline[0]} <br />
             <span className="text-accent italic font-light drop-shadow-sm">
-              DEVELOPER
+              {ME.headline[1]}
             </span>
-            .
           </h1>
 
+          <p className="label-mono text-accent mb-8">{ME.tagline}</p>
+
           <p className="text-lg md:text-xl text-[var(--muted)] max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed mb-10">
-            I&apos;m{" "}
-            <span className="text-[var(--foreground)] font-bold">{ME.name}</span>
-            , a Full Stack Developer based in Tangier. I bridge the gap between
-            pixel-perfect UI/UX design and robust backend engineering. Backed
-            by <span className="text-[var(--foreground)] font-bold">
-              2 years of hands-on project experience
-            </span>
-            , I specialize in building scalable ecosystems with React, Laravel,
-            and Go—currently engineering at Mooroot and previously developing
-            automation services in Germany.
+            {ME.bio}
           </p>
 
           {/* CTA Buttons */}
@@ -72,7 +95,7 @@ export default function Hero() {
                   .getElementById("projects")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="group flex items-center gap-2 px-8 py-4 bg-accent text-white rounded-2xl font-mono text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-[0.98]"
+              className="group flex items-center gap-2 px-8 py-4 bg-accent text-white rounded-2xl font-mono text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(201,162,39,0.4)] active:scale-[0.98]"
             >
               View Projects
               <ArrowRight

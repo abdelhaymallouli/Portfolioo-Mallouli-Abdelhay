@@ -38,19 +38,19 @@ export function BewerbungVault({ lang }: { lang: string }) {
             label: t("Lebenslauf / CV", "Curriculum Vitae"),
             sub: "PDF · 2025–2026",
             file: "/cv/Abdelhay_Mallouli_CV.pdf",
-            color: "#3b82f6",
+            color: "#c9a227",
           },
           {
             label: t("Web Developer Zertifikat", "Web Developer Certificate"),
             sub: "PDF · 2024–2025",
             file: "/certificates/Web_Developer_Certificate.pdf",
-            color: "#3b82f6",
+            color: "#c9a227",
           },
           {
             label: t("Udemy Zertifikate", "Udemy Certificates"),
             sub: "PDF · Cloud/React/QA",
             file: "#",
-            color: "#34d399",
+            color: "#10b981",
           },
         ].map((item) => (
           <a
@@ -158,7 +158,7 @@ export function BewerbungVault({ lang }: { lang: string }) {
               gap: "7px",
               padding: primary ? "11px 22px" : "10px 17px",
               borderRadius: "10px",
-              background: primary ? "#3b82f6" : "rgba(255,255,255,0.032)",
+              background: primary ? "#c9a227" : "rgba(255,255,255,0.032)",
               backdropFilter: primary ? "none" : "blur(20px) saturate(1.8)",
               border: primary ? "none" : "1px solid rgba(255,255,255,0.07)",
               color: primary ? "white" : "rgba(255,255,255,0.5)",
@@ -166,7 +166,7 @@ export function BewerbungVault({ lang }: { lang: string }) {
               fontSize: "12px",
               textDecoration: "none",
               boxShadow: primary
-                ? "0 0 28px rgba(59,130,246,0.3), 0 0 60px rgba(59,130,246,0.08)"
+                ? "0 0 28px rgba(201,162,39,0.3), 0 0 60px rgba(201,162,39,0.08)"
                 : "none",
               letterSpacing: "-0.01em",
             }}

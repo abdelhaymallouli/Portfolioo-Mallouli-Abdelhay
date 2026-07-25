@@ -42,7 +42,7 @@ const DustParticles = () => {
       <pointsMaterial
         ref={matRef}
         size={0.03}
-        color="#6366f1"
+        color="#c9a227"
         transparent
         opacity={0.3}
         sizeAttenuation

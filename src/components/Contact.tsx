@@ -136,7 +136,7 @@ export default function Contact() {
 
           <button
             disabled={isPending} type="submit"
-            className="w-full py-4 bg-accent text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:brightness-110 disabled:opacity-50 transition-all active:scale-[0.98]"
+            className="w-full py-4 bg-accent text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(201,162,39,0.4)] hover:brightness-110 disabled:opacity-50 transition-all active:scale-[0.98]"
           >
             {isPending ? (
               <Loader2 size={18} className="animate-spin" />

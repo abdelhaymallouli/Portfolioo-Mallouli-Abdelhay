@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "about": "About",
+    "work": "Work",
+    "skills": "Skills",
+    "experience": "Experience",
+    "contact": "Contact",
+    "resume": "Résumé"
+  },
+  "sections": {
+    "selectedWork": "Selected Work",
+    "thingsIveBuilt": "Things I've built",
+    "fullArchive": "Full Archive",
+    "loadMore": "Load More Projects",
+    "showing": "Showing {count} of {total} Repositories",
+    "companies": "Companies I've worked with",
+    "process": "Engineering Process",
+    "expertise": "Technical Expertise",
+    "openSource": "Open Source",
+    "certifications": "Certifications",
+    "education": "Education",
+    "testimonials": "Testimonials",
+    "blog": "Writing",
+    "now": "Now",
+    "toolbox": "Toolbox",
+    "achievements": "By the numbers",
+    "caseStudy": "Featured Case Study",
+    "comingSoon": "Coming soon"
+  },
+  "contact": {
+    "title": "Let's build something",
+    "cta": "Get in touch"
+  },
+  "seo": {
+    "title": "Abdelhay Mallouli — Software Engineer & Product Builder",
+    "description": "Software Engineer, Product Builder and AI Developer based in Tangier. I design, architect and build scalable digital products — from intuitive interfaces to robust backends."
+  }
+}

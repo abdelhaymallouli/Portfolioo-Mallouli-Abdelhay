@@ -3,7 +3,9 @@ import { useTheme } from "next-themes";
 import { Sun, Moon, Home, Briefcase, Mail, Code2 } from "lucide-react";
 import { useEffect, useState, memo, useCallback } from "react";
 import { ME } from "@/data/portfolio";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { motion } from "framer-motion";
 
 // Fix #13 — scroll spy hook to track active section
@@ -70,6 +72,7 @@ const NavbarContent = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const activeSection = useActiveSection(SECTIONS);
+  const t = useTranslations("nav");
 
   useEffect(() => setMounted(true), []);
 
@@ -92,10 +95,12 @@ const NavbarContent = () => {
 
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-6">
-              <NavItem href="/#projects"    icon={Code2}     label="Projects"   active={activeSection === "projects"} />
-              <NavItem href="/#experience"  icon={Briefcase} label="Experience" active={activeSection === "experience"} />
-              <NavItem href="/#contact"     icon={Mail}      label="Contact"    active={activeSection === "contact"} />
+              <NavItem href="/#projects"    icon={Code2}     label={t("work")}       active={activeSection === "projects"} />
+              <NavItem href="/#experience"  icon={Briefcase} label={t("experience")} active={activeSection === "experience"} />
+              <NavItem href="/#contact"     icon={Mail}      label={t("contact")}    active={activeSection === "contact"} />
             </div>
+
+            <LanguageSwitcher />
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -121,8 +126,8 @@ const NavbarContent = () => {
           className="flex items-center justify-between px-6 py-3 bg-[var(--card)]/90 backdrop-blur-2xl border border-[var(--card-border)] rounded-full shadow-2xl pointer-events-auto"
         >
           <NavItem href="/" icon={Home} label="Home" mobileOnly />
-          <NavItem href="/#projects"   icon={Code2}     label="Work"   active={activeSection === "projects"} />
-          <NavItem href="/#experience" icon={Briefcase} label="Career" active={activeSection === "experience"} />
+          <NavItem href="/#projects"   icon={Code2}     label={t("work")}       active={activeSection === "projects"} />
+          <NavItem href="/#experience" icon={Briefcase} label={t("experience")} active={activeSection === "experience"} />
 
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

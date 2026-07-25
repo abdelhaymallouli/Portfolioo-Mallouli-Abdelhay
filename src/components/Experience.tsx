@@ -56,7 +56,7 @@ export default function ExperienceSection() {
             viewport={{ once: true, margin: "-100px" }}
             className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group z-10"
           >
-            <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-accent bg-[var(--card)] text-accent shadow-[0_0_15px_rgba(59,130,246,0.5)] md:order-1 absolute left-[20px] md:left-1/2 -translate-x-1/2 z-20 group-hover:scale-125 transition-transform duration-300">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-accent bg-[var(--card)] text-accent shadow-[0_0_15px_rgba(201,162,39,0.5)] md:order-1 absolute left-[20px] md:left-1/2 -translate-x-1/2 z-20 group-hover:scale-125 transition-transform duration-300">
               {exp.type === "school" ? (
                 <School size={16} />
               ) : (

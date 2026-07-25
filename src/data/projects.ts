@@ -24,7 +24,7 @@ export const projects: Project[] = [
     ],
     link: "",
     github: "https://github.com/abdelhaymallouli/AttendanceFlow-AMS",
-    image: "/screenshots/AttendanceFlow.png",
+    image: "/screenshots/AttendanceFlow.webp",
     status: "",
   },
 
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     link: "https://venuvibe-deploy.vercel.app/",
     github:
       "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
-    image: "/screenshots/Venuvibe.png",
+    image: "/screenshots/Venuvibe.webp",
   },
 
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     ],
     link: "",
     github: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
-    image: "/screenshots/PersonalFinance.png",
+    image: "/screenshots/PersonalFinance.webp",
   },
 
   {
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     link: "",
     github:
       "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
-    image: "/screenshots/FarhaCultural.png",
+    image: "/screenshots/FarhaCultural.webp",
   },
 
   // 6. THE PROCESS BUILDER: Shows complex business logic (Ordering/Kitchen/Admin).
@@ -101,7 +101,7 @@ export const projects: Project[] = [
     ],
     link: "",
     github: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
-    image: "/screenshots/RestaurantOrdering.png",
+    image: "/screenshots/RestaurantOrdering.webp",
   },
 
   // 7. THE UX SPECIALIST: Shows attention to detail and customer experience.
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     ],
     link: "https://word-haven-bookstore.vercel.app/",
     github: "https://github.com/abdelhaymallouli/World-Haven-Book-Store",
-    image: "/screenshots/wordhaven.png",
+    image: "/screenshots/wordhaven.webp",
   },
 
   // 8. THE INTEGRATOR: Demonstrates API skills and Python knowledge.
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     ],
     link: "",
     github: "https://github.com/abdelhaymallouli/WeatherWise",
-    image: "/screenshots/WeatherWise.png",
+    image: "/screenshots/WeatherWise.webp",
   },
 
   // 9. THE SEO/MARKETING AWARE: Shows you understand the web beyond just code.
@@ -152,7 +152,7 @@ export const projects: Project[] = [
     ],
     link: "https://restaurant-of-tangier.vercel.app/",
     github: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
-    image: "/screenshots/RestaurantOfTangier.png",
+    image: "/screenshots/RestaurantOfTangier.webp",
   },
 
   // 10. THE FOUNDATION: Proves you know vanilla JavaScript deeply.
@@ -169,6 +169,6 @@ export const projects: Project[] = [
     ],
     link: "https://cart-shopping-pi.vercel.app/",
     github: "https://github.com/abdelhaymallouli/cart-shopping",
-    image: "/screenshots/CartShopping.png",
+    image: "/screenshots/CartShopping.webp",
   },
 ];

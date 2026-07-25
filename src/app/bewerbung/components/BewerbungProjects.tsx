@@ -7,7 +7,7 @@ import { GC, SecHead, Pill, RingChart, risev } from "./shared/BewerbungUI";
 
 export function BewerbungProjects({ lang }: { lang: string }) {
   const t = (de: string, en: string) => (lang === "de" ? de : en);
-  const colors = ["#3b82f6", "#a78bfa", "#34d399", "#fbbf24", "#f43f5e"];
+  const colors = ["#c9a227", "#a1a1aa", "#10b981", "#fbbf24", "#f43f5e"];
 
   return (
     <section style={{ marginBottom: "96px" }}>
@@ -184,7 +184,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         fontSize: "8px",
                         letterSpacing: "0.2em",
                         textTransform: "uppercase",
-                        color: "#3b82f6",
+                        color: "#c9a227",
                       }}
                     >
                       {t("METHODIK", "METHODOLOGY")}
@@ -208,7 +208,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         >
                           <span
                             style={{
-                              color: "rgba(59,130,246,0.6)",
+                              color: "rgba(201,162,39,0.6)",
                               fontSize: "10px",
                             }}
                           >
@@ -236,7 +236,7 @@ export function BewerbungProjects({ lang }: { lang: string }) {
                         fontSize: "8px",
                         letterSpacing: "0.2em",
                         textTransform: "uppercase",
-                        color: "#a78bfa",
+                        color: "#a1a1aa",
                       }}
                     >
                       {t("HERAUSFORDERUNG", "CHALLENGE")}

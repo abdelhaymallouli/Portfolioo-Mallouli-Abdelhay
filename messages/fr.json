@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "about": "À propos",
+    "work": "Projets",
+    "skills": "Compétences",
+    "experience": "Expérience",
+    "contact": "Contact",
+    "resume": "CV"
+  },
+  "sections": {
+    "selectedWork": "Projets sélectionnés",
+    "thingsIveBuilt": "Ce que j'ai construit",
+    "fullArchive": "Archive complète",
+    "loadMore": "Voir plus de projets",
+    "showing": "Affichage de {count} sur {total} dépôts",
+    "companies": "Entreprises avec lesquelles j'ai travaillé",
+    "process": "Processus d'ingénierie",
+    "expertise": "Expertise technique",
+    "openSource": "Open Source",
+    "certifications": "Certifications",
+    "education": "Formation",
+    "testimonials": "Témoignages",
+    "blog": "Articles",
+    "now": "En ce moment",
+    "toolbox": "Boîte à outils",
+    "achievements": "En chiffres",
+    "caseStudy": "Étude de cas",
+    "comingSoon": "Bientôt disponible"
+  },
+  "contact": {
+    "title": "Construisons quelque chose",
+    "cta": "Me contacter"
+  },
+  "seo": {
+    "title": "Abdelhay Mallouli — Ingénieur logiciel & Créateur de produits",
+    "description": "Ingénieur logiciel, créateur de produits et développeur IA basé à Tanger. Je conçois et développe des produits numériques évolutifs — des interfaces intuitives aux backends robustes."
+  }
+}

@@ -1,15 +1,31 @@
 "use client";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Sphere, Torus, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
+
+const STAR_COUNT = 1200;
+
+// Decide whether the full WebGL scene should render.
+// Skips it for users who prefer reduced motion or on low-end / small devices.
+function useCanRender3D() {
+  const [ok, setOk] = useState(false);
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const smallOrWeak =
+      window.matchMedia("(max-width: 768px)").matches ||
+      (navigator.hardwareConcurrency ?? 8) <= 4;
+    setOk(!reduced && !smallOrWeak);
+  }, []);
+  return ok;
+}
 
 // ─── Ambient Star Field ────────────────────────────────────────────────────────
 const StarField = () => {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
-    const pos = new Float32Array(2500 * 3);
-    for (let i = 0; i < 2500; i++) {
+    const pos = new Float32Array(STAR_COUNT * 3);
+    for (let i = 0; i < STAR_COUNT; i++) {
       pos[i * 3]     = (Math.random() - 0.5) * 22;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 22;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 22;
@@ -85,13 +101,13 @@ const GlowRings = () => {
   return (
     <>
       <Torus ref={r1} args={[1.45, 0.007, 32, 220]}>
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.55} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color="#c9a227" transparent opacity={0.55} blending={THREE.AdditiveBlending} depthWrite={false} />
       </Torus>
       <Torus ref={r2} args={[1.85, 0.005, 32, 220]}>
-        <meshBasicMaterial color="#60a5fa" transparent opacity={0.32} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color="#dbb43a" transparent opacity={0.32} blending={THREE.AdditiveBlending} depthWrite={false} />
       </Torus>
       <Torus ref={r3} args={[2.25, 0.003, 32, 220]}>
-        <meshBasicMaterial color="#93c5fd" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color="#a1a1aa" transparent opacity={0.2} blending={THREE.AdditiveBlending} depthWrite={false} />
       </Torus>
     </>
   );
@@ -112,8 +128,8 @@ const CoreSphere = () => {
   return (
     <Sphere ref={ref} args={[0.72, 80, 80]}>
       <MeshDistortMaterial
-        color="#1d4ed8"
-        emissive="#3b82f6"
+        color="#2a2a2e"
+        emissive="#c9a227"
         emissiveIntensity={0.7}
         roughness={0.05}
         metalness={0.9}
@@ -130,24 +146,35 @@ const CoreSphere = () => {
 const Scene = () => (
   <>
     <ambientLight intensity={0.15} />
-    <pointLight position={[4, 4, 4]} intensity={2.2} color="#3b82f6" />
-    <pointLight position={[-5, -3, -4]} intensity={0.9} color="#1e40af" />
-    <pointLight position={[0, -4, 2]} intensity={0.4} color="#0ea5e9" />
+    <pointLight position={[4, 4, 4]} intensity={2.2} color="#c9a227" />
+    <pointLight position={[-5, -3, -4]} intensity={0.9} color="#a1a1aa" />
+    <pointLight position={[0, -4, 2]} intensity={0.4} color="#dbb43a" />
 
     <StarField />
 
     <Float speed={1.1} rotationIntensity={0.15} floatIntensity={0.9}>
       <GlowRings />
       <CoreSphere />
-      <OrbitParticles radius={1.15} count={130} speed={0.45}  color="#60a5fa" tilt={0.1} />
-      <OrbitParticles radius={1.65} count={85}  speed={-0.28} color="#3b82f6" tilt={0.4} />
-      <OrbitParticles radius={2.1}  count={55}  speed={0.16}  color="#93c5fd" tilt={-0.3} />
+      <OrbitParticles radius={1.15} count={130} speed={0.45}  color="#c9a227" tilt={0.1} />
+      <OrbitParticles radius={1.65} count={85}  speed={-0.28} color="#dbb43a" tilt={0.4} />
+      <OrbitParticles radius={2.1}  count={55}  speed={0.16}  color="#a1a1aa" tilt={-0.3} />
     </Float>
   </>
 );
 
+// ─── Lightweight CSS fallback (reduced-motion / mobile / low-end) ───────────────
+const StaticGlow = () => (
+  <div className="w-full h-full absolute inset-0 -z-10 pointer-events-none">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full bg-accent/10 blur-[100px]" />
+  </div>
+);
+
 // ─── Export ───────────────────────────────────────────────────────────────────
 export default function Hero3D() {
+  const canRender = useCanRender3D();
+
+  if (!canRender) return <StaticGlow />;
+
   return (
     <div className="w-full h-full min-h-[300px] md:min-h-[500px] absolute inset-0 -z-10 pointer-events-none opacity-90 mix-blend-screen">
       <Canvas camera={{ position: [0, 0, 5.5], fov: 54 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
