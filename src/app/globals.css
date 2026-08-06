@@ -1,177 +1,341 @@
 @import "tailwindcss";
 
+/*
+ * ============================================================
+ * DESIGN SYSTEM
+ * ============================================================
+ * Warm, soft-cornered, editorial. The ground is a bone tint rather than
+ * white, which lets white cards separate on fill alone and keeps shadows
+ * shallow. Hierarchy comes from type scale and weight; the three accents
+ * are surface fills, never text on a light ground.
+ *
+ * Light mode only. Generous radii, soft shadows, translucent surfaces.
+ */
+
 @theme {
-  --color-accent: #3b82f6;
+  /*
+   * --- Surfaces ---
+   * The ground is a warm bone rather than a cool white or a neutral grey.
+   * That warmth is what stops a page of white cards reading as clinical, and
+   * it means a card separates on fill alone without a heavy shadow.
+   */
+  --color-canvas: #f0efec; /* Page background — warm bone */
+  --color-card: #ffffff; /* Card fill — lifts off the canvas */
+  --color-subtle: #f7f7f7; /* Alternating section background */
+  --color-hover: #f7f7f7; /* Hover fill */
 
-  /* Upgraded to Geist via next/font or CDN — you can also use local @font-face */
-  --font-sans: "Geist", "Geist Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  /*
+   * --- Text ---
+   * Headings sit at #343434 rather than pure black: against a warm ground,
+   * true black reads harder than the rest of the palette and flattens the
+   * step down to body copy.
+   *
+   * `muted` is darkened from the reference's #8b8b8b, which measured 2.9:1 on
+   * the canvas and fails AA for the small meta text it carries. #6b6b6b holds
+   * the same tonal role at 4.9:1.
+   */
+  --color-ink: #343434; /* Headings — 10.2:1 on canvas */
+  --color-secondary: #000000; /* Body copy — maximum legibility */
+  --color-muted: #6b6b6b; /* Tertiary / meta — 4.9:1 */
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card-border: var(--card-border);
-  --color-muted: var(--muted);
+  /* --- Lines --- */
+  --color-line: #00000012; /* Hairline, tinted from the ground */
+  --color-line-strong: #00000026; /* Border on hover */
+
+  /*
+   * --- Accents ---
+   * Three chromatic values, used as fills and surfaces only. None of them
+   * clears AA as text on a light ground — `primary` is 1.4:1 on white — so
+   * text on an accent fill is always ink, never the reverse.
+   */
+  --color-primary: #ffcc00; /* Yellow — primary fill */
+  --color-dusty-green: #447e68;
+  --color-dusty-red: #ff6464;
+
+  /* Interactive colour for focus rings and selection. */
+  --color-accent: #447e68;
+  --color-accent-hover: #36624f;
+
+  /*
+   * --- Semantic ---
+   * Separate from the accents. Only for state that means good or bad.
+   */
+  --color-success: #447e68;
+  --color-danger: #dc2626;
+
+  /* --- Type --- */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-dm-mono);
+
+  --tracking-tight: -0.025em;
+
+  /*
+   * --- Spacing ---
+   * Section rhythm is 80px mobile / 120px desktop, matching the reference's
+   * py-20 md:py-30 beat.
+   */
+  --spacing-section: 7.5rem; /* 120px — desktop */
+  --spacing-section-sm: 5rem; /* 80px — mobile */
+
+  /* --- Layout --- */
+  --container-page: 90rem; /* 1440px — max width */
+  --container-reading: 45rem; /* 720px — reading measure */
+
+  /* --- Radius: generous. Cards are soft-cornered, not sharp. --- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+
+  /* --- Shadows: one soft card shadow, plus a lift for hover. --- */
+  --shadow-subtle: 0 2px 6px 0 rgb(0 0 0 / 0.12);
+  --shadow-lift: 0 8px 24px -6px rgb(0 0 0 / 0.16);
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --duration-slow: 500ms;
 }
 
-/* ── Light mode ──────────────────────────────────────────────────────────────── */
 :root {
-  --background: #f8fafc;
-  --foreground: #020617;
-  --card: #ffffff;
-  --card-border: #e2e8f0;
-  --muted: #64748b;
-  --shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.07);
+  color-scheme: light;
 }
 
-/* ── Dark mode (Midnight Pro) ────────────────────────────────────────────────── */
-.dark {
-  --background: #020617;
-  --foreground: #f1f5f9;
-  --card: rgba(15, 23, 42, 0.45);
-  --card-border: rgba(30, 41, 59, 0.8);
-  --muted: #94a3b8;
-  --shadow: 0 8px 40px 0 rgba(0, 0, 0, 0.45);
-}
-
-/* ── Base ────────────────────────────────────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Lenis drives scrolling; CSS smooth scroll would fight it. */
+  scroll-behavior: auto;
+  scroll-padding-top: 6rem;
+  /* Prevent iOS text inflation in landscape. */
+  -webkit-text-size-adjust: 100%;
+
+  /*
+   * Never allow a stray wide child to scroll the whole page sideways.
+   *
+   * `clip`, not `hidden`, and on `html` rather than `body`. Setting any
+   * `overflow` value other than `visible`/`clip` on `body` promotes it to a
+   * scroll container, which silently breaks `position: sticky` in every
+   * descendant — that is why no sticky element on this site ever pinned.
+   * `clip` clamps the axis without creating that container.
+   */
+  overflow-x: clip;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
-  min-height: 100vh;
-  line-height: 1.6;
-  letter-spacing: -0.01em;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* ── Typography Scale ────────────────────────────────────────────────────────── */
-
-/* Display headings — ultra tight tracking for impact */
-h1, .h1 {
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.88;
+/*
+ * One family across display and body. Geist carries both, so hierarchy
+ * comes from size, weight and tracking rather than a second typeface.
+ */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Section headings */
-h2, .h2 {
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+/* Tabular figures keep metrics from shifting width as they count. */
+.tabular {
+  font-variant-numeric: tabular-nums;
 }
 
-/* Card/subsection headings */
-h3, .h3 {
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+/* ---------- Lenis ---------- */
+
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-h4, .h4 {
-  font-weight: 700;
-  letter-spacing: -0.015em;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-/* Paragraph prose */
-p {
-  line-height: 1.7;
-  letter-spacing: -0.005em;
-}
-
-/* Mono label — for section labels / badges / overlines */
-.label-mono {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;    /* 11px */
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-/* Caption / metadata */
-.caption {
-  font-size: 0.6875rem;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-/* Selection */
-::selection {
-  background-color: rgba(59, 130, 246, 0.25);
-  color: inherit;
-}
-
-/* ── Scrollbar ───────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.25);
-  border-radius: 99px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.45);
-}
-
-/* ── Glassmorphism ────────────────────────────────────────────────────────────── */
-.glass {
-  background: var(--card);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  border: 1px solid var(--card-border);
-}
-
-/* ── Border Beam ─────────────────────────────────────────────────────────────── */
-.border-beam {
-  position: relative;
+.lenis.lenis-stopped {
   overflow: hidden;
 }
 
-.border-beam > .beam {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* ---------- Utilities ---------- */
+
+/**
+ * Animated underline for inline links. Uses background-size rather than a
+ * pseudo-element so it animates on the compositor and wraps correctly
+ * across line breaks.
+ */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-base) var(--ease-out);
 }
 
-.border-beam:hover > .beam {
-  opacity: 1;
-  animation: beam-spin 4s linear infinite;
+.link-underline:hover {
+  background-size: 100% 1px;
 }
 
-@keyframes beam-spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Reading measure for long-form prose. */
+@utility measure {
+  max-width: var(--container-reading);
 }
 
-/* ── Glow utility ────────────────────────────────────────────────────────────── */
-.glow-accent {
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.25), 0 0 60px rgba(59, 130, 246, 0.08);
+/**
+ * Ghost watermark — the oversized section word that sits behind content.
+ *
+ * Painted as a clipped gradient that fades to transparent rather than a flat
+ * low-opacity fill, so the letterforms dissolve downward into the page instead
+ * of ending on a hard edge. Always `aria-hidden`: it repeats the visible
+ * heading and would otherwise be announced twice.
+ */
+@utility watermark {
+  /*
+   * Fades from the warm stone toward transparent so the letterforms dissolve
+   * downward into the page rather than ending on a hard edge — which is what
+   * lets the cards overlap it without the cut looking accidental.
+   *
+   * No `opacity` here. The stone at 22% over the #f0efec canvas measured
+   * 1.24:1, which is below the threshold where an edge is perceptible at all
+   * — the word was rendering but effectively invisible. The fade now lives
+   * entirely in the gradient's own alpha stops, so the top of the letterform
+   * stays solid enough to read as texture.
+   */
+  background-image: linear-gradient(
+    180deg,
+    rgb(140 136 121 / 0.55),
+    rgb(140 136 121 / 0.12) 70%,
+    transparent 95%
+  );
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  line-height: 0.875;
+  user-select: none;
 }
 
-.glow-accent-sm {
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.3);
+/**
+ * The same watermark, inverted for dark grounds.
+ *
+ * The warm stone above is tuned against the #f0efec canvas and disappears
+ * entirely on black — this is not a tweak of the same value but a different
+ * one, so it gets its own utility rather than a modifier.
+ *
+ * White at 30% over #0a0a0a is the top stop: bright enough to read as a
+ * deliberate mark, far enough below the body text to never compete with it.
+ */
+@utility watermark-invert {
+  background-image: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.3),
+    rgb(255 255 255 / 0.06) 65%,
+    transparent 92%
+  );
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  line-height: 0.875;
+  user-select: none;
 }
 
-/* ── Focus ring ──────────────────────────────────────────────────────────────── */
+/**
+ * Display scale for the watermark.
+ *
+ * Declared as `--text-*` theme entries rather than `@utility` rules: Tailwind
+ * generates `text-display`, `text-display-md` and `text-display-lg` from
+ * these automatically, and — critically — makes them available to variants,
+ * so `md:text-display-md` actually compiles. Hand-rolled `@utility` versions
+ * only ever emitted the unprefixed class, leaving the word stuck at 100px on
+ * every viewport.
+ */
+@theme {
+  --text-display: 100px;
+  --text-display--line-height: 0.875;
+  --text-display-md: 200px;
+  --text-display-md--line-height: 0.875;
+  --text-display-lg: 280px;
+  --text-display-lg--line-height: 0.875;
+}
+
+/**
+ * Marquee — an infinite horizontal drift.
+ *
+ * Translating by exactly -50% works because the track renders its children
+ * twice: at the halfway point the second copy sits precisely where the first
+ * began, so the reset is invisible and no JS is needed to measure or
+ * reposition anything.
+ *
+ * `translate3d` keeps it on the compositor. The global reduced-motion rule
+ * clamps `animation-duration`, which would leave the track frozen mid-scroll
+ * at an arbitrary offset — so the paused state is declared explicitly here.
+ */
+@keyframes marquee-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-drift var(--marquee-duration, 40s) linear infinite;
+}
+
+/* Pausing on hover lets someone actually read an entry they spotted. */
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+/**
+ * Translucent surface over imagery. Pairs a dark scrim with a blur so white
+ * text stays legible regardless of what sits underneath.
+ */
+@utility surface-glass {
+  background-color: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(12px);
+}
+
+/* ---------- Accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus ring: visible, consistent, and never removed. */
 :focus-visible {
-  outline: 2px solid rgba(59, 130, 246, 0.6);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 2px;
+}
+
+/* Selection uses the accent at low alpha rather than the browser default. */
+::selection {
+  background-color: color-mix(in srgb, var(--color-accent) 14%, transparent);
+  color: var(--color-ink);
 }
