@@ -38,36 +38,30 @@ export async function generateMetadata({
   };
 }
 
-/** Section wrapper — consistent heading style and rhythm down the page. */
+/**
+ * Section wrapper — consistent heading style and rhythm down the page.
+ *
+ * The page container is full width. Text sets itself to the reading measure
+ * via `prose`; screenshots opt out and use the whole column. Getting this the
+ * other way round — a narrow page with blocks breaking *out* of it — left the
+ * page looking cramped inside a wide window.
+ */
 function Block({
   title,
   children,
-  /**
-   * Lets a block escape the reading column. The page is set to the 45rem prose
-   * measure, which is right for text and too narrow for screenshots — a tall
-   * capture letterboxed inside it comes back to the same sliver this redesign
-   * set out to fix. Negative margins widen the block symmetrically without
-   * moving it out of the document flow.
-   */
-  bleed = false,
+  /** Constrain this block to the prose measure. Off for full-width media. */
+  prose = true,
 }: {
   title: string;
   children: React.ReactNode;
-  bleed?: boolean;
+  prose?: boolean;
 }) {
   return (
     <section className="border-t border-line pt-12">
       <Reveal>
         <Eyebrow as="h2">{title}</Eyebrow>
       </Reveal>
-      <div
-        className={cn(
-          "mt-8",
-          bleed && "lg:-mx-[7rem] xl:-mx-[12rem]",
-        )}
-      >
-        {children}
-      </div>
+      <div className={cn("mt-8", prose && "max-w-[46rem]")}>{children}</div>
     </section>
   );
 }
@@ -126,13 +120,12 @@ export default async function ProjectCaseStudy({
   return (
     <PageShell>
       {/*
-       * `reading`, not the default page width. This page is almost entirely
-       * prose, and at 1440px a page-width container left every paragraph
-       * hugging the left edge with the right half of the screen empty. The
-       * narrower measure centres the column and keeps line length readable;
-       * the gallery still spans the full column.
+       * Full page width. Individual text blocks constrain themselves to the
+       * reading measure; the screenshots use the whole column. Setting the
+       * *page* narrow instead made the whole layout look cramped in a wide
+       * window, which is the opposite of the problem it was meant to fix.
        */}
-      <PageHeader width="reading">
+      <PageHeader>
         {/* ---------------- Header ---------------- */}
         <Reveal>
           <Link
@@ -158,17 +151,18 @@ export default async function ProjectCaseStudy({
             )}
           </div>
 
-          <h1 className="mt-6 text-balance text-display-md font-medium leading-[1.08] tracking-[-0.035em] text-ink sm:text-display-lg lg:text-display-xl">
+          <h1 className="mt-6 max-w-[20ch] text-balance text-display-md font-medium leading-[1.08] tracking-[-0.035em] text-ink sm:text-display-lg lg:text-display-xl">
             {project.title}
           </h1>
 
-          <p className="mt-6 text-pretty text-lg leading-[1.6] text-secondary">
+          {/*
+           * The summary alone. `role` is deliberately not rendered — it read as
+           * a CV field in the middle of a product description, and the write-up
+           * below already shows what was built. It stays in the data for the
+           * cards and for structured output.
+           */}
+          <p className="mt-6 max-w-[46rem] text-pretty text-lg leading-[1.6] text-secondary">
             {project.summary}
-          </p>
-
-          {/* Role reads as a sentence here rather than a cell in a spec table. */}
-          <p className="mt-5 text-body leading-[1.6] text-muted">
-            <span className="text-secondary">Role:</span> {project.role}
           </p>
 
           {(live || source) && (
@@ -222,20 +216,37 @@ export default async function ProjectCaseStudy({
                     <h3 className="text-body font-medium text-ink">
                       What was hard
                     </h3>
-                    <RevealGroup className="mt-5 space-y-10">
+                    <RevealGroup className="mt-5 space-y-8">
                       {project.challenges.map((item) => (
                         <RevealItem key={item.challenge}>
                           <p className="text-pretty text-body leading-[1.7] text-ink">
                             {item.challenge}
                           </p>
-                          <p className="mt-4 border-l border-line pl-5 text-pretty text-body leading-[1.7] text-secondary">
+                          <p className="mt-3 border-l-2 border-line pl-5 text-pretty text-body leading-[1.7] text-secondary">
                             {item.solution}
                           </p>
+                          {/*
+                           * Trade-offs are worth keeping — they are the most
+                           * senior thing on the page — but they were a third
+                           * paragraph of equal weight on every entry, which is
+                           * most of why this section felt heavy. Folded away by
+                           * default; native <details>, so no JS and it stays
+                           * findable by in-page search.
+                           */}
                           {item.tradeoff && (
-                            <p className="mt-4 text-pretty text-sm leading-[1.65] text-muted">
-                              <span className="text-secondary">Trade-off:</span>{" "}
-                              {item.tradeoff}
-                            </p>
+                            <details className="group/t mt-3 pl-5">
+                              <summary className="cursor-pointer list-none text-sm text-muted transition-colors hover:text-secondary">
+                                <span className="link-underline">
+                                  Trade-off
+                                </span>
+                                <span className="ml-1.5 inline-block transition-transform duration-200 group-open/t:rotate-90">
+                                  ›
+                                </span>
+                              </summary>
+                              <p className="mt-2 text-pretty text-sm leading-[1.65] text-muted">
+                                {item.tradeoff}
+                              </p>
+                            </details>
                           )}
                         </RevealItem>
                       ))}
@@ -273,12 +284,10 @@ export default async function ProjectCaseStudy({
             </ul>
           </Block>
 
-          {/* 3 — The interface. */}
+          {/* 3 — The interface. `prose={false}`: screenshots get the full column. */}
           {shots.length > 0 && (
-            <Block title="Interface" bleed>
-              <Reveal>
-                <Gallery images={shots} />
-              </Reveal>
+            <Block title="Interface" prose={false}>
+              <Gallery images={shots} />
             </Block>
           )}
         </div>
