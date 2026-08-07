@@ -18,6 +18,7 @@ import {
   SiNextdotjs,
   SiOllama,
   SiPhp,
+  SiPostgresql,
   SiPython,
   SiReact,
   SiSqlite,
@@ -57,6 +58,7 @@ export type TechKey =
   | "chartjs"
   | "vite"
   | "mysql"
+  | "postgresql"
   | "sqlite"
   | "ollama"
   | "go"
@@ -94,6 +96,7 @@ export const TECH: Record<TechKey, TechMeta> = {
   chartjs: { label: "Chart.js", Icon: SiChartdotjs, brand: "#FF6384" },
   vite: { label: "Vite", Icon: SiVite, brand: "#646CFF" },
   mysql: { label: "MySQL", Icon: SiMysql, brand: "#4479A1" },
+  postgresql: { label: "PostgreSQL", Icon: SiPostgresql, brand: "#4169E1" },
   sqlite: { label: "SQLite", Icon: SiSqlite, brand: "#003B57" },
   ollama: { label: "Ollama", Icon: SiOllama, brand: "#000000" },
   go: { label: "Go", Icon: SiGo, brand: "#00ADD8" },
