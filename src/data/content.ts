@@ -25,7 +25,7 @@ export const SITE = {
   /** Job title as you'd put it on a CV. */
   role: "Full Stack Developer",
   /** Primary positioning line. Shown in metadata and the footer. */
-  positioning: "Engineering precision, from schema to pixel.",
+  positioning: "Considered builds, from schema to pixel.",
 
   email: "abdelhay.mallouli@gmail.com",
   phone: "+212 635 848 683",
@@ -73,26 +73,22 @@ export const HERO = {
   /** Positioning line above the headline. Role and place, nothing more. */
   eyebrow: `${SITE.role} · ${SITE.location}`,
   /**
-   * The main statement. One sentence, three lines maximum on desktop.
-   *
-   * Says what the work replaces rather than how it was built — "scalable",
-   * "robust" and "modern" are claims every developer makes and none evidence.
+   * The main statement. Client-facing, benefit-led — what working with you
+   * gets someone, not a claim about your title or years of experience.
    */
-  headline: "I build the systems people are required to trust.",
+  headline:
+    "Full-stack products that work the first time and hold up after.",
   /**
-   * Sits beside the headline, not under it, so it has to work at three short
-   * lines. Three concrete nouns, then the layer underneath them. No em-dash:
-   * the construction was doing too much work across the whole site.
+   * Sits beside the headline. Three concrete outcomes, then what they rest on.
    */
   intro:
-    "Attendance that can't be faked. Dashboards that catch a problem while it is still fixable. Underneath both, the schemas and APIs that decide whether any of it holds.",
-  primaryCta: { label: "View projects", href: "/projects" },
+  "I write the tests before the feature, trace the data model before the interface, and ship code someone else can read six months from now. Attendance systems that can't be faked, dashboards that catch problems early — that discipline is why they still work.",  primaryCta: { label: "View projects", href: "/projects" },
   secondaryCta: { label: "Download résumé", href: SITE.resumeHref },
 } as const;
 
 /* ------------------------------------------------------------------ *
  * ABOUT
- * Write as an engineer, not a student. How you think and work —
+ * Write as a working developer, not a student. How you think and work —
  * not a chronology of what you've learned.
  * ------------------------------------------------------------------ */
 
@@ -114,13 +110,13 @@ export const ABOUT = {
    *
    * The lead paragraph renders larger than the rest.
    */
-  paragraphs: [
-    "I'm a full-stack engineer in Tangier. Most of what I build replaces something that used to be done on paper.",
-    "That shaped the kind of engineer I became. When a system decides whether someone sits an exam, being clever matters less than being correct. So I start from the data model, the boundaries and the failure modes, then write the tests that prove the rules hold before I call anything done.",
-    "A remote engagement with a team in Germany sharpened it further. I was building HR automation in Go against Personio, MOCO and Microsoft Graph, and I couldn't lean on being in the room to explain a decision. The code, the commit history and the API contract had to carry it across a time zone and a language. I write differently now: for whoever reads it in six months, who might well be me.",
-    "Backend is where I'm most at home, because that is where the guarantees live. An interface can be redrawn in an afternoon. A schema that got the relationships wrong is felt for years. AI interests me for the same unglamorous reason. On CampusOS it meant running Mistral on-premise so regulated student data never left the campus network: slower answers, but the constraint wasn't negotiable.",
-    "I'd rather ship four systems I can still defend in an interview than twenty I can't. Quality isn't a preference here. It's the only thing that survives contact with real users.",
-  ],
+paragraphs: [
+  "I'm a full-stack developer based in Tangier. Most of the work I take on has real consequences attached — someone's attendance record, someone's exam eligibility, someone's risk score. That's a different kind of pressure than shipping another feature nobody depends on.",
+  "When a system decides whether someone gets to sit an exam, correct beats clever every time. So I don't start with the interface. I start with the data model, work out every way a feature could fail, and only write the front end once I trust what's underneath it.",
+  "A remote stretch of work for a team abroad changed how I write code. I couldn't walk over and explain a decision in person. The commit history had to do that instead, across a time zone and a language gap. I still write that way now, for whoever opens the file next.",
+  "Backend is where I stay longest, because that's where mistakes compound. Redraw an interface in an afternoon; live with a wrong schema for years. It's the same reason I've gone deep on running AI on infrastructure I control rather than just calling an API — the constraint of keeping sensitive data in-house is one I take seriously, even when it means a slower response.",
+  "I've turned down speed for correctness more than once. I'd rather hand you four systems I can explain line by line than twenty I'd rather not open again.",
+],
   /** Optional quick facts shown alongside the prose. */
   facts: [
     { label: "Based in", value: SITE.location },
@@ -132,7 +128,7 @@ export const ABOUT = {
 /* ------------------------------------------------------------------ *
  * ENGINEERING PHILOSOPHY
  * Principles that shape your decisions. Each needs a real position —
- * something another engineer could reasonably disagree with.
+ * something another developer could reasonably disagree with.
  * ------------------------------------------------------------------ */
 
 export interface Principle {
@@ -145,11 +141,11 @@ export interface Principle {
 export const PRINCIPLES: Principle[] = [
   {
     title: "Architecture first",
-    body: "SOLID and N-tier boundaries are decided before the first line of a feature is written. Moving a seam later costs far more than drawing it correctly the first time.",
+    body: "SOLID principles and N-tier boundaries are decided before the first line of a feature is written. Moving a seam later costs far more than drawing it correctly the first time.",
   },
   {
     title: "TDD, not test theater",
-    body: "Tests are written against the behavior a user or another system depends on, and verified with PHPUnit before the feature is considered done. Not added afterward to hit a coverage number.",
+    body: "Tests are written against the behavior a user or another system depends on, and verified with PHPUnit before a feature is considered done — not added afterward to hit a coverage number.",
   },
   {
     title: "Componentized by design",
@@ -157,7 +153,7 @@ export const PRINCIPLES: Principle[] = [
   },
   {
     title: "Maintainability over cleverness",
-    body: "The next person to read this, often me some months later, matters more than a concise trick. Clean, organized code is a feature rather than a nice-to-have.",
+    body: "The next person to read this code — often me, some months later — matters more than a concise trick. Clean, organized code is part of the deliverable, not a nice-to-have.",
   },
   {
     title: "Security is not a phase",
@@ -296,32 +292,32 @@ export const FAQ: FaqItem[] = [
   {
     question: "What kind of work are you looking for?",
     answer:
-      "Full-time, contract or freelance full-stack roles. I'm finishing an internship at Mooroot in Tangier, and I'm open to on-site work in Morocco or fully remote work with teams elsewhere. I've already done a remote engagement with a company in Germany, so the working model is proven rather than theoretical.",
+      "Full-time, contract, or freelance full-stack roles. I'm finishing an internship at Mooroot in Tangier and open to on-site work in Morocco or remote work with teams elsewhere. I've already completed a remote engagement with a company in Germany, so the working model is proven, not theoretical.",
   },
   {
     question: "Where are you based, and how does that work across time zones?",
     answer:
-      "Tangier, Morocco, which sits at UTC+1. That's the same hour as Berlin and Paris for most of the year, and one ahead of London. During my internship with Pragmatic Minds in Kirchheim unter Teck I worked the full German business day with no scheduling friction.",
+      "Tangier, Morocco — UTC+1, the same hour as Berlin and Paris for most of the year, and one ahead of London. During my internship with Pragmatic Minds in Kirchheim unter Teck, I worked the full German business day with no scheduling friction.",
   },
   {
     question: "What does your stack actually look like in production?",
     answer:
-      "Laravel and PHP for most backend work. Go where a service needs to be small and fast. React with TypeScript on the front end, usually over Inertia or Next.js. Around that: MySQL and PostgreSQL, Docker, GitHub Actions and Tailwind. If you want to see it in practice, CampusOS and AttendanceFlow are both documented in full on this site.",
+      "Laravel and PHP for most backend work. Go where a service needs to be small and fast. React with TypeScript on the front end, usually over Inertia or Next.js. Around that: MySQL and PostgreSQL, Docker, GitHub Actions, and Tailwind. CampusOS and AttendanceFlow are both documented in full on this site if you want to see it in practice.",
   },
   {
     question: "How do you approach a system you've never seen before?",
     answer:
-      "I want the data model, the boundaries and the failure modes before I want the feature list. Clean layering only pays off when it's decided early rather than patched in afterwards. So expect me to spend the first days reading migrations and tracing a request end to end, rather than shipping something that has to be unpicked later.",
+      "I want the data model, the boundaries, and the failure modes before I want the feature list. Clean layering only pays off when it's decided early rather than patched in afterwards, so expect me to spend the first days reading migrations and tracing a request end to end, rather than shipping something that has to be unpicked later.",
   },
   {
     question: "Do you write tests, or is that a stated preference?",
     answer:
-      "I write them. AttendanceFlow has 61 PHPUnit tests and CampusOS has 69, with dedicated coverage for the parts that would be dangerous to get wrong: token forgery and expiry, geofence boundaries, subnet matching, score aggregation. TDD is how I verify a feature is correct. It isn't a coverage number I chase afterwards.",
+      "I write them. AttendanceFlow has 61 PHPUnit tests and CampusOS has 69, with dedicated coverage for the parts that would be dangerous to get wrong: token forgery and expiry, geofence boundaries, subnet matching, score aggregation. TDD is how I verify a feature is correct — not a coverage number I chase afterwards.",
   },
   {
     question: "How do you handle security and data protection?",
     answer:
-      "RBAC, OAuth2 and GDPR-aware data handling belong in the same commit as the feature they protect, not in a hardening pass before launch. On CampusOS that meant keeping the entire AI inference path on-premise, with Ollama and Mistral running locally, so regulated student data never left the campus network. Slower answers, in exchange for data residency. That trade wasn't close.",
+      "RBAC, OAuth2, and GDPR-aware data handling belong in the same commit as the feature they protect, not a hardening pass before launch. On CampusOS that meant keeping the entire AI inference path on-premise, with Ollama and Mistral running locally, so regulated student data never left the campus network. Slower answers, in exchange for data residency — that trade-off wasn't close.",
   },
   {
     question: "What's the fastest way to reach you?",
@@ -337,7 +333,7 @@ export const FAQ: FaqItem[] = [
 export const CONTACT = {
   heading: "Let's talk about what you're building.",
   /** One short paragraph. Say what you're looking for and how to reach you. */
-  body: "I'm finishing an internship at Mooroot and open to full-time, contract or freelance full-stack roles. Email is the fastest way to reach me, and I answer within two days.",
+  body: "Working closely with your team to build full-stack systems that hold up under real use — from the schema to the interface. If that's the kind of work you're building, email is the fastest way to reach me, and I answer within two days.",
 } as const;
 
 /* ------------------------------------------------------------------ *
@@ -346,15 +342,15 @@ export const CONTACT = {
 
 export const BEWERBUNG = {
   eyebrow: "Application",
-  headline: "What I'd bring to your engineering team.",
+  headline: "What I'd bring to your team.",
   /** Two or three sentences addressed directly to a hiring manager. */
   intro:
-    "What I do, how I work, and where I've done it. Written with the detail a technical interviewer wants before the first call, so we can start further along.",
+    "What I do, how I work, and where I've done it — written with the detail a technical interviewer wants before the first call, so we can start further along.",
   /** Three or four concrete claims you can back up in conversation. */
   pitch: [
-    "I ship end to end: schema, API, interface, deployment. SOLID principles and Atomic Design guide the seams, so a feature never stalls waiting on someone else's hand-off.",
+    "I deliver end to end: schema, API, interface, deployment. SOLID principles and Atomic Design guide the seams, so a feature never stalls waiting on someone else's hand-off.",
     "I test where it counts. TDD with PHPUnit is part of how I build a feature, not a box I tick afterward.",
-    "I've shipped production work in Laravel, Go and AI-integrated tooling, with an in-house team in Tangier and a remote team in Germany.",
+    "I've shipped production work in Laravel, Go, and AI-integrated tooling, with an in-house team in Tangier and a remote team in Germany.",
     "I write for the next reader. Review feedback is something I act on rather than defend.",
   ],
 } as const;

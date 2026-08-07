@@ -45,7 +45,7 @@ export function ProjectShowcase() {
       className="relative scroll-mt-24 py-section-sm md:py-section"
     >
       <Container className="relative">
-        <Watermark className="-left-10 -top-16 sm:-left-6  lg:-left-10 lg:-top-48 z-0">
+        <Watermark className="left-8 -top-16 sm:-left-6  lg:left-8 lg:-top-48 z-0">
           Projects
         </Watermark>
 
