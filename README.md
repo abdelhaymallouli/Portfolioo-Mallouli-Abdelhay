@@ -1,72 +1,36 @@
-# Professional Portfolio | Abdelhay Mallouli
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-[![Built with Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Licence](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+## Getting Started
 
-A high-performance, responsive portfolio platform engineered to showcase full-stack engineering expertise. This project serves as a technical demonstration of modern web architectures, featuring advanced UI/UX patterns, N-Tier architecture principles, and seamless theme orchestration.
-
-## 🚀 Key Engineering Highlights
-
-### 🛠 Technical Architecture
-
-- **Framework**: Next.js 15 (App Router) for optimized rendering and routing.
-- **Styling**: Tailwind CSS 4.0 with customized CSS variable orchestration for theme consistency.
-- **Components**: Radical UI approach with Framer Motion for sophisticated micro-interactions.
-- **Data Layer**: Centralized data management in `src/data/` for scalable project and experience tracking.
-
-### 💎 Featured Solutions
-
-- **Enterprise-Grade UI**: Implementations like "Blog Solicode" showcase N-Tier back-end logic and RESTful API integration.
-- **Empathetic EdTech**: "AttendanceFlow AMS" demonstrates the application of Design Thinking (Empathy/Define) to solve real-world institutional friction.
-- **Robust Theming**: Seamless Dark/Light mode transitions using `next-themes`, optimized for mobile visibility.
-- **Recruiter-First UX**: Projects are programmatically ordered by technical impact and complexity.
-
-## 📁 Source Overview
+First, run the development server:
 
 ```bash
-├── src/
-│   ├── app/            # Next.js App Router (Layouts & Pages)
-│   ├── components/     # Modular UI Components (Navbar, ProjectCards, etc.)
-│   ├── data/           # Core Data Infrastructure (Projects, Experience, ME)
-│   └── types/          # Strict TypeScript Definitions
-├── public/             # Optimized Static Assets & Screenshots
-└── tailwind.config.ts  # Design System Tokens
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## ⚙️ Development Environment
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Prerequisites
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- Node.js 18.x or higher
-- npm or pnpm
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Setup
+## Learn More
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/abdelhaymallouli/Portfolioo-Mallouli-Abdelhay.git
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Launch development server:
-   ```bash
-   npm run dev
-   ```
+To learn more about Next.js, take a look at the following resources:
 
-## 👨💻 About the developer
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-**Abdelhay Mallouli** is a Full Stack Developer specializing in building scalable, secure, and user-centric applications. With experience ranging from Go-based microservices at
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## 📬 Contact & Collaboration
+## Deploy on Vercel
 
-- **LinkedIn**: [Abdelhay Mallouli](https://www.linkedin.com/in/abdelhaymallouli/)
-- **GitHub**: [@abdelhaymallouli](https://github.com/abdelhaymallouli)
-- **Portfolio**: [Live Preview](https://portoflio-abdelhay.vercel.app/)
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
----
-
-_Created with passion and strict engineering standards._
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
