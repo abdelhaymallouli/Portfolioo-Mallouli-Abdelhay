@@ -36,7 +36,14 @@ function ProjectCard({ project }: { project: Project }) {
             alt={project.cover.alt}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-contain object-top"
+            /*
+             * `cover` anchored to the top, not `contain`. These are full-page
+             * captures running as tall as 1:2.2; letterboxing one into a 16:10
+             * card rendered it as a sliver about 8% of the frame width, lost in
+             * empty space. Cropping to the top shows the hero and nav — the
+             * part that identifies the site — and fills the card properly.
+             */
+            className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           />
         ) : (
           <div
@@ -49,13 +56,14 @@ function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
 
+      {/*
+       * Three tiers only: name, what it is, what it's built with. The year and
+       * status used to sit in a fourth row above the title, which put the least
+       * important fact in the most prominent position and made every card read
+       * as a form rather than a link.
+       */}
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-baseline justify-between gap-3 font-mono text-xs text-muted">
-          <span>{project.year}</span>
-          {project.status && <span>{project.status}</span>}
-        </div>
-
-        <h3 className="mt-3 flex items-start justify-between gap-3 text-body font-medium text-ink">
+        <h3 className="flex items-start justify-between gap-3 text-body font-medium text-ink">
           {project.title}
           <ArrowUpRight
             className="h-4 w-4 shrink-0 text-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
@@ -67,18 +75,21 @@ function ProjectCard({ project }: { project: Project }) {
           {project.tagline}
         </p>
 
-        {/* Stack marks */}
-        <ul className="mt-auto flex items-center gap-2.5 pt-5">
-          {project.stack.slice(0, 5).map((tech) => {
-            const { Icon, label } = TECH[tech];
-            return (
-              <li key={tech} title={label}>
-                <Icon className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
-                <span className="sr-only">{label}</span>
-              </li>
-            );
-          })}
-        </ul>
+        {/* Stack marks, with the year kept as a quiet trailing detail. */}
+        <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+          <ul className="flex items-center gap-2.5">
+            {project.stack.slice(0, 3).map((tech) => {
+              const { Icon, label } = TECH[tech];
+              return (
+                <li key={tech} title={label}>
+                  <Icon className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+                  <span className="sr-only">{label}</span>
+                </li>
+              );
+            })}
+          </ul>
+          <span className="font-mono text-xs text-muted">{project.year}</span>
+        </div>
       </div>
     </Card>
   );

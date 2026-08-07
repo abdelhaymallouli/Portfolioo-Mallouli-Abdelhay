@@ -104,7 +104,7 @@ export const ABOUT = {
    * lettermark at the same dimensions, so the layout never shifts.
    */
   portrait: {
-    src: "/imgs/profile.png",
+    src: "/imgs/optimised/profile.webp",
     alt: "Abdelhay Mallouli",
   } as { src: string; alt: string } | undefined,
   /**

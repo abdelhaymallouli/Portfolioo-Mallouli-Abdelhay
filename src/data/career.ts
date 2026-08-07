@@ -32,31 +32,33 @@ export interface EducationEntry {
 export const EDUCATION: EducationEntry[] = [
   {
     school: "Lycée Anoual",
-    programme: "Baccalauréat Sciences Physiques-Chimie",
+    programme: "Baccalauréat, Physics and Chemistry",
     period: "2023 — 2024",
-    location: "Tanger, Maroc",
-    detail: "Baccalauréat National Marocain avec spécialisation en mathématiques avancées et sciences physiques.",
+    location: "Tangier, Morocco",
+    detail:
+      "Moroccan National Baccalaureate, specialising in advanced mathematics and the physical sciences.",
     details: [
-      "Base solide en Mathématiques incluant le Calcul, les Nombres Complexes et les Statistiques.",
-      "Étude des modules fondamentaux de Physique: Mécanique, Électricité et Physique Nucléaire.",
-      "Développement de compétences rigoureuses d'analyse et de résolution de problèmes nécessaires aux métiers de l'ingénierie.",
-      "Proficiency multilingue certifiée en Arabe, Français et Anglais."
+      "Solid grounding in mathematics: calculus, complex numbers and statistics.",
+      "Core physics modules: mechanics, electricity and nuclear physics.",
+      "Built the analytical and problem-solving habits the engineering work rests on.",
+      "Certified multilingual proficiency in Arabic, French and English.",
     ],
-    tech: ["Mathématiques", "Physique", "Chimie", "Logique & Analyse"]
+    tech: ["Mathematics", "Physics", "Chemistry", "Logic & Analysis"],
   },
   {
-    school: "Centre de Solidarité Numérique SOLICODE",
-    programme: "Développement Web --- Certification Double Simplon & OFPPT",
+    school: "SOLICODE — Centre de Solidarité Numérique",
+    programme: "Web Development — dual Simplon & OFPPT certification",
     period: "2024 — 2025",
-    location: "Tanger, Maroc",
-    detail: "Formation complète suivant le modèle de pédagogie active, couvrant tout le cycle de vie du développement, de la conception UI/UX aux systèmes back-end.",
+    location: "Tangier, Morocco",
+    detail:
+      "A full development lifecycle under an active-pedagogy model, from UI/UX design through to back-end systems.",
     details: [
-      "Conception d'interfaces centrées utilisateur et de wireframes sur Figma, en appliquant les principes de design thinking et d'ergonomie.",
-      "Développement de systèmes back-end dynamiques en PHP natif avec Programmation Orientée Objet (POO) et PDO pour la sécurité d'accès.",
-      "Architecture de bases de données relationnelles (MCD/MLD, SQL complexe et opérations CRUD sécurisées).",
-      "Conception d'interfaces front-end réactives avec JavaScript Moderne (ES6+), React.js (Hooks, Router) et styles CSS (Tailwind).",
-      "Gestion des versions et collaboration en équipe avec Git/GitHub (workflows de branches, pull requests et merge).",
-      "Méthodologies Agile/Scrum pour la gestion des cycles de projet, de la conception initiale au déploiement."
+      "Designed user-centred interfaces and wireframes in Figma, applying design thinking and usability principles.",
+      "Built dynamic back-end systems in native PHP using OOP and PDO for secure database access.",
+      "Architected relational databases: MCD/MLD models, complex SQL and secure CRUD operations.",
+      "Built responsive front-ends with modern JavaScript (ES6+), React (Hooks, Router) and Tailwind CSS.",
+      "Managed versioning and team collaboration in Git/GitHub: branch workflows, pull requests and merges.",
+      "Ran project cycles under Agile/Scrum, from initial design through to deployment.",
     ],
     tech: [
       "PHP (OOP)",
@@ -68,26 +70,27 @@ export const EDUCATION: EducationEntry[] = [
       "Tailwind CSS",
       "Git/GitHub",
       "Figma",
-      "WordPress"
+      "WordPress",
     ],
     certificate: {
       name: "Certificate of Completion: Web Development",
-      url: "/certificates/Certificate_Solicode_Tangier_Recated.pdf"
-    }
+      url: "/certificates/Certificate_Solicode_Tangier_Recated.pdf",
+    },
   },
   {
-    school: "Centre de Solidarité Numérique SOLICODE",
-    programme: "Développement Mobile & Full-Stack --- Certification Double Simplon & OFPPT",
+    school: "SOLICODE — Centre de Solidarité Numérique",
+    programme: "Mobile & Full-Stack Development — dual Simplon & OFPPT certification",
     period: "2025 — 2026",
-    location: "Tanger, Maroc",
-    detail: "Spécialisation avancée en développement Android natif et architectures web d'entreprise, DevOps, tests automatisés et serveurs.",
+    location: "Tangier, Morocco",
+    detail:
+      "Advanced specialisation in native Android and enterprise web architecture, with DevOps, automated testing and server administration.",
     details: [
-      "Développement d'applications Android natives en Kotlin et Jetpack Compose (MVVM, États réactifs).",
-      "Architecture de back-ends robustes en Laravel (Eloquent ORM, Middlewares personnalisés, APIs REST).",
-      "Intégration d'APIs dans des applications mobiles en utilisant Retrofit et les Coroutines pour l'asynchronisme.",
-      "Stratégie de tests automatisés complète (tests unitaires et d'intégration avec PHPUnit et Mocking).",
-      "Pratique de flux de travail collaboratifs professionnels sous Scrum avec GitFlow et revues de code strictes.",
-      "Administration système et serveurs web (Apache, VirtualHosts, routage IPv4, DNS/DHCP et certificats SSL/TLS)."
+      "Built native Android applications in Kotlin and Jetpack Compose, using MVVM and reactive state.",
+      "Architected robust Laravel back-ends: Eloquent ORM, custom middleware and REST APIs.",
+      "Consumed APIs from mobile using Retrofit and Coroutines for asynchronous work.",
+      "Implemented a full automated testing strategy — unit and integration, with PHPUnit and mocking.",
+      "Worked to professional collaboration standards under Scrum: GitFlow and strict code review.",
+      "Covered systems and web server administration: Apache, VirtualHosts, IPv4 routing, DNS/DHCP and SSL/TLS certificates.",
     ],
     tech: [
       "Kotlin",
@@ -98,19 +101,19 @@ export const EDUCATION: EducationEntry[] = [
       "Retrofit",
       "GitFlow",
       "Linux/Apache",
-      "Alpine.js"
+      "Alpine.js",
     ],
     certificate: {
-      name: "Certificate of Completion in Mobile & Full-Stack Development"
-    }
-  }
+      name: "Certificate of Completion in Mobile & Full-Stack Development",
+    },
+  },
 ];
 
 export const JOURNEY_OUTLOOK = {
   year: "Next",
   title: "Backend depth, and a team to build with",
   detail:
-    "À la recherche d'une opportunité en développement full-stack/back-end où la qualité du code et les architectures robustes priment, prêt à apporter mon expertise en tests et conception d'APIs."
+    "Looking for a full-stack or back-end role where code quality and durable architecture matter, and where I can bring what I have built around testing and API design.",
 } as const;
 
 export interface ExperienceEntry {
@@ -127,31 +130,33 @@ export interface ExperienceEntry {
 export const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "Mooroot",
-    role: "Stagiaire Développeur Full Stack & IA",
-    period: "Juin 2026 — Août 2026",
-    location: "Tanger, Maroc",
-    summary: "Développement de fonctionnalités de bout en bout et intégration d'IA pour une plateforme documentaire convertissant du Markdown en présentations de marque.",
+    role: "Full Stack & AI Developer (Internship)",
+    period: "June 2026 — Present",
+    location: "Tangier, Morocco",
+    summary:
+      "End-to-end feature development and AI integration for a document platform that converts Markdown into branded presentations.",
     achievements: [
-      "Conception et implémentation de couches UI et back-end (Laravel, Alpine.js, Tailwind CSS) pour le rendu et la structuration des présentations.",
-      "Maintenance et optimisation d'une architecture multi-tenant et d'un pipeline de génération PDF automatisé via Chromium headless sur serveur Linux.",
-      "Garantie de la qualité logicielle et respect des principes SOLID et TDD avec PHPUnit pour éliminer les régressions de mise en page."
+      "Designed and implemented the UI and back-end layers (Laravel, Alpine.js, Tailwind CSS) that render and structure presentations.",
+      "Maintained and tuned a multi-tenant architecture and an automated PDF pipeline running headless Chromium on a Linux server.",
+      "Held the quality line with SOLID principles and TDD in PHPUnit, which is what keeps layout regressions out of the render path.",
     ],
     stack: ["laravel", "php", "tailwind", "alpine"],
   },
   {
     company: "Pragmatic Minds GmbH",
-    role: "Stagiaire Développeur Backend & Automatisation (Remote)",
-    period: "Juillet 2025 — Août 2025",
-    location: "Kirchheim unter Teck, Allemagne",
-    summary: "Architecture et déploiement d'une suite de plug-ins de messagerie Mattermost et microservices en Go pour automatiser les processus RH.",
+    role: "Backend & Automation Developer (Internship, remote)",
+    period: "July 2025 — August 2025",
+    location: "Kirchheim unter Teck, Germany",
+    summary:
+      "Architected and shipped a suite of Mattermost plugins and Go microservices automating the company's HR processes.",
     achievements: [
-      "Développement de Moco-bot en Go, automatisant le suivi du temps de travail par intégration des APIs de Personio et MOCO avec alertes intelligentes.",
-      "Implémentation d'un plug-in de synchronisation de calendrier en temps réel via Microsoft Graph API et protocole OAuth 2.0.",
-      "Conception d'architectures de stockage clé-valeur sécurisées et conformes RGPD pour la gestion interne de la messagerie collaborative.",
-      "Conteneurisation systématique des services avec Docker et environnements de développement locaux hot-reloaded."
+      "Built Moco-bot in Go, automating time-tracking compliance by integrating the Personio and MOCO APIs with targeted alerts.",
+      "Implemented a real-time calendar sync plugin over the Microsoft Graph API using OAuth 2.0.",
+      "Designed secure, GDPR-compliant key-value storage for internal collaboration data.",
+      "Containerised every service with Docker, with hot-reloading local development environments.",
     ],
     stack: ["go", "docker", "postgresql"],
-  }
+  },
 ];
 
 export interface Certification {
@@ -163,13 +168,13 @@ export interface Certification {
 
 export const CERTIFICATIONS: Certification[] = [
   {
-    title: "Les fondamentaux UI/UX avec Figma",
+    title: "UI/UX Fundamentals with Figma",
     issuer: "Udemy",
     date: "2025",
     href: "https://www.udemy.com/certificate/UC-22ef93dd-a17b-4a70-9c99-c6ce5f1a542c/",
   },
   {
-    title: "Développeur React Complet",
+    title: "React — Complete Developer",
     issuer: "Udemy",
     date: "2024",
     href: "https://www.udemy.com/certificate/UC-fbc2fe02-ffa6-4608-bf62-80220c410c0a/",
@@ -206,8 +211,8 @@ export interface SpokenLanguage {
 }
 
 export const LANGUAGES: SpokenLanguage[] = [
-  { name: "Arabe", level: "Langue maternelle" },
-  { name: "Anglais", level: "B2/C1 — Professionnel" },
-  { name: "Français", level: "B1 — Intermédiaire" },
-  { name: "Allemand", level: "B1/B2 — Intermédiaire" },
+  { name: "Arabic", level: "Native" },
+  { name: "English", level: "B2/C1 — Professional" },
+  { name: "French", level: "B1 — Intermediate" },
+  { name: "German", level: "B1/B2 — Intermediate" },
 ];

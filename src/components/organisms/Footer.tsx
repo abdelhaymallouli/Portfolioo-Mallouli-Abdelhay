@@ -9,7 +9,6 @@ import { ButtonLink } from "@/components/atoms/Button";
 import { GlowBackdrop } from "@/components/atoms/GlowBackdrop";
 import { CopyEmail } from "@/components/molecules/CopyEmail";
 import { CONTACT, NAV_LINKS, SITE } from "@/data/content";
-import { VISIBLE_PROJECTS } from "@/data/projects";
 
 /** Icon links in the bottom bar. */
 const SOCIALS = [

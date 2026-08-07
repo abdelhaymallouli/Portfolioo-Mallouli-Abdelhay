@@ -14,13 +14,22 @@ import type { ProjectImage } from "@/data/projects";
  * width, navigation arrows sit over it, and a thumbnail strip is overlaid
  * along the bottom edge of the frame. The caption sits directly beneath.
  *
+ * On the frame's height
+ * ---------------------
+ * The frame used to be a hardcoded `aspect-[16/10]`. That is wrong for this
+ * content: these are full-page captures running as tall as 1:2.2, so a fixed
+ * 16:10 box rendered them as a narrow sliver stranded in empty space.
+ *
+ * It now uses a fixed *viewport-relative* height with `object-contain`. Every
+ * slide gets the same box regardless of its shape — so switching slides never
+ * reflows the page — while each image scales to fit inside it whole. That
+ * keeps tall and wide captures in one carousel without cropping either.
+ *
  * Interaction notes:
  *  - The frame is a labelled group with arrow-key support, so it is fully
  *    operable from the keyboard.
  *  - Slide changes are announced through a polite live region rather than by
  *    moving focus, which would jump the page mid-read.
- *  - Screenshots use `object-contain`: these are full-page captures, and
- *    cropping them to fill removes the content worth showing.
  */
 export function Gallery({ images }: { images: ProjectImage[] }) {
   const [rawIndex, setRawIndex] = useState(0);
@@ -76,7 +85,9 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
         onKeyDown={onKeyDown}
         className="relative isolate overflow-hidden rounded-lg border border-line bg-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
-        <div className="relative aspect-[16/10] w-full">
+        {/* Capped against the viewport so a tall capture can't run past the
+            fold, with a floor so a wide one still has presence. */}
+        <div className="relative h-[60vh] max-h-[42rem] min-h-[22rem] w-full">
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
               key={index}
@@ -93,9 +104,13 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
                   src={active.src}
                   alt={active.alt}
                   fill
-                  sizes="(min-width: 1024px) 80vw, 100vw"
-                  priority={index === 0}
-                  className="object-contain"
+                  sizes="(min-width: 1280px) 1100px, (min-width: 1024px) 90vw, 100vw"
+                  /*
+                   * `contain`, and deliberately anchored to the top: on a tall
+                   * full-page capture the header is the part that identifies
+                   * the screen, so it is what should survive letterboxing.
+                   */
+                  className="object-contain object-top"
                 />
               ) : (
                 <div

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { SiGithub } from "react-icons/si";
@@ -10,7 +9,6 @@ import { PageHeader } from "@/components/atoms/Container";
 import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { ButtonLink } from "@/components/atoms/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
-import { Counter } from "@/components/motion/Counter";
 import { Gallery } from "@/components/molecules/Gallery";
 import { TECH } from "@/lib/tech-icons";
 import {
@@ -44,79 +42,51 @@ export async function generateMetadata({
 function Block({
   title,
   children,
-  className,
+  /**
+   * Lets a block escape the reading column. The page is set to the 45rem prose
+   * measure, which is right for text and too narrow for screenshots — a tall
+   * capture letterboxed inside it comes back to the same sliver this redesign
+   * set out to fix. Negative margins widen the block symmetrically without
+   * moving it out of the document flow.
+   */
+  bleed = false,
 }: {
   title: string;
   children: React.ReactNode;
-  className?: string;
+  bleed?: boolean;
 }) {
   return (
-    <section className={cn("border-t border-line pt-12", className)}>
+    <section className="border-t border-line pt-12">
       <Reveal>
-        <Eyebrow as="h2">
-          {title}
-        </Eyebrow>
+        <Eyebrow as="h2">{title}</Eyebrow>
       </Reveal>
-      <div className="mt-8">{children}</div>
+      <div
+        className={cn(
+          "mt-8",
+          bleed && "lg:-mx-[7rem] xl:-mx-[12rem]",
+        )}
+      >
+        {children}
+      </div>
     </section>
   );
 }
 
-/** Screenshot frame. Aspect ratio follows the declared device. */
-function Figure({ image }: { image: ProjectImage }) {
-  const ratio =
-    image.device === "mobile"
-      ? "aspect-[9/16]"
-      : image.device === "tablet"
-        ? "aspect-[4/3]"
-        : "aspect-[16/10]";
-
-  return (
-    <figure>
-      <div
-        className={cn(
-          "relative w-full overflow-hidden rounded-lg border border-line bg-subtle",
-          ratio,
-        )}
-      >
-        {image.src ? (
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="(min-width: 1024px) 80vw, 100vw"
-            priority
-            // `contain`, not `cover`: these are full-page screenshots, and
-            // cropping one to fill a 16:10 box slices off the content that
-            // makes it worth showing.
-            className="object-contain"
-          />
-        ) : (
-          <div
-            role="img"
-            aria-label={image.alt}
-            className="flex h-full w-full items-center justify-center p-6 text-center"
-          >
-            <span className="font-mono text-xs text-muted">{image.alt}</span>
-          </div>
-        )}
-      </div>
-      {image.caption && (
-        <figcaption className="mt-3 text-sm text-muted">
-          {image.caption}
-        </figcaption>
-      )}
-    </figure>
-  );
-}
-
 /**
- * /projects/[slug] — engineering case study.
+ * /projects/[slug] — case study.
  *
- * Ordered the way a reviewer reads: what it is, the constraint, how it's
- * built, what went wrong, what the numbers were, what was learned. Every
- * optional field is guarded so a partially-filled project still renders as a
- * finished page rather than a set of empty headings.
+ * Three sections, deliberately: what the project is, how it was built, and
+ * what it looks like. Nothing else.
+ *
+ * This replaced an eleven-section layout (Overview, Architecture, Results,
+ * Lessons, Future work, …). The problem was not only length — it was that
+ * those fields are populated on two of six projects, so the page had no
+ * consistent shape: some projects rendered three sections and others eleven,
+ * which is what made it read as unfinished. The data is still in
+ * `projects.ts`; it simply isn't all forced onto this page.
+ *
+ * The optional guards remain, so a project missing prose or screenshots still
+ * renders as a finished page rather than a set of empty headings.
  */
 export default async function ProjectCaseStudy({
   params,
@@ -132,13 +102,37 @@ export default async function ProjectCaseStudy({
   // Wrap so the final project still offers a next step.
   const next = VISIBLE_PROJECTS[(index + 1) % VISIBLE_PROJECTS.length];
 
-  const hasLinks =
-    (project.links?.live && project.links.live !== "#") ||
-    (project.links?.source && project.links.source !== "#");
+  const live =
+    project.links?.live && project.links.live !== "#" ? project.links.live : null;
+  const source =
+    project.links?.source && project.links.source !== "#"
+      ? project.links.source
+      : null;
+
+  /*
+   * One carousel for the whole interface, cover first. Previously the cover
+   * was a separate eager <Figure> above the fold and the gallery sat far below
+   * it, which meant the largest asset on the page loaded before anything the
+   * reader had asked to see.
+   */
+  const shots: ProjectImage[] = [
+    ...(project.cover?.src ? [project.cover] : []),
+    ...(project.gallery ?? []),
+  ];
+
+  const hasWriteUp =
+    project.problem || project.solution || (project.challenges?.length ?? 0) > 0;
 
   return (
     <PageShell>
-      <PageHeader>
+      {/*
+       * `reading`, not the default page width. This page is almost entirely
+       * prose, and at 1440px a page-width container left every paragraph
+       * hugging the left edge with the right half of the screen empty. The
+       * narrower measure centres the column and keeps line length readable;
+       * the gallery still spans the full column.
+       */}
+      <PageHeader width="reading">
         {/* ---------------- Header ---------------- */}
         <Reveal>
           <Link
@@ -162,98 +156,45 @@ export default async function ProjectCaseStudy({
                 <span>{project.status}</span>
               </>
             )}
-            {project.categories.map((category) => (
-              <span key={category} className="flex items-center gap-3">
-                <span aria-hidden="true">/</span>
-                {category}
-              </span>
-            ))}
           </div>
 
           <h1 className="mt-6 text-balance text-display-md font-medium leading-[1.08] tracking-[-0.035em] text-ink sm:text-display-lg lg:text-display-xl">
             {project.title}
           </h1>
 
-          <p className="mt-6 max-w-[45rem] text-pretty text-lg leading-[1.6] text-secondary">
+          <p className="mt-6 text-pretty text-lg leading-[1.6] text-secondary">
             {project.summary}
           </p>
 
-          {hasLinks && (
+          {/* Role reads as a sentence here rather than a cell in a spec table. */}
+          <p className="mt-5 text-body leading-[1.6] text-muted">
+            <span className="text-secondary">Role:</span> {project.role}
+          </p>
+
+          {(live || source) && (
             <div className="mt-9 flex flex-wrap gap-3">
-              {project.links?.live && project.links.live !== "#" && (
-                <ButtonLink href={project.links.live} size="md">
+              {live && (
+                <ButtonLink href={live} size="md">
                   Visit site
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
               )}
-              {project.links?.source && project.links.source !== "#" && (
-                <ButtonLink
-                  href={project.links.source}
-                  variant="secondary"
-                  size="md"
-                >
+              {source && (
+                <ButtonLink href={source} variant="secondary" size="md">
                   <SiGithub className="h-4 w-4" aria-hidden="true" />
-                  Source
+                  Source code
                 </ButtonLink>
               )}
             </div>
           )}
         </Reveal>
 
-        {/* ---------------- Cover ---------------- */}
-        <Reveal delay={0.1} className="mt-16">
-          <Figure
-            image={
-              project.cover ?? {
-                alt: `${project.title} — primary interface`,
-                device: "desktop",
-              }
-            }
-          />
-        </Reveal>
-
         {/* ---------------- Body ---------------- */}
         <div className="mt-24 space-y-20">
-          {/* Overview */}
-          <Block title="Overview">
-            <dl className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
-              <div>
-                <dt className="text-sm text-muted">Role</dt>
-                <dd className="mt-1.5 text-pretty text-body text-ink">
-                  {project.role}
-                </dd>
-              </div>
-              {project.duration && (
-                <div>
-                  <dt className="text-sm text-muted">Duration</dt>
-                  <dd className="mt-1.5 text-body text-ink">
-                    {project.duration}
-                  </dd>
-                </div>
-              )}
-              {project.team && (
-                <div>
-                  <dt className="text-sm text-muted">Team</dt>
-                  <dd className="mt-1.5 text-body text-ink">
-                    {project.team}
-                  </dd>
-                </div>
-              )}
-              {project.url && (
-                <div>
-                  <dt className="text-sm text-muted">Live at</dt>
-                  <dd className="mt-1.5 font-mono text-sm text-ink">
-                    {project.url}
-                  </dd>
-                </div>
-              )}
-            </dl>
-          </Block>
-
-          {/* Problem & approach */}
-          {(project.problem || project.solution) && (
-            <Block title="Problem & approach">
-              <div className="grid gap-10 lg:grid-cols-2">
+          {/* 1 — What it is and how it was built. */}
+          {hasWriteUp && (
+            <Block title="The project">
+              <div className="space-y-10">
                 {project.problem && (
                   <Reveal>
                     <h3 className="text-body font-medium text-ink">
@@ -264,6 +205,7 @@ export default async function ProjectCaseStudy({
                     </p>
                   </Reveal>
                 )}
+
                 {project.solution && (
                   <Reveal delay={0.05}>
                     <h3 className="text-body font-medium text-ink">
@@ -274,12 +216,38 @@ export default async function ProjectCaseStudy({
                     </p>
                   </Reveal>
                 )}
+
+                {project.challenges && project.challenges.length > 0 && (
+                  <div>
+                    <h3 className="text-body font-medium text-ink">
+                      What was hard
+                    </h3>
+                    <RevealGroup className="mt-5 space-y-10">
+                      {project.challenges.map((item) => (
+                        <RevealItem key={item.challenge}>
+                          <p className="text-pretty text-body leading-[1.7] text-ink">
+                            {item.challenge}
+                          </p>
+                          <p className="mt-4 border-l border-line pl-5 text-pretty text-body leading-[1.7] text-secondary">
+                            {item.solution}
+                          </p>
+                          {item.tradeoff && (
+                            <p className="mt-4 text-pretty text-sm leading-[1.65] text-muted">
+                              <span className="text-secondary">Trade-off:</span>{" "}
+                              {item.tradeoff}
+                            </p>
+                          )}
+                        </RevealItem>
+                      ))}
+                    </RevealGroup>
+                  </div>
+                )}
               </div>
             </Block>
           )}
 
-          {/* Stack */}
-          <Block title="Technologies">
+          {/* 2 — Built with. */}
+          <Block title="Built with">
             <ul className="flex flex-wrap gap-2">
               {project.stack.map((tech) => {
                 const { Icon, label } = TECH[tech];
@@ -305,135 +273,12 @@ export default async function ProjectCaseStudy({
             </ul>
           </Block>
 
-          {/* Architecture */}
-          {project.architecture && project.architecture.length > 0 && (
-            <Block title="Architecture">
-              <ol className="max-w-[45rem]">
-                {project.architecture.map((node, nodeIndex) => (
-                  <li
-                    key={node.layer}
-                    className="grid grid-cols-[2.5rem_1fr] gap-4 border-t border-line py-5 first:border-t-0 first:pt-0"
-                  >
-                    <span className="font-mono text-xs text-muted">
-                      {String(nodeIndex + 1).padStart(2, "0")}
-                    </span>
-                    <span>
-                      <span className="block text-body font-medium text-ink">
-                        {node.layer}
-                      </span>
-                      <span className="mt-1 block text-pretty text-sm leading-[1.6] text-secondary">
-                        {node.detail}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </Block>
-          )}
-
-          {/* Challenges */}
-          {project.challenges && project.challenges.length > 0 && (
-            <Block title="Challenges & solutions">
-              <RevealGroup className="space-y-12">
-                {project.challenges.map((item) => (
-                  <RevealItem key={item.challenge}>
-                    <div className="max-w-[45rem]">
-                      <p className="text-pretty text-body leading-[1.7] text-ink">
-                        {item.challenge}
-                      </p>
-                      <p className="mt-4 border-l border-line pl-5 text-pretty text-body leading-[1.7] text-secondary">
-                        {item.solution}
-                      </p>
-                      {item.tradeoff && (
-                        <p className="mt-4 text-pretty text-sm leading-[1.65] text-muted">
-                          <span className="text-secondary">Trade-off:</span>{" "}
-                          {item.tradeoff}
-                        </p>
-                      )}
-                    </div>
-                  </RevealItem>
-                ))}
-              </RevealGroup>
-            </Block>
-          )}
-
-          {/* Results */}
-          {project.metrics && project.metrics.length > 0 && (
-            <Block title="Results">
-              <dl className="grid gap-x-8 gap-y-10 sm:grid-cols-3">
-                {project.metrics.map((metric) => (
-                  <div key={metric.label}>
-                    <dt className="sr-only">{metric.label}</dt>
-                    <dd>
-                      <span className="tabular block text-display-md font-medium leading-none tracking-[-0.03em] text-ink">
-                        <Counter
-                          value={metric.value}
-                          suffix={metric.suffix}
-                          prefix={metric.prefix}
-                          decimals={Number.isInteger(metric.value) ? 0 : 1}
-                        />
-                      </span>
-                      <span className="mt-3 block text-body text-ink">
-                        {metric.label}
-                      </span>
-                      {metric.note && (
-                        <span className="mt-1 block text-pretty text-sm text-muted">
-                          {metric.note}
-                        </span>
-                      )}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Block>
-          )}
-
-          {/* Gallery */}
-          {project.gallery && project.gallery.length > 0 && (
-            <Block title="Gallery">
+          {/* 3 — The interface. */}
+          {shots.length > 0 && (
+            <Block title="Interface" bleed>
               <Reveal>
-                <Gallery images={project.gallery} />
+                <Gallery images={shots} />
               </Reveal>
-            </Block>
-          )}
-
-          {/* Lessons */}
-          {project.lessons && project.lessons.length > 0 && (
-            <Block title="Lessons learned">
-              <ul className="max-w-[45rem] space-y-4">
-                {project.lessons.map((lesson) => (
-                  <li
-                    key={lesson}
-                    className="flex gap-4 text-pretty text-body leading-[1.7] text-secondary"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-[0.75rem] h-px w-4 shrink-0 bg-line-strong"
-                    />
-                    {lesson}
-                  </li>
-                ))}
-              </ul>
-            </Block>
-          )}
-
-          {/* Future work */}
-          {project.futureWork && project.futureWork.length > 0 && (
-            <Block title="Future work">
-              <ul className="max-w-[45rem] space-y-4">
-                {project.futureWork.map((item) => (
-                  <li
-                    key={item}
-                    className="flex gap-4 text-pretty text-body leading-[1.7] text-secondary"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="mt-[0.75rem] h-px w-4 shrink-0 bg-line-strong"
-                    />
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </Block>
           )}
         </div>
@@ -441,9 +286,7 @@ export default async function ProjectCaseStudy({
         {/* ---------------- Next ---------------- */}
         <Reveal className="mt-24 border-t border-line pt-12">
           <Link href={`/projects/${next.slug}`} className="group block">
-            <Eyebrow as="span">
-              Next project
-            </Eyebrow>
+            <Eyebrow as="span">Next project</Eyebrow>
             <span className="mt-4 flex items-center justify-between gap-6">
               <span className="text-title font-medium tracking-[-0.025em] text-ink sm:text-display-sm">
                 {next.title}

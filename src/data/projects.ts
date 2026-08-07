@@ -85,14 +85,29 @@ export interface ArchitectureNode {
   detail: string;
 }
 
-/** A screenshot slot. Drop files in /public/screenshots/ and point here. */
+/**
+ * A screenshot slot.
+ *
+ * Drop the raw capture in /public/screenshots/, then point `src` at a
+ * recompressed WebP beside it in `optimised/`. The originals are kept but not
+ * served: full-page PNG captures ran to 7.5 MB each, and re-encoding them cut
+ * the folder from 31 MB to 2.5 MB.
+ */
 export interface ProjectImage {
-  /** Path from /public. e.g. "/screenshots/attendance-dashboard.png" */
+  /** Path from /public. e.g. "/screenshots/optimised/attendance-flow.webp" */
   src?: string;
   /** Describe the content for screen readers — not "screenshot". */
   alt: string;
-  /** Controls the frame's aspect ratio in the gallery. */
-  device: "desktop" | "tablet" | "mobile";
+  /**
+   * Optional hint at the frame's shape. Leave it out and the gallery measures
+   * the file instead, which is almost always what you want: 13 of these were
+   * wrong before the ratios were checked against the actual images, because
+   * nothing forced the label and the file to agree.
+   *
+   * Note this describes the *capture*, not the device — a desktop page saved
+   * as one tall full-page screenshot is `tall`, not `mobile`.
+   */
+  device?: "wide" | "tall" | "square";
   /** Optional caption shown beneath the frame. */
   caption?: string;
 }
@@ -272,7 +287,7 @@ export const PROJECTS: Project[] = [
     challenges: [
       {
         challenge:
-          "A QR code on a projector is trivially screenshotted and forwarded to an absent friend. the whole attendance ledger is worthless if one photo can mark someone present.",
+          "A QR code on a projector is trivially screenshotted and forwarded to an absent friend. The whole attendance ledger is worthless if one photo can mark someone present.",
         solution:
           "Made the code a moving target and the scan context-bound. The payload is signed with HMAC-SHA256 under the app key, regenerated every 30 seconds and rejected outside a 30-second tolerance, so a forwarded screenshot expires before it can be used. The scan must also originate within 50m of the room or from the campus Wi-Fi subnet, and a device fingerprint already used by another trainee in the same session is refused outright.",
         tradeoff:
@@ -280,11 +295,11 @@ export const PROJECTS: Project[] = [
       },
       {
         challenge:
-          "Campus attendance is regulated student data, and 'add an AI assistant' normally means shipping it to a third-party API. a non-starter for an institutional deployment.",
+          "Campus attendance is regulated student data, and 'add an AI assistant' normally means shipping it to a third-party API, which is a non-starter for an institutional deployment.",
         solution:
           "Kept the entire inference path on-premise: Ollama hosting Mistral for generation and nomic-embed-text for embeddings, with a hand-rolled RAG pipeline: chunk institutional documents, embed, store vectors, rank by cosine similarity at query time. A guardrail service allow-lists campus topics and a role-aware context builder injects only the caller's own scoped data.",
         tradeoff:
-          "Cosine similarity computed in PHP over all stored chunks is O(n) per query. fine at hackathon corpus size, but it needs a real vector index before the document set grows. Local Mistral also answers slower and less fluently than a frontier hosted model. Both were the right trade for data residency.",
+          "Cosine similarity computed in PHP over all stored chunks is O(n) per query. That is fine at hackathon corpus size, but it needs a real vector index before the document set grows. Local Mistral also answers slower and less fluently than a frontier hosted model. Both were the right trade for data residency.",
       },
       {
         challenge:
@@ -344,7 +359,7 @@ export const PROJECTS: Project[] = [
       "Encoding the institution's real rules is the product. The 0.5-point penalty, the 15/15 base, the 30-hour exclusion threshold — those specifics are what make the risk dashboard actionable instead of decorative, and they only came from reading OFPPT's regulations rather than designing a generic attendance app.",
       "Inertia was the right call for a role-heavy admin product under time pressure: no API contract to maintain, no client-side store, while keeping the option to drop to plain JSON endpoints for the handful of genuinely live surfaces.",
       "Pushing rules into services rather than controllers is what made the sprint survivable. Because each engine was independently unit-testable, changing one rule late didn't mean re-verifying the whole check-in flow by hand.",
-      "Self-hosting an LLM buys data residency at a real cost in latency and answer quality. worth it here, but the naive PHP cosine-similarity search is the kind of shortcut that must be paid back before the corpus grows.",
+      "Self-hosting an LLM buys data residency at a real cost in latency and answer quality. Worth it here, but the naive PHP cosine-similarity search is the kind of shortcut that must be paid back before the corpus grows.",
     ],
 
     futureWork: [
@@ -357,79 +372,68 @@ export const PROJECTS: Project[] = [
     ],
 
     cover: {
-      src: "/imgs/campusos/trainer-qr-live.png",
+      src: "/imgs/campusos/optimised/trainer-qr-live.webp",
       alt: "Trainer view of the dynamic QR code with cryptographic token countdown and live scan feed",
-      device: "desktop",
     },
 
     gallery: [
       {
-        src: "/imgs/campusos/admin-dashboard.png",
+        src: "/imgs/campusos/optimised/admin-dashboard.webp",
         alt: "Admin dashboard showing campus attendance rate, enrolment counts, pending justifications, and critical absenteeism alerts",
-        device: "desktop",
         caption:
           "Administration overview: campus-wide attendance at a glance, a moderation queue for justifications and reschedules, and dropout alerts naming the trainees closest to exam exclusion.",
       },
       {
-        src: "/imgs/campusos/admin-risk.png",
+        src: "/imgs/campusos/optimised/admin-risk.webp",
         alt: "Predictive risk management table ranking trainees by accumulated unjustified absence hours and attendance rate",
-        device: "desktop",
         caption:
           "The predictive risk table, built around OFPPT's 30-hour exclusion rule — every row carries its intervention: call, AI analysis, or formal warning.",
       },
       {
-        src: "/imgs/campusos/trainer-dashboard.png",
+        src: "/imgs/campusos/optimised/trainer-dashboard.webp",
         alt: "Trainer dashboard listing the day's sessions with attendance activation locked until each session starts",
-        device: "desktop",
         caption:
           "Trainer day view. Attendance can only be activated inside a session's own time slot — upcoming slots stay locked.",
       },
       {
-        src: "/imgs/campusos/admin-schedule.png",
+        src: "/imgs/campusos/optimised/admin-schedule.webp",
         alt: "Weekly timetable manager with per-group, per-room, and per-trainer views and inline session editing",
-        device: "desktop",
         caption:
           "Timetable manager, pivotable by group, room or trainer — collisions and capacity overruns are caught before a change is written.",
       },
       {
-        src: "/imgs/campusos/admin-leaderboard.png",
+        src: "/imgs/campusos/optimised/admin-leaderboard.webp",
         alt: "Global trainee leaderboard with engagement scores, attendance rates, and awarded badges",
-        device: "desktop",
         caption:
           "The engagement leaderboard: attendance, assiduity note and badges collapsed into one transparent score across all groups.",
       },
       {
-        src: "/imgs/campusos/login.png",
+        src: "/imgs/campusos/optimised/login.webp",
         alt: "CampusOS institutional login page with split layout and academic email sign-in",
-        device: "desktop",
         caption:
           "Institutional entry point. A single login routes admins, trainers and trainees to their own dashboard via role-based redirects.",
       },
       {
-        src: "/imgs/campusos/admin-announcements.png",
+        src: "/imgs/campusos/optimised/admin-announcements.webp",
         alt: "Announcement composer with recipient targeting and broadcast history",
-        device: "tablet",
         caption:
           "Announcements targeted by group, filière or campus-wide, with priority levels and per-trainee read receipts.",
       },
       {
-        src: "/imgs/campusos/admin-users.png",
+        src: "/imgs/campusos/optimised/admin-users.webp",
         alt: "User directory listing trainees, trainers, and administrators with roles and profile details",
-        device: "tablet",
         caption:
           "Directory of all 64 accounts, filterable by role — each trainee resolved to their matricule, filière and group.",
       },
       {
-        src: "/imgs/campusos/admin-absences.png",
+        src: "/imgs/campusos/optimised/admin-absences.webp",
         alt: "Absence history and validation table with filters and exportable records",
-        device: "tablet",
         caption:
           "Absence ledger with justification status, supporting documents and exports for administrative follow-up.",
       },
       {
-        src: "/imgs/campusos/student-dashboard.png",
+        src: "/imgs/campusos/optimised/student-dashboard.webp",
         alt: "Student dashboard showing regulatory assiduity score, next session, QR scan action, and announcements",
-        device: "mobile",
         caption:
           "The trainee's view — a 14.5/15 assiduity score they can finally see moving, the next session, and one button to scan in.",
       },
@@ -460,10 +464,15 @@ export const PROJECTS: Project[] = [
     ],
 
     featured: true,
-    status: "In Development",
+    /*
+     * The build ran Oct 2025 to Jun 2026 and is finished; "In Development"
+     * alongside a completed date range read as a contradiction to anyone
+     * checking. It is built and not publicly deployed, which is `Prototype`.
+     */
+    status: "Prototype",
     url: "github.com/abdelhaymallouli/AttendanceFlow-AMS",
 
-    duration: "9 months — Oct 2025 to Jun 2026",
+    duration: "9 months, Oct 2025 to Jun 2026",
     team: "Solo",
 
     problem:
@@ -586,7 +595,7 @@ export const PROJECTS: Project[] = [
       "Modelling trust as a weighted score instead of a chain of boolean gates was the decision that made the anti-fraud system usable. Requiring all four signals would have locked out honest students with a bad GPS fix; scoring lets the system be strict in aggregate while forgiving about any single sensor failing.",
       "Pushing logic into services before the feature count grew paid for itself repeatedly. When QR attendance was added months into the project, it slotted in as a new service package rather than a rewrite, and the existing attendance flows kept working untouched.",
       "Idempotency has to be designed into the schema, not bolted on at the endpoint. Choosing session, student and nonce as the natural dedup key early meant offline sync, network retries and double-taps all collapsed into the same already-solved problem.",
-      "Building the mobile client with NativePHP kept the whole project in one language and one mental model. The trade-off is a smaller ecosystem and less community material than React Native or Flutter. worth it for a solo developer, and something I would weigh differently on a team with existing mobile expertise.",
+      "Building the mobile client with NativePHP kept the whole project in one language and one mental model. The trade-off is a smaller ecosystem and less community material than React Native or Flutter. Worth it for a solo developer, and something I would weigh differently on a team with existing mobile expertise.",
     ],
 
     futureWork: [
@@ -599,76 +608,65 @@ export const PROJECTS: Project[] = [
     ],
 
     cover: {
-      src: "/imgs/attendanceflow/admin-dashboard.png",
+      src: "/imgs/attendanceflow/optimised/admin-dashboard.webp",
       alt: "Administrator dashboard with attendance KPIs and Chart.js analytics",
-      device: "desktop",
     },
 
     gallery: [
       {
-        src: "/imgs/attendanceflow/admin-qr.png",
+        src: "/imgs/attendanceflow/optimised/admin-qr.webp",
         alt: "QR attendance management screen showing session tokens",
-        device: "desktop",
         caption:
           "QR session control — rotating signed tokens with a fallback text code for students without a camera.",
       },
       {
-        src: "/imgs/attendanceflow/admin-attendance.png",
+        src: "/imgs/attendanceflow/optimised/admin-attendance.webp",
         alt: "Attendance records table with filters by group, module, and status",
-        device: "desktop",
         caption:
           "Attendance register — filterable by filière, group, module, session and status.",
       },
       {
-        src: "/imgs/attendanceflow/admin-settings.png",
+        src: "/imgs/attendanceflow/optimised/admin-settings.webp",
         alt: "System settings for validation weights and campus parameters",
-        device: "desktop",
         caption:
           "Settings — campus coordinates, geofence radius, validation weights and score thresholds, all tunable per deployment.",
       },
       {
-        src: "/imgs/attendanceflow/admin-justifications.png",
+        src: "/imgs/attendanceflow/optimised/admin-justifications.webp",
         alt: "Justification approval queue with submitted documents",
-        device: "desktop",
         caption:
           "Justification workflow — review submitted certificates and approve or reject in one click.",
       },
       {
-        src: "/imgs/attendanceflow/admin-timetable.png",
+        src: "/imgs/attendanceflow/optimised/admin-timetable.webp",
         alt: "Timetable management grid",
-        device: "desktop",
         caption: "Timetable management — sessions scheduled across groups and rooms.",
       },
       {
-        src: "/imgs/attendanceflow/teacher-timetable-request.png",
+        src: "/imgs/attendanceflow/optimised/teacher-timetable-request.webp",
         alt: "Teacher submitting a timetable change request",
-        device: "desktop",
         caption:
           "Timetable change request — teachers propose a move, administrators approve or reject.",
       },
       {
-        src: "/imgs/attendanceflow/teacher-dashboard.png",
+        src: "/imgs/attendanceflow/optimised/teacher-dashboard.webp",
         alt: "Teacher dashboard listing today's sessions",
-        device: "desktop",
         caption: "Teacher dashboard — today's sessions and one-tap attendance launch.",
       },
       {
-        src: "/imgs/attendanceflow/admin-logs.png",
+        src: "/imgs/attendanceflow/optimised/admin-logs.webp",
         alt: "Audit log listing attendance and administrative actions",
-        device: "desktop",
         caption: "Audit log — every override, approval and scan verdict is traceable.",
       },
       {
-        src: "/imgs/attendanceflow/admin-users.png",
+        src: "/imgs/attendanceflow/optimised/admin-users.webp",
         alt: "User management screen with role assignment",
-        device: "desktop",
         caption:
           "User management — RBAC role assignment across admin, teacher and student.",
       },
       {
-        src: "/imgs/attendanceflow/landing.png",
+        src: "/imgs/attendanceflow/optimised/landing.webp",
         alt: "AttendanceFlow AMS public landing page presenting the product",
-        device: "desktop",
         caption: "Public landing page — the entry point for all three user roles.",
       },
     ],
@@ -714,9 +712,8 @@ export const PROJECTS: Project[] = [
     ],
 
     cover: {
-      src: "/screenshots/Venuvibe.png",
+      src: "/screenshots/optimised/Venuvibe.webp",
       alt: "VenuVibe event marketplace showing venue listings with date and category filters",
-      device: "desktop",
     },
 
     links: {
@@ -749,9 +746,8 @@ export const PROJECTS: Project[] = [
     status: "Live",
 
     cover: {
-      src: "/screenshots/WeatherWise.png",
+      src: "/screenshots/optimised/WeatherWise.webp",
       alt: "WeatherWise desktop interface showing current conditions and forecast for a searched location",
-      device: "desktop",
     },
 
     links: { source: "https://github.com/abdelhaymallouli/WeatherWise" },
@@ -774,12 +770,17 @@ export const PROJECTS: Project[] = [
       "Secure CRUD operations",
     ],
 
+    /*
+     * Fourth featured slot. A dashboard with real data visualisation says
+     * more about full-stack range than a front-end exercise does, which is
+     * why this took the place World Haven previously held.
+     */
+    featured: true,
     status: "Live",
 
     cover: {
-      src: "/screenshots/PersonalFinance.png",
+      src: "/screenshots/optimised/PersonalFinance.webp",
       alt: "Personal finance dashboard with spending charts and a recent transaction list",
-      device: "desktop",
     },
 
     links: {
@@ -809,9 +810,8 @@ export const PROJECTS: Project[] = [
     status: "Live",
 
     cover: {
-      src: "/screenshots/FarhaCultural.png",
+      src: "/screenshots/optimised/FarhaCultural.webp",
       alt: "Farha cultural event platform showing an event listing with filters and a booking action",
-      device: "desktop",
     },
 
     links: {
@@ -819,131 +819,6 @@ export const PROJECTS: Project[] = [
         "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
     },
   },
-
-  {
-    slug: "restaurant-ordering-system",
-    title: "Restaurant Ordering System",
-    tagline:
-      "Food ordering that connects the customer's basket to the kitchen and an admin dashboard in one flow.",
-    summary:
-      "An ordering system covering the path from customer to kitchen. Customers build an order, staff track its status, and administrators see the whole queue from a dashboard.",
-    year: "2024",
-    role: "Full-stack developer",
-    categories: ["Full Stack", "Dashboard"],
-    stack: ["php", "mysql", "javascript", "html5", "css"],
-    stackExtras: [
-      "Session management",
-      "Real-time status tracking",
-      "Responsive UI",
-    ],
-
-    status: "Live",
-
-    cover: {
-      src: "/screenshots/RestaurantOrdering.png",
-      alt: "Restaurant ordering interface with a menu, basket and order status panel",
-      device: "desktop",
-    },
-
-    links: {
-      source: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
-    },
-  },
-
-  {
-    slug: "world-haven-book-store",
-    title: "World Haven Book Store",
-    tagline:
-      "An online bookstore front end with category browsing and a wishlist that survives a refresh.",
-    summary:
-      "A bookstore interface focused on the browsing experience. Books are discoverable by category, and the wishlist persists locally so a visitor does not lose it between sessions.",
-    year: "2024",
-    role: "Frontend developer",
-    categories: ["Frontend"],
-    stack: ["javascript", "html5", "css"],
-    stackExtras: [
-      "LocalStorage persistence",
-      "Dynamic DOM manipulation",
-      "UX/UI optimisation",
-    ],
-
-    featured: true,
-    status: "Live",
-
-    cover: {
-      src: "/screenshots/wordhaven.png",
-      alt: "World Haven bookstore showing a book grid with category filters and a wishlist control",
-      device: "desktop",
-    },
-
-    links: {
-      live: "https://word-haven-bookstore.vercel.app/",
-      source: "https://github.com/abdelhaymallouli/World-Haven-Book-Store",
-    },
-  },
-
-  {
-    slug: "restaurant-of-tangier",
-    title: "Restaurant of Tangier",
-    tagline:
-      "A mobile-first local directory for Tangier restaurants, built for discovery.",
-    summary:
-      "A directory application for local restaurants, designed mobile-first. Listings render dynamically and the markup is structured for local search visibility.",
-    year: "2024",
-    role: "Full-stack developer",
-    categories: ["Frontend"],
-    stack: ["php", "javascript", "html5", "css"],
-    stackExtras: [
-      "Responsive web design",
-      "Local SEO",
-      "Mobile-first design",
-    ],
-
-    status: "Live",
-
-    cover: {
-      src: "/screenshots/RestaurantOfTangier.png",
-      alt: "Restaurant of Tangier directory showing restaurant cards on a mobile-first layout",
-      device: "desktop",
-    },
-
-    links: {
-      live: "https://restaurant-of-tangier.vercel.app/",
-      source: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
-    },
-  },
-
-  {
-    slug: "cart-shopping-dessert-shop",
-    title: "Cart Shopping — Dessert Shop",
-    tagline:
-      "A shopping cart written in vanilla JavaScript, with no framework holding the state.",
-    summary:
-      "A front-end study in state management without a framework. The cart tracks quantities, totals and item state in plain JavaScript, updating the DOM directly as the basket changes.",
-    year: "2024",
-    role: "Frontend developer",
-    categories: ["Frontend"],
-    stack: ["javascript", "html5", "css"],
-    stackExtras: [
-      "State management",
-      "Event-driven programming",
-      "Vanilla JS architecture",
-    ],
-
-    status: "Live",
-
-    cover: {
-      src: "/screenshots/CartShopping.png",
-      alt: "Dessert shop storefront with items being added to a running cart total",
-      device: "desktop",
-    },
-
-    links: {
-      live: "https://cart-shopping-pi.vercel.app/",
-      source: "https://github.com/abdelhaymallouli/cart-shopping",
-    },
-  },
-
 ];
 
 /* ------------------------------------------------------------------ *

@@ -37,14 +37,14 @@ import { FAQ } from "@/components/organisms/FAQ";
  */
 export default function Home() {
   return (
-    <PageShell trackSections>
+    <PageShell trackSections darkHero>
       <Hero />
-      <Skills />
       <ProjectShowcase />
       <About />
       <Journey />
       <Bento />
       <Philosophy />
+      <Skills />
       <FAQ />
     </PageShell>
   );

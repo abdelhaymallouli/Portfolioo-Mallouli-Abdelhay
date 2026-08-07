@@ -23,7 +23,14 @@ import { NAV_LINKS, SECTION_IDS, SITE } from "@/data/content";
  * lets the yellow CTA marker sit at full saturation without competing with
  * anything around it.
  */
-export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
+export function Navbar({
+  trackSections = false,
+  /** See `PageShell` — false on every page that opens on light canvas. */
+  darkHero = false,
+}: {
+  trackSections?: boolean;
+  darkHero?: boolean;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -99,12 +106,16 @@ export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
           className={cn(
             "rounded-xl transition-all duration-300 ease-out",
             /*
-             * Fully transparent at rest: the hero panel behind it is already
-             * dark, so a fill here would read as a second box stacked on the
-             * first. It only materialises once the page has scrolled past
-             * the hero onto the light sections.
+             * Transparent at rest only where something dark sits behind it —
+             * i.e. the home hero, where a fill would read as a second box
+             * stacked on the first.
+             *
+             * Everywhere else the page opens on light canvas, and the bar's
+             * contents are white, so staying transparent made the wordmark and
+             * links invisible until the first scroll. Those pages get the pill
+             * immediately.
              */
-            scrolled || menuOpen
+            scrolled || menuOpen || !darkHero
               ? "border border-white/10 bg-black/80 backdrop-blur-lg"
               : "border border-transparent",
           )}
