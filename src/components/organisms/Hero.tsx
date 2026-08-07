@@ -33,13 +33,13 @@ export function Hero() {
        * bottom, so the gap between them absorbs the viewport height rather
        * than the two blocks drifting apart at a fixed distance.
        */}
-      <div className="relative flex min-h-[90vh] flex-col justify-between overflow-hidden rounded-3xl bg-[#0a0a0a] pt-36 md:min-h-screen md:pt-44 lg:pt-52">
+      <div className="relative flex min-h-[90vh] flex-col justify-between overflow-hidden rounded-3xl bg-surface-dark pt-36 md:min-h-screen md:pt-44 lg:pt-52">
         <HeroBackdrop />
 
         <Container className="relative z-10">
           {SITE.availability.open && (
             <Reveal>
-              <p className="inline-flex w-fit items-center gap-2.5 rounded-full border border-white/15 bg-white/5 py-1.5 pl-3 pr-4 text-[0.8125rem] text-white/70 backdrop-blur-sm">
+              <p className="inline-flex w-fit items-center gap-2.5 rounded-full border border-white/10 bg-white/5 py-1.5 pl-3 pr-4 text-caption text-white/70 backdrop-blur-sm">
                 <StatusDot />
                 Available for {SITE.availability.modes[0].toLowerCase()} work
               </p>
@@ -53,14 +53,14 @@ export function Hero() {
                * orphan word on the last line. No explicit measure — the
                * column width already does that job.
                */}
-              <h1 className="text-balance text-[2.25rem] font-semibold leading-[1.03] tracking-tight text-white sm:text-[3rem] md:text-[3.5rem] lg:text-[4.5rem]">
+              <h1 className="text-balance text-display-sm font-semibold leading-[1.03] tracking-tight text-white sm:text-display-lg md:text-display-lg lg:text-display-xl">
                 {HERO.headline}
               </h1>
             </Reveal>
 
             <div className="lg:max-w-md lg:pt-3">
               <Reveal delay={0.1}>
-                <p className="text-pretty text-[1.0625rem] leading-[1.7] text-white/70">
+                <p className="text-pretty text-lead leading-[1.7] text-white/70">
                   {HERO.intro}
                 </p>
               </Reveal>
@@ -84,7 +84,7 @@ export function Hero() {
                     variant="secondary"
                     size="lg"
                     /* Secondary defaults to a light fill — inverted here. */
-                    className="border-white/20 bg-white/5 text-white hover:border-white/35 hover:bg-white/10"
+                    className="border-white/25 bg-white/5 text-white hover:border-white/40 hover:bg-white/10"
                   >
                     {HERO.secondaryCta.label}
                     <Download

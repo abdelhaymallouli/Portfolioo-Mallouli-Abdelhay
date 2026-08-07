@@ -90,7 +90,7 @@ export function HeroBackdrop() {
           />
           {/* The lit edge itself, drawn as a gradient border. */}
           <div
-            className="absolute inset-0 rounded-[50%]"
+            className="absolute inset-0 rounded-full"
             style={{
               border: "1px solid transparent",
               background:

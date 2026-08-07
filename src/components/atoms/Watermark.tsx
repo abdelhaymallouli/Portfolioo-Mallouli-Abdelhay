@@ -25,7 +25,7 @@ export function Watermark({
       aria-hidden="true"
       className={cn(
         "watermark pointer-events-none absolute select-none whitespace-nowrap",
-        "text-display md:text-display-md lg:text-display-lg",
+        "text-ghost-sm md:text-ghost-md lg:text-ghost-lg",
         className,
       )}
     >

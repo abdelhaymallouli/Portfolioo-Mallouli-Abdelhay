@@ -7,6 +7,7 @@ import { SiGithub } from "react-icons/si";
 import { cn } from "@/lib/utils";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader } from "@/components/atoms/Container";
+import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { ButtonLink } from "@/components/atoms/Button";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { Counter } from "@/components/motion/Counter";
@@ -52,9 +53,9 @@ function Block({
   return (
     <section className={cn("border-t border-line pt-12", className)}>
       <Reveal>
-        <h2 className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+        <Eyebrow as="h2">
           {title}
-        </h2>
+        </Eyebrow>
       </Reveal>
       <div className="mt-8">{children}</div>
     </section>
@@ -169,11 +170,11 @@ export default async function ProjectCaseStudy({
             ))}
           </div>
 
-          <h1 className="mt-6 text-balance text-[2.5rem] font-medium leading-[1.08] tracking-[-0.035em] text-ink sm:text-[3.25rem] lg:text-[4rem]">
+          <h1 className="mt-6 text-balance text-display-md font-medium leading-[1.08] tracking-[-0.035em] text-ink sm:text-display-lg lg:text-display-xl">
             {project.title}
           </h1>
 
-          <p className="mt-6 max-w-[45rem] text-pretty text-[1.125rem] leading-[1.6] text-secondary">
+          <p className="mt-6 max-w-[45rem] text-pretty text-lg leading-[1.6] text-secondary">
             {project.summary}
           </p>
 
@@ -218,14 +219,14 @@ export default async function ProjectCaseStudy({
             <dl className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <dt className="text-sm text-muted">Role</dt>
-                <dd className="mt-1.5 text-pretty text-[0.9375rem] text-ink">
+                <dd className="mt-1.5 text-pretty text-body text-ink">
                   {project.role}
                 </dd>
               </div>
               {project.duration && (
                 <div>
                   <dt className="text-sm text-muted">Duration</dt>
-                  <dd className="mt-1.5 text-[0.9375rem] text-ink">
+                  <dd className="mt-1.5 text-body text-ink">
                     {project.duration}
                   </dd>
                 </div>
@@ -233,7 +234,7 @@ export default async function ProjectCaseStudy({
               {project.team && (
                 <div>
                   <dt className="text-sm text-muted">Team</dt>
-                  <dd className="mt-1.5 text-[0.9375rem] text-ink">
+                  <dd className="mt-1.5 text-body text-ink">
                     {project.team}
                   </dd>
                 </div>
@@ -255,20 +256,20 @@ export default async function ProjectCaseStudy({
               <div className="grid gap-10 lg:grid-cols-2">
                 {project.problem && (
                   <Reveal>
-                    <h3 className="text-[0.9375rem] font-medium text-ink">
+                    <h3 className="text-body font-medium text-ink">
                       The problem
                     </h3>
-                    <p className="mt-3 text-pretty text-[0.9375rem] leading-[1.7] text-secondary">
+                    <p className="mt-3 text-pretty text-body leading-[1.7] text-secondary">
                       {project.problem}
                     </p>
                   </Reveal>
                 )}
                 {project.solution && (
                   <Reveal delay={0.05}>
-                    <h3 className="text-[0.9375rem] font-medium text-ink">
+                    <h3 className="text-body font-medium text-ink">
                       The approach
                     </h3>
-                    <p className="mt-3 text-pretty text-[0.9375rem] leading-[1.7] text-secondary">
+                    <p className="mt-3 text-pretty text-body leading-[1.7] text-secondary">
                       {project.solution}
                     </p>
                   </Reveal>
@@ -284,7 +285,7 @@ export default async function ProjectCaseStudy({
                 const { Icon, label } = TECH[tech];
                 return (
                   <li key={tech}>
-                    <span className="inline-flex h-8 items-center gap-2 rounded-md border border-line px-3 text-[0.8125rem] text-ink">
+                    <span className="inline-flex h-8 items-center gap-2 rounded-lg border border-line px-3 text-caption text-ink">
                       <Icon className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
                       {label}
                     </span>
@@ -296,7 +297,7 @@ export default async function ProjectCaseStudy({
                   nothing is dropped just because a logo doesn't exist. */}
               {project.stackExtras?.map((extra) => (
                 <li key={extra}>
-                  <span className="inline-flex h-8 items-center rounded-md border border-line px-3 text-[0.8125rem] text-secondary">
+                  <span className="inline-flex h-8 items-center rounded-lg border border-line px-3 text-caption text-secondary">
                     {extra}
                   </span>
                 </li>
@@ -317,7 +318,7 @@ export default async function ProjectCaseStudy({
                       {String(nodeIndex + 1).padStart(2, "0")}
                     </span>
                     <span>
-                      <span className="block text-[0.9375rem] font-medium text-ink">
+                      <span className="block text-body font-medium text-ink">
                         {node.layer}
                       </span>
                       <span className="mt-1 block text-pretty text-sm leading-[1.6] text-secondary">
@@ -337,10 +338,10 @@ export default async function ProjectCaseStudy({
                 {project.challenges.map((item) => (
                   <RevealItem key={item.challenge}>
                     <div className="max-w-[45rem]">
-                      <p className="text-pretty text-[0.9375rem] leading-[1.7] text-ink">
+                      <p className="text-pretty text-body leading-[1.7] text-ink">
                         {item.challenge}
                       </p>
-                      <p className="mt-4 border-l border-line pl-5 text-pretty text-[0.9375rem] leading-[1.7] text-secondary">
+                      <p className="mt-4 border-l border-line pl-5 text-pretty text-body leading-[1.7] text-secondary">
                         {item.solution}
                       </p>
                       {item.tradeoff && (
@@ -364,7 +365,7 @@ export default async function ProjectCaseStudy({
                   <div key={metric.label}>
                     <dt className="sr-only">{metric.label}</dt>
                     <dd>
-                      <span className="tabular block text-[2.5rem] font-medium leading-none tracking-[-0.03em] text-ink">
+                      <span className="tabular block text-display-md font-medium leading-none tracking-[-0.03em] text-ink">
                         <Counter
                           value={metric.value}
                           suffix={metric.suffix}
@@ -372,7 +373,7 @@ export default async function ProjectCaseStudy({
                           decimals={Number.isInteger(metric.value) ? 0 : 1}
                         />
                       </span>
-                      <span className="mt-3 block text-[0.9375rem] text-ink">
+                      <span className="mt-3 block text-body text-ink">
                         {metric.label}
                       </span>
                       {metric.note && (
@@ -403,7 +404,7 @@ export default async function ProjectCaseStudy({
                 {project.lessons.map((lesson) => (
                   <li
                     key={lesson}
-                    className="flex gap-4 text-pretty text-[0.9375rem] leading-[1.7] text-secondary"
+                    className="flex gap-4 text-pretty text-body leading-[1.7] text-secondary"
                   >
                     <span
                       aria-hidden="true"
@@ -423,7 +424,7 @@ export default async function ProjectCaseStudy({
                 {project.futureWork.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-4 text-pretty text-[0.9375rem] leading-[1.7] text-secondary"
+                    className="flex gap-4 text-pretty text-body leading-[1.7] text-secondary"
                   >
                     <span
                       aria-hidden="true"
@@ -440,11 +441,11 @@ export default async function ProjectCaseStudy({
         {/* ---------------- Next ---------------- */}
         <Reveal className="mt-24 border-t border-line pt-12">
           <Link href={`/projects/${next.slug}`} className="group block">
-            <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted">
+            <Eyebrow as="span">
               Next project
-            </span>
+            </Eyebrow>
             <span className="mt-4 flex items-center justify-between gap-6">
-              <span className="text-[1.75rem] font-medium tracking-[-0.025em] text-ink sm:text-[2rem]">
+              <span className="text-title font-medium tracking-[-0.025em] text-ink sm:text-display-sm">
                 {next.title}
               </span>
               <ArrowRight

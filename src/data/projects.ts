@@ -193,9 +193,9 @@ export const PROJECTS: Project[] = [
     tagline:
       "Fraud-proof QR attendance, dropout risk detection, and an on-premise AI assistant for OFPPT campuses.",
     summary:
-      "A full-stack campus operations platform built for OFPPT, Morocco's vocational training office. It replaces paper roll-call with a rotating, HMAC-signed QR code that trainers project in class and students scan from a native mobile app — validated against GPS geofencing, campus Wi-Fi subnet, and device fingerprinting, so proxy check-ins fail. On top of that attendance ledger it encodes OFPPT's real regulatory logic, surfaces at-risk trainees before they cross the exam-exclusion threshold, and answers regulatory questions through a role-aware AI assistant running entirely on-premise.",
+      "A full-stack campus operations platform built for OFPPT, Morocco's vocational training office. It replaces paper roll-call with a rotating, HMAC-signed QR code that trainers project in class and students scan from a native mobile app. Every scan is validated against GPS geofencing, campus Wi-Fi subnet and device fingerprinting, so proxy check-ins fail. On top of that attendance ledger it encodes OFPPT's real regulatory logic, surfaces at-risk trainees before they cross the exam-exclusion threshold, and answers regulatory questions through a role-aware AI assistant running entirely on-premise.",
     year: "2026",
-    role: "Full-stack developer — architecture, Laravel backend, React/Inertia frontend, AI layer, NativePHP mobile app",
+    role: "Full-stack developer: architecture, Laravel backend, React/Inertia frontend, AI layer, NativePHP mobile app",
     categories: ["Full Stack", "EdTech", "AI & LLM", "Mobile", "Dashboard"],
     stack: [
       "php",
@@ -218,15 +218,20 @@ export const PROJECTS: Project[] = [
 
     featured: true,
     status: "Prototype",
-    url: "github.com/abdelhaymallouli/Smart-Campus-OFPPT-Hackahton-2026",
+    /*
+     * Display string only. The real repo path contains a typo ("Hackahton"),
+     * which `links.source` must keep verbatim or the link 404s — but there is
+     * no reason to render the misspelling to every visitor.
+     */
+    url: "github.com/abdelhaymallouli/Smart-Campus-OFPPT",
 
     duration: "Hackathon sprint — OFPPT Hackathon 2026",
     team: "4 contributors",
 
     problem:
-      "OFPPT campuses still run attendance on paper. Roll-call eats the first ten minutes of every session, sheets are easy to fake through friends signing in for absentees, and totals are only tallied weeks later — by which point a trainee has already crossed the 30-hour unjustified-absence threshold and is barred from end-of-module exams. Nobody sees the slide coming: administration has no live view of who is drifting, trainers cannot intervene early, and trainees have no visibility into a score that quietly decides their academic year. Timetabling has the same blind spot — sessions get rescheduled into rooms already booked or over capacity, because conflicts are only caught by whoever happens to notice.",
+      "OFPPT campuses still run attendance on paper. Roll-call eats the first ten minutes of every session, sheets are easy to fake through friends signing in for absentees, and totals are only tallied weeks later. By that point a trainee has already crossed the 30-hour unjustified-absence threshold and is barred from end-of-module exams. Nobody sees the slide coming: administration has no live view of who is drifting, trainers cannot intervene early, and trainees have no visibility into a score that quietly decides their academic year. Timetabling has the same blind spot. Sessions get rescheduled into rooms already booked or over capacity, because conflicts are only caught by whoever happens to notice.",
     solution:
-      "One system that owns the attendance ledger end to end. The trainer projects a QR code that regenerates every 30 seconds, each payload carrying an HMAC-SHA256 signature over the session ID and timestamp. A scan is accepted only if the signature verifies, the timestamp is inside the tolerance window, the device is within 50m of the room or on the campus Wi-Fi subnet, and its fingerprint has not already been used by another trainee in the same session — which structurally kills screenshot sharing and proxy check-ins. Every accepted scan feeds three engines: assiduity applies OFPPT's penalty rules and flags risk tiers, gamification awards badges and recomputes standing, and the notification layer alerts the trainee.",
+      "One system that owns the attendance ledger end to end. The trainer projects a QR code that regenerates every 30 seconds, each payload carrying an HMAC-SHA256 signature over the session ID and timestamp. A scan is accepted only if the signature verifies, the timestamp is inside the tolerance window, the device is within 50m of the room or on the campus Wi-Fi subnet, and its fingerprint has not already been used by another trainee in the same session. That combination structurally kills screenshot sharing and proxy check-ins. Every accepted scan feeds three engines: assiduity applies OFPPT's penalty rules and flags risk tiers, gamification awards badges and recomputes standing, and the notification layer alerts the trainee.",
 
     highlights: [
       "Rotating HMAC-SHA256 QR codes on a 30-second validity window, layered with GPS geofencing, Wi-Fi subnet matching, and per-session device fingerprinting — four independent checks a proxy check-in has to beat at once.",
@@ -267,7 +272,7 @@ export const PROJECTS: Project[] = [
     challenges: [
       {
         challenge:
-          "A QR code on a projector is trivially screenshotted and forwarded to an absent friend — the whole attendance ledger is worthless if one photo can mark someone present.",
+          "A QR code on a projector is trivially screenshotted and forwarded to an absent friend. the whole attendance ledger is worthless if one photo can mark someone present.",
         solution:
           "Made the code a moving target and the scan context-bound. The payload is signed with HMAC-SHA256 under the app key, regenerated every 30 seconds and rejected outside a 30-second tolerance, so a forwarded screenshot expires before it can be used. The scan must also originate within 50m of the room or from the campus Wi-Fi subnet, and a device fingerprint already used by another trainee in the same session is refused outright.",
         tradeoff:
@@ -275,11 +280,11 @@ export const PROJECTS: Project[] = [
       },
       {
         challenge:
-          "Campus attendance is regulated student data, and 'add an AI assistant' normally means shipping it to a third-party API — a non-starter for an institutional deployment.",
+          "Campus attendance is regulated student data, and 'add an AI assistant' normally means shipping it to a third-party API. a non-starter for an institutional deployment.",
         solution:
-          "Kept the entire inference path on-premise: Ollama hosting Mistral for generation and nomic-embed-text for embeddings, with a hand-rolled RAG pipeline — chunk institutional documents, embed, store vectors, rank by cosine similarity at query time. A guardrail service allow-lists campus topics and a role-aware context builder injects only the caller's own scoped data.",
+          "Kept the entire inference path on-premise: Ollama hosting Mistral for generation and nomic-embed-text for embeddings, with a hand-rolled RAG pipeline: chunk institutional documents, embed, store vectors, rank by cosine similarity at query time. A guardrail service allow-lists campus topics and a role-aware context builder injects only the caller's own scoped data.",
         tradeoff:
-          "Cosine similarity computed in PHP over all stored chunks is O(n) per query — fine at hackathon corpus size, but it needs a real vector index before the document set grows. Local Mistral also answers slower and less fluently than a frontier hosted model. Both were the right trade for data residency.",
+          "Cosine similarity computed in PHP over all stored chunks is O(n) per query. fine at hackathon corpus size, but it needs a real vector index before the document set grows. Local Mistral also answers slower and less fluently than a frontier hosted model. Both were the right trade for data residency.",
       },
       {
         challenge:
@@ -339,7 +344,7 @@ export const PROJECTS: Project[] = [
       "Encoding the institution's real rules is the product. The 0.5-point penalty, the 15/15 base, the 30-hour exclusion threshold — those specifics are what make the risk dashboard actionable instead of decorative, and they only came from reading OFPPT's regulations rather than designing a generic attendance app.",
       "Inertia was the right call for a role-heavy admin product under time pressure: no API contract to maintain, no client-side store, while keeping the option to drop to plain JSON endpoints for the handful of genuinely live surfaces.",
       "Pushing rules into services rather than controllers is what made the sprint survivable. Because each engine was independently unit-testable, changing one rule late didn't mean re-verifying the whole check-in flow by hand.",
-      "Self-hosting an LLM buys data residency at a real cost in latency and answer quality — worth it here, but the naive PHP cosine-similarity search is the kind of shortcut that must be paid back before the corpus grows.",
+      "Self-hosting an LLM buys data residency at a real cost in latency and answer quality. worth it here, but the naive PHP cosine-similarity search is the kind of shortcut that must be paid back before the corpus grows.",
     ],
 
     futureWork: [
@@ -441,9 +446,9 @@ export const PROJECTS: Project[] = [
     tagline:
       "QR-based attendance for schools, with multi-factor anti-fraud scoring and an offline-capable mobile app.",
     summary:
-      "AttendanceFlow AMS replaces paper attendance sheets and the manual Excel re-entry that follows them. Teachers project a rotating HMAC-signed QR code; students scan it from their phone and the scan is validated against four independent signals — token signature, GPS geofence, campus Wi-Fi subnet, and device fingerprint — before it is written as a present or late record. Around that core sit role-scoped portals for administrators, teachers, and students: dashboards, timetable management with a change-request workflow, digital absence justifications with document upload, notifications, audit logs, and CSV/PDF reporting for at-risk students.",
+      "AttendanceFlow AMS replaces paper attendance sheets and the manual Excel re-entry that follows them. Teachers project a rotating HMAC-signed QR code; students scan it from their phone and the scan is validated against four independent signals (token signature, GPS geofence, campus Wi-Fi subnet and device fingerprint) before it is written as a present or late record. Around that core sit role-scoped portals for administrators, teachers, and students: dashboards, timetable management with a change-request workflow, digital absence justifications with document upload, notifications, audit logs, and CSV/PDF reporting for at-risk students.",
     year: "2026",
-    role: "Full-stack developer — architecture, backend, UI, and mobile",
+    role: "Full-stack developer: architecture, backend, UI, and mobile",
     categories: ["Full Stack", "EdTech", "Mobile", "Dashboard"],
     stack: ["laravel", "php", "tailwind", "alpine", "mysql", "vite", "chartjs"],
     stackExtras: [
@@ -462,9 +467,9 @@ export const PROJECTS: Project[] = [
     team: "Solo",
 
     problem:
-      "Attendance in most training centers is captured on paper, then re-typed by hand into spreadsheets. That human bridge is the bottleneck: it costs administrative staff hours every week, introduces transcription errors, and delays the data by days — so by the time anyone notices a student is at risk of exclusion, the damage is done. Students have no visibility into their own record, and submitting a medical certificate means physically walking it to an office.",
+      "Attendance in most training centers is captured on paper, then re-typed by hand into spreadsheets. That human bridge is the bottleneck: it costs administrative staff hours every week, introduces transcription errors, and delays the data by days. By the time anyone notices a student is at risk of exclusion, the damage is done. Students have no visibility into their own record, and submitting a medical certificate means physically walking it to an office.",
     solution:
-      "A single system that captures attendance at the source and makes it immediately queryable. Teachers open a session and display a QR code that rotates every 30 seconds; students scan it in the mobile app. Because a QR code on a screen can be photographed and forwarded, the scan alone is not trusted — the server scores it against GPS proximity to campus, the client's Wi-Fi subnet, and a known device fingerprint, and the weighted total decides whether the record is accepted as present, downgraded to late, or rejected outright. Justifications, timetable changes, and reporting all live in the same data model, so an approved certificate updates the student's rate the moment an admin clicks approve.",
+      "A single system that captures attendance at the source and makes it immediately queryable. Teachers open a session and display a QR code that rotates every 30 seconds; students scan it in the mobile app. Because a QR code on a screen can be photographed and forwarded, the scan alone is not trusted. The server scores it against GPS proximity to campus, the client's Wi-Fi subnet and a known device fingerprint, and the weighted total decides whether the record is accepted as present, downgraded to late, or rejected outright. Justifications, timetable changes, and reporting all live in the same data model, so an approved certificate updates the student's rate the moment an admin clicks approve.",
 
     highlights: [
       "HMAC-SHA256 signed QR tokens with a 30-second TTL, single-use nonces, and configurable clock-skew tolerance — a screenshotted code is worthless within half a minute.",
@@ -521,7 +526,7 @@ export const PROJECTS: Project[] = [
         challenge:
           "Classrooms have unreliable connectivity, but attendance must not depend on the network being up at 9:00 sharp.",
         solution:
-          "The mobile client queues scans locally and syncs them as a batch when connectivity returns. OfflineQueueService deduplicates on the session, student and nonce triple before writing, making the sync endpoint fully idempotent — a retried batch is a no-op.",
+          "The mobile client queues scans locally and syncs them as a batch when connectivity returns. OfflineQueueService deduplicates on the session, student and nonce triple before writing, making the sync endpoint fully idempotent. A retried batch is a no-op.",
         tradeoff:
           "Offline scans cannot be validated against server-side rate limits at capture time, and their timestamps come from the device clock. This is bounded by the token's own 30-second expiry, evaluated server-side at sync — a stale queued token is rejected regardless of when it was captured.",
       },
@@ -581,7 +586,7 @@ export const PROJECTS: Project[] = [
       "Modelling trust as a weighted score instead of a chain of boolean gates was the decision that made the anti-fraud system usable. Requiring all four signals would have locked out honest students with a bad GPS fix; scoring lets the system be strict in aggregate while forgiving about any single sensor failing.",
       "Pushing logic into services before the feature count grew paid for itself repeatedly. When QR attendance was added months into the project, it slotted in as a new service package rather than a rewrite, and the existing attendance flows kept working untouched.",
       "Idempotency has to be designed into the schema, not bolted on at the endpoint. Choosing session, student and nonce as the natural dedup key early meant offline sync, network retries and double-taps all collapsed into the same already-solved problem.",
-      "Building the mobile client with NativePHP kept the whole project in one language and one mental model. The trade-off is a smaller ecosystem and less community material than React Native or Flutter — worth it for a solo developer, and something I would weigh differently on a team with existing mobile expertise.",
+      "Building the mobile client with NativePHP kept the whole project in one language and one mental model. The trade-off is a smaller ecosystem and less community material than React Native or Flutter. worth it for a solo developer, and something I would weigh differently on a team with existing mobile expertise.",
     ],
 
     futureWork: [
@@ -676,159 +681,267 @@ export const PROJECTS: Project[] = [
   {
     slug: "venuvibe",
     title: "VenuVibe",
-    tagline: "Event discovery and booking platform.",
+    tagline:
+      "A marketplace connecting venue owners with event planners, with booking and vendor management built in.",
     summary:
-      "A venue and event marketplace where organisers publish listings and attendees browse, filter, and book. Built around fast search over a large, frequently-updated catalogue.",
+      "A full-stack marketplace that bridges venue owners and event planners. It handles the booking workflow end to end and gives vendors an administrative panel to manage their listings, availability and incoming requests.",
     year: "2025",
-    role: "Full-stack engineer — search, booking flow, caching",
+    role: "Full-stack developer",
     categories: ["Full Stack", "Frontend"],
-    stack: ["nextjs", "typescript", "react", "tailwind", "mysql"],
+    stack: ["react", "typescript", "php", "mysql", "vite"],
+    stackExtras: [
+      "Agile development",
+      "Component-based architecture",
+      "State management",
+    ],
 
     featured: true,
     status: "Live",
-    url: "venuvibe.app",
-
-    duration: "8 weeks",
-    team: "2 engineers",
-
-    problem:
-      "Organisers had no single channel to list events, and attendees were discovering them through scattered social posts. Listings went stale quickly, and there was no reliable way to confirm availability before turning up.",
-    solution:
-      "A catalogue with server-rendered listing pages for search visibility, incremental regeneration so published changes appear quickly without rebuilding, and a booking flow that treats the server as the single source of truth for availability.",
-
-    highlights: [
-      "Server-rendered listings with incremental regeneration on publish.",
-      "Full-text venue search that stays responsive past 50k rows.",
-      "Booking flow with optimistic UI and a defined rollback path.",
-      "Tag-based cache invalidation scoped to the edited listing.",
-    ],
-
-    architecture: [
-      { layer: "Next.js App Router", detail: "Server components, streamed listing pages" },
-      { layer: "Edge cache", detail: "Tag-based revalidation triggered on publish" },
-      { layer: "Route handlers", detail: "Typed endpoints with schema-validated input" },
-      { layer: "MySQL", detail: "Full-text indexes over venue and event metadata" },
-      { layer: "GitHub Actions", detail: "Test, build, and preview deployment per PR" },
-    ],
 
     challenges: [
       {
         challenge:
-          "Search degraded badly once the catalogue passed ~50k rows — `LIKE '%term%'` forced a full table scan on every keystroke.",
+          "Filtering events across multiple dates and categories at once meant holding a large, interdependent state tree in the client.",
         solution:
-          "Replaced the scan with a MySQL full-text index and moved querying into a debounced server action, so typing no longer issued a request per character.",
-        tradeoff:
-          "Full-text matching handles typos less gracefully than trigram search would; acceptable at this catalogue size.",
+          "Decoupled the state into custom React hooks so each slice of filtering logic could be reasoned about and tested on its own.",
       },
       {
         challenge:
-          "Optimistic booking updates could diverge from server state when two people booked the last slot simultaneously.",
+          "The vendor dashboard needed tight access control without making client-facing queries slow.",
         solution:
-          "Kept authoritative availability on the server and reconciled on mutation settle, rolling the optimistic update back with an explicit message rather than silently correcting it.",
+          "Tuned the MySQL joins and added caching on the read paths, keeping venue-owner queries responsive.",
       },
     ],
 
-    metrics: [
-      { value: 40, suffix: "%", label: "Lower bounce rate" },
-      { value: 1.2, suffix: "s", label: "Largest contentful paint" },
-      { value: 99.9, suffix: "%", label: "Uptime" },
-    ],
+    cover: {
+      src: "/screenshots/Venuvibe.png",
+      alt: "VenuVibe event marketplace showing venue listings with date and category filters",
+      device: "desktop",
+    },
 
-    lessons: [
-      "Optimistic UI needs its rollback story designed up front — retrofitting one means guessing at states you no longer have.",
-      "Cache invalidation is a product decision as much as a technical one: how stale is acceptable is a question for the people using it.",
-    ],
-
-    futureWork: [
-      "Geospatial search for venues near a given location.",
-      "Organiser analytics dashboard.",
-    ],
-
-    gallery: [
-      { alt: "Event discovery grid with active filters", device: "desktop" },
-      { alt: "Venue detail and booking panel", device: "desktop" },
-      { alt: "Mobile browsing view", device: "mobile" },
-    ],
-
-    links: { live: "#", source: "#" },
+    links: {
+      live: "https://venuvibe-deploy.vercel.app/",
+      source:
+        "https://github.com/abdelhaymallouli/Venuvibe-Event-Planning-Platform",
+    },
   },
 
   {
     slug: "weatherwise",
     title: "WeatherWise",
-    tagline: "Forecast aggregation service with a Go backend.",
+    tagline:
+      "A desktop weather client that turns raw meteorological API data into a readable forecast.",
     summary:
-      "A service that aggregates forecasts from several upstream providers into a single normalised response, designed to stay available when individual providers are slow or rate-limiting.",
+      "A Python desktop application demonstrating API orchestration. It resolves a location, queries a weather service, and renders the response as a clean Tkinter interface rather than leaving the user to read raw JSON.",
     year: "2024",
-    role: "Backend engineer — service design, caching, deployment",
-    categories: ["Backend", "Open Source"],
-    stack: ["go", "react", "typescript", "docker", "githubactions"],
+    role: "Developer",
+    categories: ["Backend"],
+    stack: ["python"],
+    stackExtras: [
+      "Tkinter",
+      "Requests",
+      "Geopy",
+      "API integration",
+      "Error handling",
+      "Object-oriented programming",
+    ],
+
+    status: "Live",
+
+    cover: {
+      src: "/screenshots/WeatherWise.png",
+      alt: "WeatherWise desktop interface showing current conditions and forecast for a searched location",
+      device: "desktop",
+    },
+
+    links: { source: "https://github.com/abdelhaymallouli/WeatherWise" },
+  },
+
+  {
+    slug: "personal-finance-manager",
+    title: "Personal Finance Manager",
+    tagline:
+      "Budget tracking with a dashboard that turns transaction history into something you can act on.",
+    summary:
+      "A budget tracking application built around a dashboard view. It visualises transaction data so spending patterns are visible at a glance rather than buried in a table.",
+    year: "2024",
+    role: "Full-stack developer",
+    categories: ["Full Stack", "Dashboard"],
+    stack: ["php", "mysql", "javascript", "chartjs", "css"],
+    stackExtras: [
+      "MVC architecture",
+      "Data visualisation",
+      "Secure CRUD operations",
+    ],
+
+    status: "Live",
+
+    cover: {
+      src: "/screenshots/PersonalFinance.png",
+      alt: "Personal finance dashboard with spending charts and a recent transaction list",
+      device: "desktop",
+    },
+
+    links: {
+      source: "https://github.com/abdelhaymallouli/personal-finance-manager-php",
+    },
+  },
+
+  {
+    slug: "farha-cultural-event-platform",
+    title: "Farha Cultural Event Platform",
+    tagline:
+      "A ticketing platform for a cultural association, built around data integrity and a secure booking flow.",
+    summary:
+      "A ticketing solution for a cultural association. It carries event listings with advanced filtering and an end-to-end booking flow, with security handled at the database boundary rather than bolted on.",
+    year: "2024",
+    role: "Full-stack developer",
+    categories: ["Full Stack", "Backend"],
+    stack: ["php", "mysql", "javascript"],
+    stackExtras: [
+      "PHP 8 (OOP)",
+      "PDO prepared statements",
+      "Bcrypt authentication",
+      "Relational database design",
+      "Page Controller pattern",
+    ],
+
+    status: "Live",
+
+    cover: {
+      src: "/screenshots/FarhaCultural.png",
+      alt: "Farha cultural event platform showing an event listing with filters and a booking action",
+      device: "desktop",
+    },
+
+    links: {
+      source:
+        "https://github.com/abdelhaymallouli/Event-management-of-a-cultural-association",
+    },
+  },
+
+  {
+    slug: "restaurant-ordering-system",
+    title: "Restaurant Ordering System",
+    tagline:
+      "Food ordering that connects the customer's basket to the kitchen and an admin dashboard in one flow.",
+    summary:
+      "An ordering system covering the path from customer to kitchen. Customers build an order, staff track its status, and administrators see the whole queue from a dashboard.",
+    year: "2024",
+    role: "Full-stack developer",
+    categories: ["Full Stack", "Dashboard"],
+    stack: ["php", "mysql", "javascript", "html5", "css"],
+    stackExtras: [
+      "Session management",
+      "Real-time status tracking",
+      "Responsive UI",
+    ],
+
+    status: "Live",
+
+    cover: {
+      src: "/screenshots/RestaurantOrdering.png",
+      alt: "Restaurant ordering interface with a menu, basket and order status panel",
+      device: "desktop",
+    },
+
+    links: {
+      source: "https://github.com/abdelhaymallouli/restaurant-ordering-system",
+    },
+  },
+
+  {
+    slug: "world-haven-book-store",
+    title: "World Haven Book Store",
+    tagline:
+      "An online bookstore front end with category browsing and a wishlist that survives a refresh.",
+    summary:
+      "A bookstore interface focused on the browsing experience. Books are discoverable by category, and the wishlist persists locally so a visitor does not lose it between sessions.",
+    year: "2024",
+    role: "Frontend developer",
+    categories: ["Frontend"],
+    stack: ["javascript", "html5", "css"],
+    stackExtras: [
+      "LocalStorage persistence",
+      "Dynamic DOM manipulation",
+      "UX/UI optimisation",
+    ],
 
     featured: true,
     status: "Live",
-    url: "weatherwise.dev",
 
-    duration: "6 weeks",
-    team: "Solo",
+    cover: {
+      src: "/screenshots/wordhaven.png",
+      alt: "World Haven bookstore showing a book grid with category filters and a wishlist control",
+      device: "desktop",
+    },
 
-    problem:
-      "Individual weather APIs disagree, rate-limit aggressively on free tiers, and occasionally stall. Any client depending on exactly one of them inherits all of those failure modes.",
-    solution:
-      "A Go service that fans out to several providers in parallel under a shared deadline, normalises their responses, and returns a partial result when a provider is slow rather than waiting for the slowest one.",
+    links: {
+      live: "https://word-haven-bookstore.vercel.app/",
+      source: "https://github.com/abdelhaymallouli/World-Haven-Book-Store",
+    },
+  },
 
-    highlights: [
-      "Parallel provider fan-out with a shared request deadline.",
-      "Request coalescing so concurrent identical lookups hit upstream once.",
-      "Graceful degradation — a slow provider is dropped, not fatal.",
-      "12MB distroless container image.",
+  {
+    slug: "restaurant-of-tangier",
+    title: "Restaurant of Tangier",
+    tagline:
+      "A mobile-first local directory for Tangier restaurants, built for discovery.",
+    summary:
+      "A directory application for local restaurants, designed mobile-first. Listings render dynamically and the markup is structured for local search visibility.",
+    year: "2024",
+    role: "Full-stack developer",
+    categories: ["Frontend"],
+    stack: ["php", "javascript", "html5", "css"],
+    stackExtras: [
+      "Responsive web design",
+      "Local SEO",
+      "Mobile-first design",
     ],
 
-    architecture: [
-      { layer: "React client", detail: "Typed API client with suspense boundaries" },
-      { layer: "Go service", detail: "Provider fan-out under per-request context deadlines" },
-      { layer: "In-memory cache", detail: "Per-region TTL with singleflight deduplication" },
-      { layer: "Docker", detail: "Distroless image, ~12MB" },
+    status: "Live",
+
+    cover: {
+      src: "/screenshots/RestaurantOfTangier.png",
+      alt: "Restaurant of Tangier directory showing restaurant cards on a mobile-first layout",
+      device: "desktop",
+    },
+
+    links: {
+      live: "https://restaurant-of-tangier.vercel.app/",
+      source: "https://github.com/abdelhaymallouli/Restaurant-of-Tangier",
+    },
+  },
+
+  {
+    slug: "cart-shopping-dessert-shop",
+    title: "Cart Shopping — Dessert Shop",
+    tagline:
+      "A shopping cart written in vanilla JavaScript, with no framework holding the state.",
+    summary:
+      "A front-end study in state management without a framework. The cart tracks quantities, totals and item state in plain JavaScript, updating the DOM directly as the basket changes.",
+    year: "2024",
+    role: "Frontend developer",
+    categories: ["Frontend"],
+    stack: ["javascript", "html5", "css"],
+    stackExtras: [
+      "State management",
+      "Event-driven programming",
+      "Vanilla JS architecture",
     ],
 
-    challenges: [
-      {
-        challenge:
-          "Traffic spikes produced hundreds of identical concurrent lookups for the same region, immediately exhausting upstream rate limits.",
-        solution:
-          "Wrapped provider calls in singleflight so concurrent identical requests share one in-flight upstream call, backed by a short per-region TTL cache.",
-      },
-      {
-        challenge:
-          "One slow provider held the entire aggregate response hostage, because the handler waited for every call to return.",
-        solution:
-          "Gave each provider its own context deadline and returned whatever had resolved when the shared deadline expired, flagging the response as partial.",
-        tradeoff:
-          "Partial responses need explicit handling client-side; the alternative was an outage whenever any single provider degraded.",
-      },
-    ],
+    status: "Live",
 
-    metrics: [
-      { value: 30, suffix: "ms", label: "p95 latency" },
-      { value: 5, suffix: "x", label: "Throughput improvement" },
-      { value: 100, label: "Lighthouse performance" },
-    ],
+    cover: {
+      src: "/screenshots/CartShopping.png",
+      alt: "Dessert shop storefront with items being added to a running cart total",
+      device: "desktop",
+    },
 
-    lessons: [
-      "Timeouts are a feature. An unbounded wait is an outage that hasn't happened yet.",
-      "Coalescing duplicate work is cheaper than scaling infrastructure to absorb it.",
-    ],
-
-    futureWork: [
-      "Persistent cache layer so restarts don't cold-start every region.",
-      "Provider health scoring to deprioritise consistently slow sources.",
-    ],
-
-    gallery: [
-      { alt: "Forecast view with aggregated provider data", device: "desktop" },
-      { alt: "Mobile forecast view", device: "mobile" },
-    ],
-
-    links: { live: "#", source: "#" },
+    links: {
+      live: "https://cart-shopping-pi.vercel.app/",
+      source: "https://github.com/abdelhaymallouli/cart-shopping",
+    },
   },
 
 ];

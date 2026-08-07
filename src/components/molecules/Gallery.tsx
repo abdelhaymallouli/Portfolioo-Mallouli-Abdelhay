@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useState } from "react";
 import Image from "next/image";
@@ -135,7 +135,7 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
             </button>
 
             {/* Counter */}
-            <span className="absolute right-3 top-3 rounded-full border border-line bg-card/90 px-2.5 py-1 font-mono text-[0.6875rem] text-secondary backdrop-blur">
+            <span className="absolute right-3 top-3 rounded-full border border-line bg-card/90 px-2.5 py-1 font-mono text-micro text-secondary backdrop-blur">
               <span className="tabular">{index + 1}</span>
               <span aria-hidden="true"> / </span>
               <span className="tabular">{count}</span>
@@ -186,8 +186,8 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
             initial={reduceMotion ? false : { opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
-            transition={{ duration: 0.18, ease: [0, 0, 0.2, 1] }}
-            className="max-w-[45rem] text-pretty text-[0.9375rem] leading-[1.65] text-secondary"
+            transition={{ duration: 0.2, ease: [0, 0, 0.2, 1] }}
+            className="max-w-[45rem] text-pretty text-body leading-[1.65] text-secondary"
           >
             {active.caption ?? active.alt}
           </motion.p>

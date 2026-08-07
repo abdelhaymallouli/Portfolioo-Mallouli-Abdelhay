@@ -17,7 +17,7 @@ export function WindowChrome({ url }: { url?: string }) {
         <span className="h-2.5 w-2.5 rounded-full border border-line" />
       </div>
       {url && (
-        <span className="truncate font-mono text-[0.6875rem] text-muted">
+        <span className="truncate font-mono text-micro text-muted">
           {url}
         </span>
       )}

@@ -12,12 +12,12 @@ import { PRINCIPLES } from "@/data/content";
  */
 export function Philosophy() {
   return (
-    <Section id="philosophy">
+    <Section id="philosophy" tone="subtle">
       <Container>
         <SectionHeading
           eyebrow="Philosophy"
           title="How I make engineering decisions."
-          description="Positions I've arrived at from shipping and maintaining production systems — each one is a trade-off I'd defend in review."
+          description="Positions I arrived at by shipping and maintaining production systems. Each one is a trade-off I would defend in review."
         />
 
         <RevealGroup className="mt-20 grid gap-x-12 gap-y-0 md:grid-cols-2 lg:grid-cols-3">
@@ -28,11 +28,11 @@ export function Philosophy() {
                   {String(index + 1).padStart(2, "0")}
                 </span>
 
-                <h3 className="mt-5 text-[1.0625rem] font-medium tracking-[-0.01em] text-ink">
+                <h3 className="mt-5 text-lead font-medium tracking-[-0.01em] text-ink">
                   {principle.title}
                 </h3>
 
-                <p className="mt-3 text-pretty text-[0.9375rem] leading-[1.65] text-secondary">
+                <p className="mt-3 text-pretty text-body leading-[1.65] text-secondary">
                   {principle.body}
                 </p>
               </article>

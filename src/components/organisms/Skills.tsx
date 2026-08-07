@@ -1,69 +1,111 @@
-import { Container, Section } from "@/components/atoms/Container";
-import { SectionHeading } from "@/components/atoms/SectionHeading";
-import { Eyebrow } from "@/components/atoms/Eyebrow";
-import { Chip } from "@/components/atoms/Chip";
+"use client";
+
+import { Container } from "@/components/atoms/Container";
 import { Reveal } from "@/components/motion/Reveal";
-import { TECH } from "@/lib/tech-icons";
-import { SKILLS } from "@/data/content";
+import { TECH, type TechKey } from "@/lib/tech-icons";
 
 /**
- * Technical capability, grouped by layer.
+ * Technologies section — mirrors the "Trusted by fast-growing startups"
+ * logo-grid pattern from the reference, adapted for a developer portfolio.
  *
- * Chips only — no proficiency bars or percentages. A "React 85%" bar asserts
- * a precision nobody can verify and reads as filler; a categorised list of
- * what you actually work with is honest and faster to scan.
- *
- * Chip glyphs are monochrome. Rendering brand colours across two dozen chips
- * turns the section into confetti and pulls attention away from the type.
- *
- * Certifications and languages used to live here too. They were a separate
- * concern wearing the same layout, and now sit in the `Bento` grid — this
- * organism does one thing.
+ * Icons come from the central TECH registry. Plain-text extras represent
+ * tools and practices that have no recognisable logo mark.
  */
+
+// All icon-backed technologies from the CV
+const ICON_TECH: TechKey[] = [
+  "laravel",
+  "php",
+  "go",
+  "react",
+  "nextjs",
+  "typescript",
+  "javascript",
+  "python",
+  "kotlin",
+  "tailwind",
+  "mysql",
+  "sqlite",
+  "docker",
+  "githubactions",
+  "gitflow",
+  "figma",
+  "alpine",
+  "inertia",
+  "vite",
+  "html5",
+  "css",
+  "ollama",
+  "chartjs",
+];
+
+// Text-only extras that appear as plain pill badges
+const TEXT_EXTRAS = [
+  "PostgreSQL",
+  "REST APIs",
+  "GraphQL",
+  "OAuth2 / OpenID",
+  "Microsoft Graph API",
+  "Personio SDK",
+  "PHPUnit / TDD",
+  "NativePHP",
+  "Spatie RBAC",
+  "Retrofit",
+  "MVVM",
+  "Scrum / GitFlow",
+];
+
 export function Skills() {
   return (
-    <Section id="skills">
-      <Container>
-        <SectionHeading
-          eyebrow="Capabilities"
-          title="Tools and practice."
-          description="Grouped by where they sit in a system. Everything listed is something I've shipped with, not something I've read about."
-        />
+    <section
+      id="skills"
+      className="relative w-full border-t border-line bg-canvas py-12 md:py-16"
+    >
+      <Container className="max-w-7xl">
+        {/* Label matching the reference's mono uppercase eyebrow */}
+        <Reveal offset={8}>
+          <p className="text-center font-mono text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+            Ecosystem &amp; Core Technologies
+          </p>
+        </Reveal>
 
-        <div className="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2">
-          {SKILLS.map((group, index) => (
-            <Reveal key={group.title} delay={index * 0.05}>
-              <div className="border-t border-line pt-7">
-                <Eyebrow as="h3">{group.title}</Eyebrow>
+        {/* Icon grid */}
+        <div className="mx-auto mt-8 flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-4 md:gap-x-10 md:gap-y-6">
+          {ICON_TECH.map((key, index) => {
+            const { Icon, label } = TECH[key];
+            return (
+              <Reveal key={key} delay={index * 0.02} offset={10}>
+                <div
+                  className="group flex items-center gap-2.5 rounded-xl border border-line bg-card px-4 py-2.5 shadow-subtle/40 transition-all duration-300 hover:scale-105 hover:border-line-strong hover:shadow-lift"
+                  style={{ perspective: "800px" }}
+                >
+                  <Icon
+                    className="h-4 w-4 shrink-0 text-muted transition-colors duration-200 group-hover:text-ink"
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm font-semibold tracking-tight text-muted transition-colors duration-200 group-hover:text-ink">
+                    {label}
+                  </span>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
 
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {group.items.map((tech) => {
-                    const { Icon, label } = TECH[tech];
-                    return (
-                      <li key={tech}>
-                        <Chip interactive tone="ink">
-                          <Icon
-                            className="h-3.5 w-3.5 text-muted"
-                            aria-hidden="true"
-                          />
-                          {label}
-                        </Chip>
-                      </li>
-                    );
-                  })}
+        {/* Divider */}
+        <div className="mx-auto mt-6 h-px max-w-3xl bg-gradient-to-r from-transparent via-line-strong to-transparent" />
 
-                  {/* Entries without a recognisable logo. */}
-                  {group.extras?.map((extra) => (
-                    <li key={extra}>
-                      <Chip interactive>{extra}</Chip>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Plain-text extras — tools without a logo mark */}
+        <div className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-3">
+          {TEXT_EXTRAS.map((extra, index) => (
+            <Reveal key={extra} delay={index * 0.015} offset={8}>
+              <span className="rounded-full border border-line bg-card px-4 py-1.5 text-xs font-medium tracking-wide text-muted transition-colors duration-200 hover:border-line-strong hover:text-ink">
+                {extra}
+              </span>
             </Reveal>
           ))}
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

@@ -1,51 +1,50 @@
 import { PageShell } from "@/components/layout/PageShell";
 import { Hero } from "@/components/organisms/Hero";
 import { ProjectShowcase } from "@/components/organisms/ProjectShowcase";
-import { Highlight } from "@/components/organisms/Highlight";
-import { Services } from "@/components/organisms/Services";
-import { Bento } from "@/components/organisms/Bento";
 import { About } from "@/components/organisms/About";
-import { Process } from "@/components/organisms/Process";
-import { Comparison } from "@/components/organisms/Comparison";
-import { Philosophy } from "@/components/organisms/Philosophy";
 import { Journey } from "@/components/organisms/Journey";
+import { Bento } from "@/components/organisms/Bento";
+import { Philosophy } from "@/components/organisms/Philosophy";
 import { Skills } from "@/components/organisms/Skills";
 import { FAQ } from "@/components/organisms/FAQ";
 
 /**
  * Home.
  *
- * Order is deliberate: work first, because that's what a reviewer came for.
- * The showcase grid is the hook — imagery before prose — and `Work` supplies
- * the written detail for anyone who wants it.
+ * Every section answers exactly one question a hiring reader is actually
+ * asking, in the order they ask it:
  *
- * `Highlight` is a deliberate beat of stillness between the four dense case
- * studies and the six service cards; without it the two heavy sections
- * collide and neither lands.
+ *   Who is this?          Hero
+ *   Can they build?       ProjectShowcase
+ *   Who are they really?  About
+ *   How did they get here? Journey
+ *   What's the evidence?  Bento
+ *   How do they think?    Philosophy
+ *   What do they use?     Skills
+ *   The obvious questions FAQ
+ *   How do I reach them?  Footer (carries the contact CTA)
  *
- * From there it narrows: what I sell (Services), the evidence behind it
- * (Bento — figures, languages, certifications and stack in one grid), who I
- * am (About), how I work (Process, Comparison, Philosophy), what I've shipped
- * (Journey, Skills), then the questions a first call would otherwise open
- * with.
+ * Work comes before biography on purpose. A reviewer opens a portfolio to see
+ * what was built; making them read two prose sections first spends attention
+ * before it has been earned.
  *
- * Tone alternates canvas/subtle down the page so no two banded sections ever
- * touch — three in a row read as one undifferentiated block.
+ * Four sections were cut here — Services, Process, Comparison and Highlight.
+ * All four were written for a client buying an agency's time, not for someone
+ * deciding whether to interview. The case studies already demonstrate process
+ * and trade-offs far better than a list of them claimed to.
+ *
+ * Tone alternates canvas/subtle so no two banded sections touch.
  */
 export default function Home() {
   return (
     <PageShell trackSections>
       <Hero />
-      <ProjectShowcase />
-      <Highlight />
-      <Services />
-      <Bento />
-      <About />
-      <Process />
-      <Comparison />
-      <Philosophy />
-      <Journey />
       <Skills />
+      <ProjectShowcase />
+      <About />
+      <Journey />
+      <Bento />
+      <Philosophy />
       <FAQ />
     </PageShell>
   );

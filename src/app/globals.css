@@ -25,6 +25,15 @@
   --color-hover: #f7f7f7; /* Hover fill */
 
   /*
+   * The inverted ground, used by Hero, About and the footer. It was written
+   * as a literal `#0a0a0a` in six places before this — a system colour with
+   * no token, which is how three sections ended up almost but not exactly
+   * matching.
+   */
+  --color-surface-dark: #0a0a0a;
+  --color-surface-dark-soft: #1c1a17; /* Backdrop orbs */
+
+  /*
    * --- Text ---
    * Headings sit at #343434 rather than pure black: against a warm ground,
    * true black reads harder than the rest of the palette and flattens the
@@ -70,6 +79,42 @@
   --tracking-tight: -0.025em;
 
   /*
+   * --- Type scale ---
+   *
+   * Nine named steps replacing 21 distinct arbitrary `text-[…rem]` values
+   * spread across 83 usages. The old set had no scale at all — `0.9375rem`
+   * appeared 34 times beside `0.875rem` and `1.0625rem`, differences too
+   * small to be intentional and too many to be maintained.
+   *
+   * Line heights ride with the size, so a caller never has to remember that
+   * display type wants 1.05 and body wants 1.7. Tracking is applied
+   * separately, since it depends on ground as well as size.
+   *
+   * `display-*` are the three heading sizes; `body`/`meta`/`caption` are the
+   * three prose sizes. Everything else was a rounding error.
+   */
+  --text-micro: 0.6875rem; /* 11px — mono kind labels, window chrome */
+  --text-micro--line-height: 1.4;
+  --text-caption: 0.8125rem; /* 13px — chips, fine print */
+  --text-caption--line-height: 1.5;
+  --text-meta: 0.875rem; /* 14px — metadata, labels */
+  --text-meta--line-height: 1.5;
+  --text-body: 0.9375rem; /* 15px — default body */
+  --text-body--line-height: 1.65;
+  --text-lead: 1.0625rem; /* 17px — section descriptions, hero intro */
+  --text-lead--line-height: 1.7;
+  --text-title: 1.75rem; /* 28px — card titles, dialog */
+  --text-title--line-height: 1.2;
+  --text-display-sm: 2rem; /* 32px — section h2 base */
+  --text-display-sm--line-height: 1.1;
+  --text-display-md: 2.5rem; /* 40px — section h2 at sm */
+  --text-display-md--line-height: 1.1;
+  --text-display-lg: 3rem; /* 48px — section h2 at lg */
+  --text-display-lg--line-height: 1.05;
+  --text-display-xl: 4.5rem; /* 72px — hero h1 only */
+  --text-display-xl--line-height: 1.03;
+
+  /*
    * --- Spacing ---
    * Section rhythm is 80px mobile / 120px desktop, matching the reference's
    * py-20 md:py-30 beat.
@@ -81,14 +126,29 @@
   --container-page: 90rem; /* 1440px — max width */
   --container-reading: 45rem; /* 720px — reading measure */
 
-  /* --- Radius: generous. Cards are soft-cornered, not sharp. --- */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
+  /*
+   * --- Radius ---
+   *
+   * Three real values, not seven. The scale previously ran sm/md/lg/xl/2xl/
+   * 3xl/4xl across 0.25–2rem, and call sites used all of them — differences
+   * of 0.125rem that no one could see but everyone had to choose between.
+   *
+   * The names are kept as aliases so existing call sites keep compiling, but
+   * they now resolve to one of three steps:
+   *
+   *   controls  0.5rem   buttons, inputs, chips-with-square-ends
+   *   card      1rem     every card and panel
+   *   panel     1.5rem   large inset panels (hero, contact, dialog)
+   *
+   * `rounded-full` remains for genuinely circular objects.
+   */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.5rem;
   --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
+  --radius-xl: 1rem;
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
-  --radius-4xl: 2rem;
+  --radius-4xl: 1.5rem;
 
   /* --- Shadows: one soft card shadow, plus a lift for hover. --- */
   --shadow-subtle: 0 2px 6px 0 rgb(0 0 0 / 0.12);
@@ -248,22 +308,25 @@ html.lenis body {
 }
 
 /**
- * Display scale for the watermark.
+ * Display scale for the decorative watermark.
  *
- * Declared as `--text-*` theme entries rather than `@utility` rules: Tailwind
- * generates `text-display`, `text-display-md` and `text-display-lg` from
- * these automatically, and — critically — makes them available to variants,
- * so `md:text-display-md` actually compiles. Hand-rolled `@utility` versions
- * only ever emitted the unprefixed class, leaving the word stuck at 100px on
- * every viewport.
+ * Namespaced `ghost-*` rather than `display-*`: the type scale above owns
+ * `display-sm|md|lg` for real headings, and the two collided — `--text-
+ * display-md` was declared twice, so the 280px watermark value silently won
+ * and every section heading would have rendered at watermark size.
+ *
+ * Declared as `--text-*` theme entries rather than `@utility` rules because
+ * Tailwind only generates responsive variants for the former: hand-rolled
+ * `@utility` versions emit the unprefixed class alone, which left the word
+ * stuck at one size on every viewport.
  */
 @theme {
-  --text-display: 100px;
-  --text-display--line-height: 0.875;
-  --text-display-md: 200px;
-  --text-display-md--line-height: 0.875;
-  --text-display-lg: 280px;
-  --text-display-lg--line-height: 0.875;
+  --text-ghost-sm: 100px;
+  --text-ghost-sm--line-height: 0.875;
+  --text-ghost-md: 200px;
+  --text-ghost-md--line-height: 0.875;
+  --text-ghost-lg: 280px;
+  --text-ghost-lg--line-height: 0.875;
 }
 
 /**

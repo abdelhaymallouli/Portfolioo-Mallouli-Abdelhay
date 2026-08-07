@@ -17,16 +17,22 @@ export function Chip({
   interactive = false,
   /** Icon chips use the primary ink; plain text chips step down to secondary. */
   tone = "secondary",
+  /** `sm` is the 24px variant used inside cards, where 32px crowds. */
+  size = "md",
 }: {
   children: ReactNode;
   className?: string;
   interactive?: boolean;
   tone?: "ink" | "secondary";
+  size?: "sm" | "md";
 }) {
   return (
     <span
       className={cn(
-        "inline-flex h-8 items-center gap-2 rounded-full border border-line px-3.5 text-[0.8125rem]",
+        "inline-flex items-center gap-2 rounded-full border border-line",
+        size === "sm"
+          ? "h-6 px-2.5 text-micro"
+          : "h-8 px-3.5 text-caption",
         tone === "ink" ? "text-ink" : "text-secondary",
         interactive &&
           "transition-colors duration-200 ease-out hover:border-line-strong hover:bg-hover",

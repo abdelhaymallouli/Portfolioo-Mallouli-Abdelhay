@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TECH } from "@/lib/tech-icons";
+import { Card } from "@/components/atoms/Card";
 import {
   PROJECT_CATEGORIES,
   VISIBLE_PROJECTS,
@@ -17,9 +18,15 @@ import {
 /** One card in the archive grid. */
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link
+    <Card
+      as={Link}
       href={`/projects/${project.slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-lg border border-line bg-card shadow-subtle transition-all duration-200 ease-out hover:-translate-y-1 hover:border-line-strong hover:shadow-lift"
+      interactive
+      /*
+       * The hover contract lives in `Card` — this had a hand-written copy of
+       * it, which is how two card designs drifted apart in the first place.
+       */
+      className="group flex h-full flex-col overflow-hidden"
     >
       {/* Thumbnail */}
       <div className="relative isolate aspect-[16/10] w-full overflow-hidden bg-subtle">
@@ -48,7 +55,7 @@ function ProjectCard({ project }: { project: Project }) {
           {project.status && <span>{project.status}</span>}
         </div>
 
-        <h3 className="mt-3 flex items-start justify-between gap-3 text-[0.9375rem] font-medium text-ink">
+        <h3 className="mt-3 flex items-start justify-between gap-3 text-body font-medium text-ink">
           {project.title}
           <ArrowUpRight
             className="h-4 w-4 shrink-0 text-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
@@ -73,7 +80,7 @@ function ProjectCard({ project }: { project: Project }) {
           })}
         </ul>
       </div>
-    </Link>
+    </Card>
   );
 }
 
@@ -128,7 +135,7 @@ export function ProjectGrid() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search projects or tech"
             aria-label="Search projects"
-            className="h-10 w-full rounded-md border border-line bg-card pl-9 pr-9 text-sm text-ink transition-colors placeholder:text-muted hover:border-line-strong focus-visible:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="h-10 w-full rounded-lg border border-line bg-card pl-9 pr-9 text-sm text-ink transition-colors placeholder:text-muted hover:border-line-strong focus-visible:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           />
           {query && (
             <button
@@ -198,7 +205,7 @@ export function ProjectGrid() {
 
       {filtered.length === 0 && (
         <div className="mt-10 border-t border-line py-20 text-center">
-          <p className="text-[0.9375rem] text-ink">No projects match.</p>
+          <p className="text-body text-ink">No projects match.</p>
           <button
             type="button"
             onClick={() => {

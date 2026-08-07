@@ -37,8 +37,8 @@ export function GlowBackdrop() {
       />
 
       {/* Near-black orbs — depth, not colour. */}
-      <div className="absolute -left-40 top-0 h-[46rem] w-[45rem] rounded-full bg-[#1c1a17] blur-[180px]" />
-      <div className="absolute -right-40 top-0 h-[46rem] w-[45rem] rounded-full bg-[#1c1a17] blur-[180px]" />
+      <div className="absolute -left-40 top-0 h-[46rem] w-[45rem] rounded-full bg-surface-dark-soft blur-[180px]" />
+      <div className="absolute -right-40 top-0 h-[46rem] w-[45rem] rounded-full bg-surface-dark-soft blur-[180px]" />
 
       {/* The one light source. */}
       <div className="absolute -left-56 top-40 h-[26rem] w-[26rem] rounded-full bg-white/10 blur-[150px]" />

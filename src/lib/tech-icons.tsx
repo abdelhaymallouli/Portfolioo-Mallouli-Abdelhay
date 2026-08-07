@@ -2,7 +2,9 @@ import type { IconType } from "react-icons";
 import {
   SiAlpinedotjs,
   SiChartdotjs,
+  SiCss,
   SiDocker,
+  SiHtml5,
   SiFigma,
   SiGit,
   SiGithub,
@@ -45,6 +47,8 @@ export type TechKey =
   | "javascript"
   | "python"
   | "kotlin"
+  | "html5"
+  | "css"
   | "tailwind"
   | "php"
   | "laravel"
@@ -79,6 +83,9 @@ export const TECH: Record<TechKey, TechMeta> = {
   javascript: { label: "JavaScript", Icon: SiJavascript, brand: "#F7DF1E" },
   python: { label: "Python", Icon: SiPython, brand: "#3776AB" },
   kotlin: { label: "Kotlin", Icon: SiKotlin, brand: "#7F52FF" },
+  html5: { label: "HTML5", Icon: SiHtml5, brand: "#E34F26" },
+  /* Simple Icons dropped the numbered `SiCss3` mark; `SiCss` is its successor. */
+  css: { label: "CSS", Icon: SiCss, brand: "#663399" },
   tailwind: { label: "Tailwind CSS", Icon: SiTailwindcss, brand: "#06B6D4" },
   php: { label: "PHP", Icon: SiPhp, brand: "#777BB4" },
   laravel: { label: "Laravel", Icon: SiLaravel, brand: "#FF2D20" },

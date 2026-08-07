@@ -45,7 +45,7 @@ export function CopyEmail({
       onClick={handleCopy}
       className={[
         "inline-flex h-12 items-center gap-2.5 rounded-lg border px-4",
-        "font-mono text-[0.8125rem]",
+        "font-mono text-caption",
         "transition-all duration-200 ease-out",
         tone === "dark"
           ? "border-white/25 bg-white/5 text-white/70 hover:border-white/40 hover:bg-white/10 hover:text-white"

@@ -3,6 +3,8 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { Container } from "@/components/atoms/Container";
+import { SectionHeading } from "@/components/atoms/SectionHeading";
+import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { ButtonLink } from "@/components/atoms/Button";
 import { GlowBackdrop } from "@/components/atoms/GlowBackdrop";
 import { CopyEmail } from "@/components/molecules/CopyEmail";
@@ -34,7 +36,6 @@ const SOCIALS = [
 export function Footer() {
   const year = new Date().getFullYear();
 
-  /* Columns are built from real routes only — no invented Legal pages. */
   const columns = [
     {
       heading: "Navigate",
@@ -44,11 +45,13 @@ export function Footer() {
       ],
     },
     {
-      heading: "Projects",
-      links: VISIBLE_PROJECTS.map((project) => ({
-        label: project.title,
-        href: `/projects/${project.slug}`,
-      })),
+      heading: "Sections",
+      links: [
+        { label: "Evidence", href: "/#credentials" },
+        { label: "Journey", href: "/#journey" },
+        { label: "Philosophy", href: "/#philosophy" },
+        { label: "FAQ", href: "/#faq" },
+      ],
     },
     {
       heading: "Connect",
@@ -62,12 +65,12 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-[#0a0a0a]">
+    <footer className="relative overflow-hidden bg-surface-dark">
       <GlowBackdrop />
 
       <Container className="relative z-10 pb-10 pt-20">
         {/* ---------------- CTA card ---------------- */}
-        <div className="relative flex min-h-[26rem] flex-col justify-between overflow-hidden rounded-4xl border border-white/10 bg-white/5 md:min-h-[28rem]">
+        <div className="relative flex min-h-[26rem] flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-white/5 md:min-h-[28rem]">
           {/*
            * Ghost wordmark, anchored to the bottom of the card and clipped by
            * it. Decorative — the name is already in the DOM below — so it is
@@ -82,12 +85,11 @@ export function Footer() {
 
           <div className="relative z-10 flex flex-col gap-8 p-6 sm:p-10 md:flex-row md:items-start md:justify-between md:p-14">
             <div className="max-w-[34rem]">
-              <h2 className="text-balance text-[2rem] font-medium leading-[1.1] tracking-tight text-white md:text-[2.75rem] lg:text-[3.5rem] lg:leading-[1.05]">
-                {CONTACT.heading}
-              </h2>
-              <p className="mt-5 max-w-[32rem] text-pretty text-[0.9375rem] leading-[1.7] text-white/60">
-                {CONTACT.body}
-              </p>
+              <SectionHeading
+                tone="dark"
+                title={CONTACT.heading}
+                description={CONTACT.body}
+              />
             </div>
 
             <div className="flex shrink-0 flex-col items-start gap-3">
@@ -95,7 +97,7 @@ export function Footer() {
                 href={`mailto:${SITE.email}`}
                 size="lg"
                 /* The default white/20 border disappears on this ground. */
-                className="border-white/30"
+                className="border-white/25"
               >
                 Get in touch
                 <ArrowUpRight
@@ -116,9 +118,9 @@ export function Footer() {
         >
           {columns.map((column) => (
             <div key={column.heading}>
-              <h3 className="font-mono text-xs uppercase tracking-[0.12em] text-white/50">
+              <Eyebrow as="h3" tone="dark">
                 {column.heading}
-              </h3>
+              </Eyebrow>
               <ul className="mt-5 flex flex-col gap-3.5">
                 {column.links.map((link) => {
                   const external = link.href.startsWith("http");
@@ -163,7 +165,7 @@ export function Footer() {
           <div>
             <Link
               href="/"
-              className="text-[0.9375rem] font-medium tracking-tight text-white"
+              className="text-body font-medium tracking-tight text-white"
             >
               {SITE.name}
             </Link>
@@ -181,7 +183,7 @@ export function Footer() {
                   rel={
                     href.startsWith("http") ? "noopener noreferrer" : undefined
                   }
-                  className="grid h-9 w-9 place-items-center rounded-lg border border-white/15 text-white/60 transition-colors duration-200 ease-out hover:border-white/35 hover:text-white"
+                  className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-white/60 transition-colors duration-200 ease-out hover:border-white/40 hover:text-white"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                   <span className="sr-only">{label}</span>

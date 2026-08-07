@@ -38,7 +38,7 @@ function Marker({ size }: { size: Size }) {
       aria-hidden="true"
       className={cn(
         "absolute inset-y-0 left-1 z-10 my-auto flex flex-col items-center justify-center",
-        "rounded-[5px] bg-primary transition-all duration-400 ease-out",
+        "rounded-sm bg-primary transition-all duration-400 ease-out",
         "group-hover/btn:rotate-180",
         MARKER_GEOMETRY[size],
       )}
@@ -76,7 +76,7 @@ function Marker({ size }: { size: Size }) {
  * fill is what makes an outlined button read as a control instead of a box.
  */
 const VARIANTS: Record<Variant, string> = {
-  primary: "border border-white/20 bg-black text-white",
+  primary: "border border-white/25 bg-black text-white",
   secondary:
     "border border-line bg-card text-ink hover:border-line-strong hover:bg-hover",
   ghost: "text-ink hover:bg-hover",
@@ -85,7 +85,7 @@ const VARIANTS: Record<Variant, string> = {
 const SIZES: Record<Size, string> = {
   sm: "h-9 px-3.5 text-sm",
   md: "h-10 px-4 text-sm",
-  lg: "h-12 px-6 text-[0.9375rem]",
+  lg: "h-12 px-6 text-body",
 };
 
 /** Left padding on `primary` has to clear the marker that sits inside it. */

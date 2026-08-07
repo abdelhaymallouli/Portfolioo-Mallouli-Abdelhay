@@ -42,21 +42,10 @@ export function ProjectShowcase() {
   return (
     <section
       id="work"
-      className="relative scroll-mt-24 overflow-hidden py-section-sm md:py-section"
+      className="relative scroll-mt-24 py-section-sm md:py-section"
     >
       <Container className="relative">
-        {/*
-         * The watermark anchors to the top of the container and the cards
-         * overlap its lower half — the word is meant to be partially covered,
-         * so it reads as a layer behind the grid rather than as a heading
-         * sitting above it.
-         *
-         * The negative inset pulls the word past the container gutter so it
-         * bleeds toward the viewport edge. How much of it stays uncovered is
-         * set by the grid's top margin below, not here — this element is
-         * `absolute` and has no flow of its own to push against.
-         */}
-        <Watermark className="-left-4 top-0 sm:-left-6 lg:-left-8">
+        <Watermark className="-left-10 -top-16 sm:-left-6  lg:-left-10 lg:-top-48 z-0">
           Projects
         </Watermark>
 

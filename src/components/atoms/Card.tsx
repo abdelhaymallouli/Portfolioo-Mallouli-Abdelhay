@@ -19,6 +19,7 @@ export function Card({
   interactive = false,
   /** `lg` is the standard card; `sm` suits dense list rows and chips-in-cards. */
   radius = "lg",
+  ...rest
 }: {
   children: ReactNode;
   className?: string;
@@ -26,6 +27,13 @@ export function Card({
   /** Adds the lift-on-hover treatment. Only for cards that are links. */
   interactive?: boolean;
   radius?: "sm" | "lg";
+  /*
+   * Anything else is forwarded to the rendered element. That is what lets
+   * `as={Link} href="…"` work — without it every card that needed to be a
+   * link had to hand-roll the surface instead, which is how two card designs
+   * drifted apart.
+   */
+  [key: string]: unknown;
 }) {
   return (
     <Tag
@@ -38,6 +46,7 @@ export function Card({
         ],
         className,
       )}
+      {...rest}
     >
       {children}
     </Tag>

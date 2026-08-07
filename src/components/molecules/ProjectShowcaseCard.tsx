@@ -76,7 +76,7 @@ export function ProjectShowcaseCard({
               fill
               sizes={sizes}
               priority={priority}
-              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              className="object-cover object-top transition-transform duration-300 ease-out group-hover:scale-[1.03]"
             />
           ) : (
             /* No screenshot yet — the title still has to carry the tile. */

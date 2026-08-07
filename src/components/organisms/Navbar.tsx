@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { ArrowUp, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/atoms/Container";
 import { ButtonLink } from "@/components/atoms/Button";
@@ -25,15 +25,32 @@ import { NAV_LINKS, SECTION_IDS, SITE } from "@/data/content";
  */
 export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
+  const [passedHero, setPassedHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [nearFooter, setNearFooter] = useState(false);
 
   const activeSection = useActiveSection(trackSections ? SECTION_IDS : []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      setPassedHero(window.scrollY > window.innerHeight);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Hide navbar and show scroll-to-top when the footer is in view
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setNearFooter(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(footer);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -48,12 +65,39 @@ export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
   // page, which never change `pathname`, so an effect would miss them.
   const closeMenu = () => setMenuOpen(false);
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
-    <header className="fixed inset-x-0 top-4 z-50 mx-auto w-full lg:max-w-[calc(100%-4rem)]">
+    <>
+    {/* Scroll-to-top FAB */}
+    <AnimatePresence>
+      {passedHero && (
+        <motion.button
+          initial={{ opacity: 0, y: 16, scale: 0.85 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 16, scale: 0.85 }}
+          transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
+          onClick={scrollToTop}
+          aria-label="Back to top"
+          className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary shadow-lift transition-all duration-200 hover:scale-110 hover:shadow-xl"
+        >
+          <ArrowUp className="h-5 w-5 text-ink" aria-hidden="true" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+
+    <AnimatePresence>
+    {!nearFooter && (
+    <motion.header
+      initial={{ opacity: 1, y: 0 }}
+      animate={{ opacity: nearFooter ? 0 : 1, y: nearFooter ? -80 : 0 }}
+      exit={{ opacity: 0, y: -80 }}
+      transition={{ duration: 0.35, ease: [0, 0, 0.2, 1] }}
+      className="fixed inset-x-0 top-4 z-50 mx-auto w-full lg:max-w-[calc(100%-4rem)]">
       <Container>
         <div
           className={cn(
-            "rounded-2xl transition-all duration-300 ease-out",
+            "rounded-xl transition-all duration-300 ease-out",
             /*
              * Fully transparent at rest: the hero panel behind it is already
              * dark, so a fill here would read as a second box stacked on the
@@ -70,7 +114,7 @@ export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
             <Link
               href="/"
               onClick={closeMenu}
-              className="shrink-0 text-[0.9375rem] font-medium tracking-tight text-white"
+              className="shrink-0 text-body font-medium tracking-tight text-white"
             >
               {SITE.name}
             </Link>
@@ -182,6 +226,9 @@ export function Navbar({ trackSections = false }: { trackSections?: boolean }) {
           </AnimatePresence>
         </div>
       </Container>
-    </header>
+    </motion.header>
+    )}
+    </AnimatePresence>
+    </>
   );
 }
