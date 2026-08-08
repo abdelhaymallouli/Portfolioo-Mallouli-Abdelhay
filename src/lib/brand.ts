@@ -12,8 +12,8 @@
  * MUST be updated together; there is no mechanism that can enforce it.
  */
 
-/** Mirrors `--color-primary` in globals.css. */
-export const BRAND_PRIMARY = "#ffcc00";
+/** Mirrors `--color-primary` in globals.css. Electric blue. */
+export const BRAND_PRIMARY = "#00d4ff";
 
 /** Mirrors `--color-ink` in globals.css. Carried on top of the primary fill. */
 export const BRAND_INK = "#343434";

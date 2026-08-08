@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa6";
 import { Mail } from "lucide-react";
@@ -9,10 +10,11 @@ import { GlowBackdrop } from "@/components/atoms/GlowBackdrop";
 import { Reveal } from "@/components/motion/Reveal";
 import { ABOUT, SITE } from "@/data/content";
 
+/** `key` selects the sr-only label from the catalogue — see Footer. */
 const SOCIALS = [
-  { label: "GitHub", href: SITE.github, Icon: SiGithub },
-  { label: "LinkedIn", href: SITE.linkedin, Icon: FaLinkedin },
-  { label: "Email", href: `mailto:${SITE.email}`, Icon: Mail },
+  { key: "github", href: SITE.github, Icon: SiGithub },
+  { key: "linkedin", href: SITE.linkedin, Icon: FaLinkedin },
+  { key: "email", href: `mailto:${SITE.email}`, Icon: Mail },
 ] as const;
 
 /**
@@ -23,7 +25,9 @@ const SOCIALS = [
  * page has been a sequence of light cards on a warm ground, and this stops
  * that rhythm outright before resuming it.
  */
-export function About() {
+export async function About() {
+  const t = await getTranslations("about");
+
   return (
     <section
       id="about"
@@ -49,7 +53,7 @@ export function About() {
               ) : (
                 <div
                   role="img"
-                  aria-label={`${SITE.name} — portrait placeholder`}
+                  aria-label={t("portraitPlaceholder", { name: SITE.name })}
                   className="flex h-full w-full items-center justify-center"
                 >
                   <span className="text-[5rem] font-medium tracking-tight text-white/40">
@@ -67,8 +71,8 @@ export function About() {
           <div className="flex flex-col lg:col-span-3">
             <Reveal delay={0.05}>
               <ul className="flex items-center gap-3 lg:justify-end">
-                {SOCIALS.map(({ label, href, Icon }) => (
-                  <li key={label}>
+                {SOCIALS.map(({ key, href, Icon }) => (
+                  <li key={key}>
                     <a
                       href={href}
                       target={href.startsWith("http") ? "_blank" : undefined}
@@ -80,7 +84,7 @@ export function About() {
                       className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-white/60 transition-colors duration-200 ease-out hover:border-white/40 hover:text-white"
                     >
                       <Icon className="h-4 w-4" aria-hidden="true" />
-                      <span className="sr-only">{label}</span>
+                      <span className="sr-only">{t(key)}</span>
                     </a>
                   </li>
                 ))}

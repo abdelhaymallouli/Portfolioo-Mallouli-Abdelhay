@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Plus } from "lucide-react";
 import { Container, Section } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
@@ -68,15 +69,16 @@ const MARQUEE_TECH = [...TECH_MARQUEE, ...TECH_MARQUEE];
 const CERTS_SHOWN = 4;
 
 export function Bento() {
+  const t = useTranslations("evidence");
   const [certsOpen, setCertsOpen] = useState(false);
 
   return (
     <Section id="credentials" className="bg-subtle py-20 md:py-30">
       <Container>
         <SectionHeading
-          eyebrow="Evidence"
-          title="What the work adds up to."
-          description="A hackathon win, shipped integrations, a tested codebase — plus the credentials, languages and stack behind them."
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
         />
 
         {/* Lead stat left, everything else in a two-column stack at right. */}
@@ -150,7 +152,7 @@ export function Bento() {
             {/* Card 4: Languages Spoken */}
             <Reveal delay={0.15} offset={16} className="md:col-span-1">
               <Card className="flex flex-col p-8 bg-card border border-line shadow-subtle h-full">
-                <Eyebrow as="h3">Languages</Eyebrow>
+                <Eyebrow as="h3">{t("languages")}</Eyebrow>
                 <ul className="mt-5 flex flex-col divide-y divide-line">
                   {LANGUAGES.map((lang) => (
                     <li key={lang.name} className="flex justify-between py-2.5 first:pt-0 last:pb-0">
@@ -176,7 +178,7 @@ export function Bento() {
              */}
             <Reveal delay={0.2} offset={16} className="md:col-span-1">
               <Card className="flex h-full flex-col border border-line bg-card p-8 shadow-subtle">
-                <Eyebrow as="h3">Certifications</Eyebrow>
+                <Eyebrow as="h3">{t("certifications")}</Eyebrow>
                 <ul className="mt-5 flex flex-col divide-y divide-line">
                   {CERTIFICATIONS.slice(0, CERTS_SHOWN).map((cert) => {
                     const body = (
@@ -236,7 +238,9 @@ export function Bento() {
                       />
                     </span>
                     <span className="link-underline">
-                      {CERTIFICATIONS.length - CERTS_SHOWN} more
+                      {t("more", {
+                        count: CERTIFICATIONS.length - CERTS_SHOWN,
+                      })}
                     </span>
                   </button>
                 )}
@@ -247,7 +251,7 @@ export function Bento() {
             <Reveal delay={0.25} offset={16} className="md:col-span-2">
               <Card className="relative flex min-h-[120px] flex-col justify-center overflow-hidden border border-line bg-card p-8 shadow-subtle">
                 <Eyebrow as="h4" className="mb-4">
-                  Core Stack &amp; Ecosystem
+                  {t("coreStack")}
                 </Eyebrow>
 
                 <div className="relative flex w-full items-center overflow-hidden py-2">

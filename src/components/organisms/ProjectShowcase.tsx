@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/atoms/Container";
 import { ButtonLink } from "@/components/atoms/Button";
@@ -38,7 +39,9 @@ const SIZES = [
  * This is the visual hook and the only project surface on the home page —
  * imagery first, with the written detail living on each case-study route.
  */
-export function ProjectShowcase() {
+export async function ProjectShowcase() {
+  const t = await getTranslations("showcase");
+
   return (
     <section
       id="work"
@@ -46,7 +49,7 @@ export function ProjectShowcase() {
     >
       <Container className="relative">
         <Watermark className="left-8 -top-16 sm:-left-6  lg:left-8 lg:-top-48 z-0">
-          Projects
+          {t("watermark")}
         </Watermark>
 
         {/*
@@ -55,7 +58,7 @@ export function ProjectShowcase() {
          * document outline. Visually hidden because the giant ghost word
          * already does the labelling job on screen.
          */}
-        <h2 className="sr-only">Selected projects</h2>
+        <h2 className="sr-only">{t("heading")}</h2>
 
         {/*
         
@@ -93,7 +96,7 @@ export function ProjectShowcase() {
          */}
         <Reveal delay={0.1} className="relative z-10 mt-12">
           <ButtonLink href="/projects" variant="secondary" size="lg">
-            View all {VISIBLE_PROJECTS.length} projects
+            {t("viewAll", { count: VISIBLE_PROJECTS.length })}
             <ArrowUpRight
               className="h-4 w-4 transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
               aria-hidden="true"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -35,6 +36,7 @@ import type { ProjectImage } from "@/data/projects";
  * and focus follows. Reduced motion is respected via the global CSS rule.
  */
 export function Gallery({ images }: { images: ProjectImage[] }) {
+  const t = useTranslations("caseStudy");
   const shots = images.filter((image) => image.src);
   const baseId = useId();
 
@@ -181,7 +183,7 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
       {count > 1 && (
         <div
           role="tablist"
-          aria-label="Screenshots"
+          aria-label={t("screenshots")}
           onKeyDown={onKeyDown}
           className="mt-5 flex gap-3 overflow-x-auto pb-2"
         >

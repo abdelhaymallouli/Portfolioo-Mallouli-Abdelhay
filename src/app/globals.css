@@ -29,6 +29,7 @@
    * as a literal `#0a0a0a` in six places before this — a system colour with
    * no token, which is how three sections ended up almost but not exactly
    * matching.
+   *
    */
   --color-surface-dark: #0a0a0a;
   --color-surface-dark-soft: #1c1a17; /* Backdrop orbs */
@@ -57,10 +58,20 @@
    * clears AA as text on a light ground — `primary` is 1.4:1 on white — so
    * text on an accent fill is always ink, never the reverse.
    *
-   * `primary` carries ink at 8.2:1, which is what lets the monogram tile, the
+   * `primary` carries ink at 7.0:1, which is what lets the monogram tile, the
    * scroll-to-top FAB and the button marker take ink glyphs.
+   *
+   * The blue is fully saturated on purpose. A desaturated teal was tried here
+   * (#99e2d0, 32% saturation) and read as washed out — on a warm bone canvas a
+   * muted cool accent has nothing to push against. At 100% it reads as a
+   * deliberate signal rather than a tint.
+   *
+   * `accent-warm` is the counterweight: the old brand yellow, kept for the few
+   * places that want heat against all this cool. It is used sparingly by
+   * design — the contrast only works while the warm notes stay rare.
    */
-  --color-primary: #ffcc00; /* Yellow — primary fill */
+  --color-primary: #00d4ff; /* Electric blue — primary fill */
+  --color-accent-warm: #ffcc00; /* Yellow — the rare warm counterpoint */
   --color-dusty-green: #447e68;
   --color-dusty-red: #ff6464;
 
@@ -289,10 +300,10 @@ html.lenis body {
  * The same watermark, inverted for dark grounds.
  *
  * The warm stone above is tuned against the #f0efec canvas and disappears
- * entirely on black — this is not a tweak of the same value but a different
- * one, so it gets its own utility rather than a modifier.
+ * entirely on the dark surface — this is not a tweak of the same value but a
+ * different one, so it gets its own utility rather than a modifier.
  *
- * White at 30% over #0a0a0a is the top stop: bright enough to read as a
+ * White at 30% over `surface-dark` is the top stop: bright enough to read as a
  * deliberate mark, far enough below the body text to never compete with it.
  */
 @utility watermark-invert {

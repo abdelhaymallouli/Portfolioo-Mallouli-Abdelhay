@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Plus } from "lucide-react";
 import {
   motion,
@@ -244,6 +245,7 @@ function JourneyCard({
   reduceMotion: boolean;
   onOpen: (m: Milestone) => void;
 }) {
+  const t = useTranslations("journey");
   const hasMore = Boolean(
     milestone.details?.length || milestone.certificate || milestone.tech?.length,
   );
@@ -285,7 +287,7 @@ function JourneyCard({
             // Outer ring + glow
             /* Glow derived from the token via color-mix, not a literal — it
                was a hard-coded rgba(255,204,0,…) that silently kept the old
-               yellow when the brand colour changed. */
+               the old yellow when the brand colour changed. */
             "h-4 w-4 ring-2 ring-offset-2 ring-offset-subtle shadow-[0_0_10px_2px_color-mix(in_srgb,var(--color-primary)_35%,transparent)]",
             KIND_DOT_RING[milestone.kind],
             KIND_DOT_BG[milestone.kind],
@@ -332,13 +334,17 @@ function JourneyCard({
               <span
                 className={cn(
                   "inline-flex items-center rounded-md px-2.5 py-0.5",
-                  "bg-ink font-mono text-micro font-bold tracking-[0.1em] text-primary",
+                  /* The warm note. Yellow on ink, against a page whose accent
+                     is now cool — small and rare by design. */
+                  "bg-ink font-mono text-micro font-bold tracking-[0.1em] text-accent-warm",
                 )}
               >
                 {milestone.year}
               </span>
+              {/* `kind` stays an English union — it keys the style maps
+                  above. Only the label is translated. */}
               <Eyebrow as="span" size="xs">
-                {milestone.kind}
+                {t(`kind.${milestone.kind}`)}
               </Eyebrow>
             </div>
 
@@ -402,7 +408,7 @@ function JourneyCard({
                     "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
                   )}
                 >
-                  <span className="link-underline">See more</span>
+                  <span className="link-underline">{t("seeMore")}</span>
                   <Plus
                     className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover/card:rotate-90"
                     aria-hidden="true"
@@ -430,6 +436,7 @@ function JourneyCard({
 ───────────────────────────────────────────────────────────────────── */
 
 export function Journey() {
+  const t = useTranslations("journey");
   const reduceMotion = useReducedMotion();
   const trackRef     = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<Milestone | null>(null);
@@ -464,9 +471,9 @@ export function Journey() {
     <Section id="journey" tone="subtle">
       <Container>
         <SectionHeading
-          eyebrow="Journey"
-          title="How I got here."
-          description="Where I studied, what I built, and where I worked — oldest first."
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
         />
 
         <div ref={trackRef} className="relative mt-16 lg:mt-24">
@@ -503,7 +510,7 @@ export function Journey() {
             </motion.div>
 
             {/*
-             * Layer 3 — sharp primary line: 2 px, full opacity, brand yellow.
+             * Layer 3 — sharp primary line: 2 px, full opacity, brand accent.
              * Clipped by the same value — rides on top of the glow.
              */}
             <motion.div

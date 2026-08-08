@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ArrowRight, Download } from "lucide-react";
 import { Container } from "@/components/atoms/Container";
 import { ButtonLink } from "@/components/atoms/Button";
@@ -25,7 +26,9 @@ import { HERO, SITE } from "@/data/content";
  * itself gets the full-width showcase grid immediately below — putting
  * previews in both places made the first two screens say the same thing.
  */
-export function Hero() {
+export async function Hero() {
+  const t = await getTranslations("hero");
+
   return (
     <section className="w-full p-2">
       {/*
@@ -41,7 +44,9 @@ export function Hero() {
             <Reveal>
               <p className="inline-flex w-fit items-center gap-2.5 rounded-full border border-white/10 bg-white/5 py-1.5 pl-3 pr-4 text-caption text-white/70 backdrop-blur-sm">
                 <StatusDot />
-                Available for {SITE.availability.modes[0].toLowerCase()} work
+                {t("availability", {
+                  mode: SITE.availability.modes[0].toLowerCase(),
+                })}
               </p>
             </Reveal>
           )}

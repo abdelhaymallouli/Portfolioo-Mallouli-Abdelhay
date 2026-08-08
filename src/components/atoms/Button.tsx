@@ -25,7 +25,7 @@ const MARKER_GEOMETRY: Record<Size, string> = {
 };
 
 /**
- * The yellow marker inside a primary button.
+ * The accent marker inside a primary button.
  *
  * On hover it slides to the opposite end and rotates 180°, which turns the
  * button into its own affordance — the movement reads as "this goes somewhere"
@@ -68,8 +68,8 @@ function Marker({ size }: { size: Size }) {
 }
 
 /**
- * The primary action is solid black with a yellow marker rather than a yellow
- * fill: `--color-primary` is 1.4:1 against white and cannot legally carry text,
+ * The primary action is solid black with an accent marker rather than an accent
+ * fill: `--color-primary` is 1.5:1 against white and cannot legally carry text,
  * so the accent becomes a shape on a dark ground instead of a background.
  *
  * Secondary sits on `card` rather than `canvas` — on the warm ground a white

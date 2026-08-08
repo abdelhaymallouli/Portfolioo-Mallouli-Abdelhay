@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,6 +18,8 @@ import {
 
 /** One card in the archive grid. */
 function ProjectCard({ project }: { project: Project }) {
+  const t = useTranslations("projects");
+
   return (
     <Card
       as={Link}
@@ -48,7 +51,7 @@ function ProjectCard({ project }: { project: Project }) {
         ) : (
           <div
             role="img"
-            aria-label={`${project.title} thumbnail placeholder`}
+            aria-label={t("thumbnailPlaceholder", { title: project.title })}
             className="flex h-full w-full items-center justify-center"
           >
             <span className="font-mono text-xs text-muted">{project.title}</span>
@@ -103,6 +106,7 @@ function ProjectCard({ project }: { project: Project }) {
  * matches projects even when the word never appears in the prose.
  */
 export function ProjectGrid() {
+  const t = useTranslations("projects");
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<ProjectCategory | "All">(
     "All",
@@ -144,15 +148,15 @@ export function ProjectGrid() {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search projects or tech"
-            aria-label="Search projects"
+            placeholder={t("searchPlaceholder")}
+            aria-label={t("searchLabel")}
             className="h-10 w-full rounded-lg border border-line bg-card pl-9 pr-9 text-sm text-ink transition-colors placeholder:text-muted hover:border-line-strong focus-visible:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
-              aria-label="Clear search"
+              aria-label={t("clearSearch")}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-ink"
             >
               <X className="h-3.5 w-3.5" />
@@ -162,7 +166,7 @@ export function ProjectGrid() {
 
         <div
           role="group"
-          aria-label="Filter by category"
+          aria-label={t("filterLabel")}
           className="flex flex-wrap items-center gap-x-6 gap-y-2"
         >
           {categories.map((category) => {
@@ -178,7 +182,13 @@ export function ProjectGrid() {
                   isActive ? "text-ink" : "text-secondary hover:text-ink",
                 )}
               >
-                {category}
+                {/*
+                 * "All" is a sentinel filter value, not content — it needs a
+                 * translated label while the value stays constant. The real
+                 * categories are data and stay in English, which is correct:
+                 * they double as search terms over English project prose.
+                 */}
+                {category === "All" ? t("all") : category}
                 {isActive && (
                   <motion.span
                     layoutId="filter-underline"
@@ -192,8 +202,10 @@ export function ProjectGrid() {
         </div>
       </div>
 
+      {/* ICU plural, not a ternary: German picks its own plural form, and a
+          hand-rolled `n === 1 ? … : …` only ever encodes English rules. */}
       <p aria-live="polite" className="mt-6 font-mono text-xs text-muted">
-        {filtered.length} {filtered.length === 1 ? "project" : "projects"}
+        {t("count", { count: filtered.length })}
       </p>
 
       {/* Grid */}
@@ -216,7 +228,7 @@ export function ProjectGrid() {
 
       {filtered.length === 0 && (
         <div className="mt-10 border-t border-line py-20 text-center">
-          <p className="text-body text-ink">No projects match.</p>
+          <p className="text-body text-ink">{t("empty")}</p>
           <button
             type="button"
             onClick={() => {
@@ -225,7 +237,7 @@ export function ProjectGrid() {
             }}
             className="mt-3 text-sm text-secondary transition-colors hover:text-ink"
           >
-            <span className="link-underline">Reset filters</span>
+            <span className="link-underline">{t("reset")}</span>
           </button>
         </div>
       )}

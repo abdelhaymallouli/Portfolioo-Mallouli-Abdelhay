@@ -1,13 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/atoms/Container";
 import { ButtonLink } from "@/components/atoms/Button";
 import { Logo } from "@/components/atoms/Logo";
+import { LocaleSwitcher } from "@/components/molecules/LocaleSwitcher";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { NAV_LINKS, SECTION_IDS, SITE } from "@/data/content";
 
@@ -32,6 +34,7 @@ export function Navbar({
   trackSections?: boolean;
   darkHero?: boolean;
 }) {
+  const t = useTranslations("nav");
   const [scrolled, setScrolled] = useState(false);
   const [passedHero, setPassedHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -86,7 +89,7 @@ export function Navbar({
           exit={{ opacity: 0, y: 16, scale: 0.85 }}
           transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
           onClick={scrollToTop}
-          aria-label="Back to top"
+          aria-label={t("backToTop")}
           className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary shadow-lift transition-all duration-200 hover:scale-110 hover:shadow-xl"
         >
           <ArrowUp className="h-5 w-5 text-ink" aria-hidden="true" />
@@ -131,12 +134,12 @@ export function Navbar({
             <Link
               href="/"
               onClick={closeMenu}
-              aria-label={`${SITE.name} — home`}
+              aria-label={t("home", { name: SITE.name })}
               /* `outline-accent`, matching every other focus ring on the site
                  (globals.css). This was the one place the brand fill doubled
-                 as a focus indicator, which also put a yellow ring directly on
-                 the yellow logo tile — the one background it cannot show up
-                 against. */
+                 as a focus indicator, which also put the ring directly on the
+                 logo tile painted in that same colour — the one background it
+                 cannot show up against. */
               className="group/logo flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary transition-transform duration-200 ease-out group-hover/logo:-rotate-6">
@@ -149,7 +152,7 @@ export function Navbar({
 
             {/* Desktop nav */}
             <nav
-              aria-label="Primary"
+              aria-label={t("primary")}
               className="hidden items-baseline gap-2 md:flex"
             >
               {NAV_LINKS.map((link) => {
@@ -165,7 +168,9 @@ export function Navbar({
                       active ? "text-white" : "text-white/70 hover:text-white",
                     )}
                   >
-                    {link.label}
+                    {/* Label by id, so the data keeps the structure and the
+                        catalogue keeps the words. */}
+                    {t(link.id)}
                     {active && (
                       <motion.span
                         layoutId="nav-underline"
@@ -179,6 +184,8 @@ export function Navbar({
             </nav>
 
             <div className="flex items-center gap-2">
+              <LocaleSwitcher className="hidden sm:flex" />
+
               {/*
                * Straight to mail rather than to an in-page anchor: the
                * contact section was merged into the footer, so `#contact` no
@@ -189,7 +196,7 @@ export function Navbar({
                 size="sm"
                 className="hidden sm:inline-flex"
               >
-                Get in touch
+                {t("getInTouch")}
               </ButtonLink>
 
               <button
@@ -197,7 +204,7 @@ export function Navbar({
                 onClick={() => setMenuOpen((open) => !open)}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav"
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-label={menuOpen ? t("closeMenu") : t("openMenu")}
                 className="-mr-1 grid h-10 w-10 place-items-center rounded-lg text-white transition-colors duration-200 hover:bg-white/10 md:hidden"
               >
                 {menuOpen ? (
@@ -214,7 +221,7 @@ export function Navbar({
             {menuOpen && (
               <motion.nav
                 id="mobile-nav"
-                aria-label="Mobile"
+                aria-label={t("mobile")}
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -229,7 +236,7 @@ export function Navbar({
                       onClick={closeMenu}
                       className="border-t border-white/10 py-3.5 text-sm text-white/70 transition-colors duration-200 hover:text-white"
                     >
-                      {link.label}
+                      {t(link.id)}
                     </Link>
                   ))}
                   <Link
@@ -237,8 +244,18 @@ export function Navbar({
                     onClick={closeMenu}
                     className="border-t border-white/10 py-3.5 text-sm text-white/70 transition-colors duration-200 hover:text-white"
                   >
-                    All projects
+                    {t("allProjects")}
                   </Link>
+
+                  {/* The switcher is hidden beside the CTA below `sm`, so the
+                      sheet is where it lives on a phone. */}
+                  <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+                    <span className="text-sm text-white/50">
+                      {t("language")}
+                    </span>
+                    <LocaleSwitcher />
+                  </div>
+
                   <ButtonLink
                     href={SITE.resumeHref}
                     variant="secondary"
@@ -246,7 +263,7 @@ export function Navbar({
                     className="mt-4 w-full"
                     onClick={closeMenu}
                   >
-                    Download résumé
+                    {t("downloadResume")}
                   </ButtonLink>
                 </div>
               </motion.nav>

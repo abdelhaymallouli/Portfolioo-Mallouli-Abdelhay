@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "role": "Full Stack Developer",
+    "description": "Full Stack Developer in Tangier, Morocco. Considered builds, from schema to pixel. Full-stack web applications with a focus on architecture, performance and interface detail."
+  },
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "journey": "Journey",
+    "home": "{name} — home",
+    "primary": "Primary",
+    "mobile": "Mobile",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "getInTouch": "Get in touch",
+    "allProjects": "All projects",
+    "downloadResume": "Download résumé",
+    "backToTop": "Back to top",
+    "skipToContent": "Skip to content",
+    "language": "Language"
+  },
+  "footer": {
+    "label": "Footer",
+    "navigate": "Navigate",
+    "sections": "Sections",
+    "connect": "Connect",
+    "allProjects": "All projects",
+    "evidence": "Evidence",
+    "journey": "Journey",
+    "philosophy": "Philosophy",
+    "faq": "FAQ",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "resume": "Résumé",
+    "getInTouch": "Get in touch"
+  },
+  "hero": {
+    "availability": "Available for {mode} work"
+  },
+  "evidence": {
+    "eyebrow": "Evidence",
+    "title": "What the work adds up to.",
+    "description": "A hackathon win, shipped integrations, a tested codebase — plus the credentials, languages and stack behind them.",
+    "languages": "Languages",
+    "certifications": "Certifications",
+    "coreStack": "Core Stack & Ecosystem",
+    "more": "{count} more"
+  },
+  "certifications": {
+    "credentials": "Credentials",
+    "title": "Certifications",
+    "subtitle": "{count} completed — each one verifiable.",
+    "close": "Close"
+  },
+  "journey": {
+    "eyebrow": "Journey",
+    "title": "How I got here.",
+    "description": "Where I studied, what I built, and where I worked — oldest first.",
+    "seeMore": "See more",
+    "stack": "Stack",
+    "close": "Close",
+    "kind": {
+      "Education": "Education",
+      "Role": "Role",
+      "Outlook": "Outlook"
+    }
+  },
+  "philosophy": {
+    "eyebrow": "Philosophy",
+    "title": "How I make engineering decisions.",
+    "description": "Positions I arrived at by shipping and maintaining production systems. Each one is a trade-off I would defend in review."
+  },
+  "skills": {
+    "title": "Ecosystem & Core Technologies"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "emailPrompt": "Anything not covered here? Email me at",
+    "hiringTitle": "Hiring for a role I'd fit?",
+    "hiringBody": "I'm open to full-time, contract and freelance work — on-site in Morocco or remote. Happy to walk through any of the case studies in detail.",
+    "getInTouch": "Get in touch"
+  },
+  "showcase": {
+    "watermark": "Projects",
+    "heading": "Selected projects",
+    "viewAll": "View all {count} projects",
+    "viewProject": "View project"
+  },
+  "projects": {
+    "metaTitle": "Projects",
+    "metaDescription": "A full archive of engineering work, filterable by technology.",
+    "count": "{count, plural, one {# project} other {# projects}}",
+    "title": "Everything I've built.",
+    "description": "Filter by category or search across technologies. Each project links to a full case study.",
+    "searchPlaceholder": "Search projects or tech",
+    "searchLabel": "Search projects",
+    "clearSearch": "Clear search",
+    "filterLabel": "Filter by category",
+    "all": "All",
+    "empty": "No projects match.",
+    "reset": "Reset filters",
+    "thumbnailPlaceholder": "{title} thumbnail placeholder"
+  },
+  "caseStudy": {
+    "notFound": "Project not found",
+    "allProjects": "All projects",
+    "visitSite": "Visit site",
+    "sourceCode": "Source code",
+    "overview": "Overview",
+    "stack": "Stack",
+    "myRole": "My role",
+    "links": "Links",
+    "liveSite": "Live site",
+    "problem": "The problem",
+    "approach": "The approach",
+    "whatWasHard": "What was hard",
+    "tradeoff": "Trade-off",
+    "moreScreens": "More screens",
+    "results": "Results",
+    "nextProject": "Next project",
+    "screenshots": "Screenshots"
+  },
+  "bewerbung": {
+    "metaTitle": "Bewerbung",
+    "metaDescription": "Application summary — experience, working approach and availability, written for hiring teams.",
+    "back": "Back to portfolio",
+    "downloadResume": "Download résumé",
+    "scheduleCall": "Schedule a call",
+    "whatIBring": "What I bring",
+    "experience": "Experience",
+    "languages": "Languages",
+    "close": "Let's talk.",
+    "availability": "Available for {modes}. Email is the fastest way to reach me."
+  },
+  "about": {
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "Email",
+    "portraitPlaceholder": "{name} — portrait placeholder"
+  },
+  "common": {
+    "emailCopied": "Email copied to clipboard"
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "eyebrow": "404",
+    "title": "This page doesn't exist.",
+    "description": "The link may be out of date, or the page may have moved. The work is all still here.",
+    "home": "Back to home",
+    "projects": "Browse projects"
+  }
+}

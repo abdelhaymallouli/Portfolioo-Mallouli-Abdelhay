@@ -1,15 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 import type { Project } from "@/data/projects";
 
 const EASE = [0, 0, 0.2, 1] as const;
 
-/** Framer-driven `next/link`, so the anchor itself can own motion states. */
+/**
+ * Framer-driven link, so the anchor itself can own motion states. Wraps the
+ * locale-aware `Link` rather than `next/link`, so a German reader clicking a
+ * project stays under `/de`.
+ */
 const MotionLink = motion.create(Link);
 
 /**
@@ -40,6 +45,7 @@ export function ProjectShowcaseCard({
   priority?: boolean;
   sizes: string;
 }) {
+  const t = useTranslations("showcase");
   const reduceMotion = useReducedMotion();
   const image = project.cover ?? project.gallery?.[0];
 
@@ -115,7 +121,7 @@ export function ProjectShowcaseCard({
               className="flex w-full items-end justify-between gap-4"
             >
               <span className="flex items-center gap-1.5 text-sm font-medium text-white">
-                View project
+                {t("viewProject")}
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </span>
               <span className="text-right text-sm font-medium text-white/80">

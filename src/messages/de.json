@@ -1,0 +1,153 @@
+{
+  "meta": {
+    "role": "Full-Stack-Entwickler",
+    "description": "Full-Stack-Entwickler in Tanger, Marokko. Durchdachte Umsetzung, vom Schema bis zum Pixel. Full-Stack-Webanwendungen mit Fokus auf Architektur, Performance und Detailgenauigkeit im Interface."
+  },
+  "nav": {
+    "work": "Arbeiten",
+    "about": "Über mich",
+    "journey": "Werdegang",
+    "home": "{name} — Startseite",
+    "primary": "Hauptnavigation",
+    "mobile": "Mobile Navigation",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "getInTouch": "Kontakt aufnehmen",
+    "allProjects": "Alle Projekte",
+    "downloadResume": "Lebenslauf herunterladen",
+    "backToTop": "Nach oben",
+    "skipToContent": "Zum Inhalt springen",
+    "language": "Sprache"
+  },
+  "footer": {
+    "label": "Fußzeile",
+    "navigate": "Navigation",
+    "sections": "Bereiche",
+    "connect": "Kontakt",
+    "allProjects": "Alle Projekte",
+    "evidence": "Nachweise",
+    "journey": "Werdegang",
+    "philosophy": "Philosophie",
+    "faq": "FAQ",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "E-Mail",
+    "resume": "Lebenslauf",
+    "getInTouch": "Kontakt aufnehmen"
+  },
+  "hero": {
+    "availability": "Verfügbar für {mode}"
+  },
+  "evidence": {
+    "eyebrow": "Nachweise",
+    "title": "Was die Arbeit ergibt.",
+    "description": "Ein Hackathon-Sieg, ausgelieferte Integrationen, eine getestete Codebasis — dazu die Zertifikate, Sprachen und der Stack dahinter.",
+    "languages": "Sprachen",
+    "certifications": "Zertifikate",
+    "coreStack": "Stack & Ökosystem",
+    "more": "{count} weitere"
+  },
+  "certifications": {
+    "credentials": "Qualifikationen",
+    "title": "Zertifikate",
+    "subtitle": "{count} abgeschlossen — alle überprüfbar.",
+    "close": "Schließen"
+  },
+  "journey": {
+    "eyebrow": "Werdegang",
+    "title": "Wie ich hierher kam.",
+    "description": "Wo ich studiert, was ich gebaut und wo ich gearbeitet habe — älteste zuerst.",
+    "seeMore": "Mehr anzeigen",
+    "stack": "Stack",
+    "close": "Schließen",
+    "kind": {
+      "Education": "Ausbildung",
+      "Role": "Position",
+      "Outlook": "Ausblick"
+    }
+  },
+  "philosophy": {
+    "eyebrow": "Philosophie",
+    "title": "Wie ich technische Entscheidungen treffe.",
+    "description": "Positionen, zu denen ich durch das Ausliefern und Warten von Produktivsystemen gekommen bin. Jede davon ist ein Kompromiss, den ich im Review vertreten würde."
+  },
+  "skills": {
+    "title": "Ökosystem & Kerntechnologien"
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "emailPrompt": "Etwas nicht beantwortet? Schreiben Sie mir an",
+    "hiringTitle": "Suchen Sie jemanden für eine passende Stelle?",
+    "hiringBody": "Ich bin offen für Festanstellung, Werkverträge und freiberufliche Arbeit — vor Ort in Marokko oder remote. Gerne gehe ich jede der Fallstudien im Detail durch.",
+    "getInTouch": "Kontakt aufnehmen"
+  },
+  "showcase": {
+    "watermark": "Projekte",
+    "heading": "Ausgewählte Projekte",
+    "viewAll": "Alle {count} Projekte ansehen",
+    "viewProject": "Projekt ansehen"
+  },
+  "projects": {
+    "metaTitle": "Projekte",
+    "metaDescription": "Ein vollständiges Archiv meiner Entwicklungsarbeit, filterbar nach Technologie.",
+    "count": "{count, plural, one {# Projekt} other {# Projekte}}",
+    "title": "Alles, was ich gebaut habe.",
+    "description": "Nach Kategorie filtern oder nach Technologien suchen. Jedes Projekt führt zu einer vollständigen Fallstudie.",
+    "searchPlaceholder": "Projekte oder Technologien suchen",
+    "searchLabel": "Projekte durchsuchen",
+    "clearSearch": "Suche zurücksetzen",
+    "filterLabel": "Nach Kategorie filtern",
+    "all": "Alle",
+    "empty": "Keine passenden Projekte.",
+    "reset": "Filter zurücksetzen",
+    "thumbnailPlaceholder": "{title} — Platzhalterbild"
+  },
+  "caseStudy": {
+    "notFound": "Projekt nicht gefunden",
+    "allProjects": "Alle Projekte",
+    "visitSite": "Website besuchen",
+    "sourceCode": "Quellcode",
+    "overview": "Überblick",
+    "stack": "Stack",
+    "myRole": "Meine Rolle",
+    "links": "Links",
+    "liveSite": "Live-Website",
+    "problem": "Das Problem",
+    "approach": "Der Ansatz",
+    "whatWasHard": "Was schwierig war",
+    "tradeoff": "Kompromiss",
+    "moreScreens": "Weitere Ansichten",
+    "results": "Ergebnisse",
+    "nextProject": "Nächstes Projekt",
+    "screenshots": "Screenshots"
+  },
+  "bewerbung": {
+    "metaTitle": "Bewerbung",
+    "metaDescription": "Bewerbungsübersicht — Erfahrung, Arbeitsweise und Verfügbarkeit, geschrieben für Personalverantwortliche.",
+    "back": "Zurück zum Portfolio",
+    "downloadResume": "Lebenslauf herunterladen",
+    "scheduleCall": "Gespräch vereinbaren",
+    "whatIBring": "Was ich mitbringe",
+    "experience": "Berufserfahrung",
+    "languages": "Sprachen",
+    "close": "Sprechen wir.",
+    "availability": "Verfügbar für {modes}. Per E-Mail erreichen Sie mich am schnellsten."
+  },
+  "about": {
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "email": "E-Mail",
+    "portraitPlaceholder": "{name} — Platzhalter für Porträt"
+  },
+  "common": {
+    "emailCopied": "E-Mail in die Zwischenablage kopiert"
+  },
+  "notFound": {
+    "metaTitle": "Seite nicht gefunden",
+    "eyebrow": "404",
+    "title": "Diese Seite existiert nicht.",
+    "description": "Der Link ist möglicherweise veraltet oder die Seite wurde verschoben. Die Projekte sind alle noch da.",
+    "home": "Zurück zur Startseite",
+    "projects": "Projekte ansehen"
+  }
+}

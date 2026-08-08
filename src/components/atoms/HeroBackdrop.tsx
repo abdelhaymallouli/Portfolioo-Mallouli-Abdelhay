@@ -32,12 +32,17 @@ const STARS = [
 export function HeroBackdrop() {
   return (
     <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-      {/* 1. Grid, faded out toward the edges. */}
+      {/* 1. Grid in the brand blue, faded out toward the edges. */}
       <div
-        className="absolute inset-0 opacity-[0.06]"
+        /*
+         * Opacity raised from 0.06 to 0.14 with the switch from white lines to
+         * blue: the accent is darker than white, so at the old value the grid
+         * disappeared entirely rather than reading as tinted.
+         */
+        className="absolute inset-0 opacity-[0.14]"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+            "linear-gradient(to right, var(--color-primary) 1px, transparent 1px), linear-gradient(to bottom, var(--color-primary) 1px, transparent 1px)",
           backgroundSize: "88px 88px",
           maskImage:
             "radial-gradient(ellipse 75% 55% at 50% 35%, #000 30%, transparent 100%)",
@@ -93,8 +98,14 @@ export function HeroBackdrop() {
             className="absolute inset-0 rounded-full"
             style={{
               border: "1px solid transparent",
+              /*
+               * The padding-box fill must be the panel colour exactly — it is
+               * the ellipse's own body, and any difference reads as a disc
+               * floating on the ground. Tokenised for that reason: as a
+               * literal `#0a0a0a` it stayed black when the surface went navy.
+               */
               background:
-                "linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(180deg, rgba(255,236,209,0.95), rgba(250,154,99,0.2) 25%, transparent 55%) border-box",
+                "linear-gradient(var(--color-surface-dark), var(--color-surface-dark)) padding-box, linear-gradient(180deg, rgba(255,236,209,0.95), rgba(250,154,99,0.2) 25%, transparent 55%) border-box",
             }}
           />
         </div>

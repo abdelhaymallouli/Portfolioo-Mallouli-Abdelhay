@@ -8,9 +8,9 @@
  * 2. Two large near-black orbs (#1c1a17) at very high blur. They read as
  *    almost nothing individually — their job is to break the evenness of the
  *    ground so it looks lit rather than filled.
- * 3. A 44px grid, radially masked so it dissolves before the edges. It is the
- *    only hard-edged element here, and at 1px on #16151300 it registers as
- *    texture rather than as a visible grid.
+ * 3. A 44px grid in the brand blue, radially masked so it dissolves before the
+ *    edges. It is the only hard-edged element here, and at 1px and 1.6:1
+ *    against the ground it registers as texture rather than as a visible grid.
  *
  * Everything is CSS — no images, no JS — so the layer costs nothing in the
  * LCP path and scales to any viewport without a second asset.
@@ -26,8 +26,14 @@ export function GlowBackdrop() {
       <div
         className="absolute inset-0"
         style={{
+          /*
+           * Blue lines, picking up the brand accent. #14384a measures 1.60:1
+           * on the ground — a step brighter than the #26241f warm grey it
+           * replaces (1.28), which is what makes the hue legible without the
+           * grid graduating from texture into something you actually read.
+           */
           backgroundImage:
-            "linear-gradient(to right, #26241f 1px, transparent 1px), linear-gradient(to bottom, #26241f 1px, transparent 1px)",
+            "linear-gradient(to right, #14384a 1px, transparent 1px), linear-gradient(to bottom, #14384a 1px, transparent 1px)",
           backgroundSize: "44px 44px",
           maskImage:
             "radial-gradient(ellipse 70% 60% at 60% 30%, #000 10%, transparent 100%)",

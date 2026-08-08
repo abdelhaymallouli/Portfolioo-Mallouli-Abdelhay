@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/atoms/Container";
 import { Reveal } from "@/components/motion/Reveal";
 import { TECH, type TechKey } from "@/lib/tech-icons";
@@ -56,6 +57,8 @@ const TEXT_EXTRAS = [
 ];
 
 export function Skills() {
+  const t = useTranslations("skills");
+
   return (
     <section
       id="skills"
@@ -65,7 +68,7 @@ export function Skills() {
         {/* Label matching the reference's mono uppercase eyebrow */}
         <Reveal offset={8}>
           <p className="text-center font-mono text-xs font-semibold uppercase tracking-[0.2em] text-muted">
-            Ecosystem &amp; Core Technologies
+            {t("title")}
           </p>
         </Reveal>
 

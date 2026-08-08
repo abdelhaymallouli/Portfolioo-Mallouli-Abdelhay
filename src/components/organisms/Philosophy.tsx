@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Container, Section } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
 import { RevealGroup, RevealItem } from "@/components/motion/Reveal";
@@ -10,14 +11,16 @@ import { PRINCIPLES } from "@/data/content";
  * a considered list instead of six competing panels. Hover lifts the row
  * fractionally and darkens the rule above it; nothing else moves.
  */
-export function Philosophy() {
+export async function Philosophy() {
+  const t = await getTranslations("philosophy");
+
   return (
     <Section id="philosophy" tone="subtle">
       <Container>
         <SectionHeading
-          eyebrow="Philosophy"
-          title="How I make engineering decisions."
-          description="Positions I arrived at by shipping and maintaining production systems. Each one is a trade-off I would defend in review."
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
         />
 
         <RevealGroup className="mt-20 grid gap-x-12 gap-y-0 md:grid-cols-2 lg:grid-cols-3">

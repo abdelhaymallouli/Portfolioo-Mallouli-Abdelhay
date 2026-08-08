@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ChevronDown } from "lucide-react";
 import { Container, Section } from "@/components/atoms/Container";
 import { Card } from "@/components/atoms/Card";
@@ -23,7 +24,9 @@ import { FAQ as FAQ_ITEMS, SITE } from "@/data/content";
  * there is no height animation, because animating `height: auto` correctly
  * would require exactly the JS this approach avoids.
  */
-export function FAQ() {
+export async function FAQ() {
+  const t = await getTranslations("faq");
+
   return (
     <Section id="faq">
       <Container>
@@ -33,10 +36,10 @@ export function FAQ() {
             <Reveal>
               <div>
                 <h2 className="max-w-[16ch] text-balance text-display-sm font-medium tracking-tight text-ink sm:text-display-md lg:text-display-lg">
-                  Frequently asked questions
+                  {t("title")}
                 </h2>
                 <p className="mt-4 text-pretty text-lead text-secondary">
-                  Anything not covered here? Email me at{" "}
+                  {t("emailPrompt")}{" "}
                   {/*
                    * `accent-hover`, not `accent`, as the resting colour:
                    * #447e68 measures 4.12:1 on the canvas and fails AA for
@@ -58,16 +61,14 @@ export function FAQ() {
             <Reveal delay={0.05}>
               <Card className="w-full p-6 sm:p-7 lg:max-w-lg">
                 <p className="text-title font-medium tracking-tight text-ink">
-                  Hiring for a role I&apos;d fit?
+                  {t("hiringTitle")}
                 </p>
                 <p className="mt-3 text-pretty text-body text-secondary">
-                  I&apos;m open to full-time, contract and freelance work —
-                  on-site in Morocco or remote. Happy to walk through any of
-                  the case studies in detail.
+                  {t("hiringBody")}
                 </p>
                 <div className="mt-6">
                   <ButtonLink href={`mailto:${SITE.email}`}>
-                    Get in touch
+                    {t("getInTouch")}
                   </ButtonLink>
                 </div>
               </Card>

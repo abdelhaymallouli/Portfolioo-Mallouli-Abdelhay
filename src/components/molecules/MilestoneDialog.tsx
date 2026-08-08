@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -43,6 +44,8 @@ export function MilestoneDialog({
   milestone: MilestoneDetail | null;
   onClose: () => void;
 }) {
+  const t = useTranslations("journey");
+
   /* ── Scroll lock ─────────────────────────────────────────────── */
   useEffect(() => {
     if (!milestone) return;
@@ -126,7 +129,7 @@ export function MilestoneDialog({
 
                   {/* Year + kind badges */}
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center rounded-md bg-ink px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-[0.1em] text-primary">
+                    <span className="inline-flex items-center rounded-md bg-ink px-2.5 py-0.5 font-mono text-[11px] font-bold tracking-[0.1em] text-accent-warm">
                       {milestone.year}
                     </span>
                     <span
@@ -135,7 +138,7 @@ export function MilestoneDialog({
                         KIND_PILL[milestone.kind] ?? KIND_PILL.Outlook,
                       )}
                     >
-                      {milestone.kind}
+                      {t(`kind.${milestone.kind}`)}
                     </span>
                   </div>
 
@@ -159,7 +162,7 @@ export function MilestoneDialog({
                 <button
                   type="button"
                   onClick={onClose}
-                  aria-label="Close"
+                  aria-label={t("close")}
                   className={cn(
                     "shrink-0 -mr-2 -mt-1",
                     "grid h-9 w-9 place-items-center rounded-xl",
@@ -204,7 +207,7 @@ export function MilestoneDialog({
               {milestone.tech && milestone.tech.length > 0 && (
                 <div className="mt-6 border-t border-line pt-6">
                   <Eyebrow as="p" size="xs" className="mb-3">
-                    Stack
+                    {t("stack")}
                   </Eyebrow>
                   <ul className="flex flex-wrap gap-2">
                     {milestone.tech.map((item) => (

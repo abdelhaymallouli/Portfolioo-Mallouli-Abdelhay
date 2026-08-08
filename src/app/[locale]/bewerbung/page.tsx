@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowUpRight, Download } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { localeAlternates, routing } from "@/i18n/routing";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader } from "@/components/atoms/Container";
 import { Eyebrow } from "@/components/atoms/Eyebrow";
@@ -11,11 +13,24 @@ import { TECH } from "@/lib/tech-icons";
 import { BEWERBUNG, SITE } from "@/data/content";
 import { EXPERIENCE, LANGUAGES } from "@/data/career";
 
-export const metadata: Metadata = {
-  title: "Bewerbung",
-  description:
-    "Application summary — experience, working approach and availability, written for hiring teams.",
-};
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "bewerbung" });
+
+  return {
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    alternates: localeAlternates("/bewerbung", locale),
+  };
+}
 
 /**
  * /bewerbung — application pitch.
@@ -24,7 +39,16 @@ export const metadata: Metadata = {
  * scanning this wants one uninterrupted line of argument, and a pinned
  * portrait alongside it competes for attention without adding information.
  */
-export default function BewerbungPage() {
+export default async function BewerbungPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations("bewerbung");
+
   return (
     <PageShell>
       <PageHeader width="reading">
@@ -37,7 +61,7 @@ export default function BewerbungPage() {
               className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
               aria-hidden="true"
             />
-            <span className="link-underline">Back to portfolio</span>
+            <span className="link-underline">{t("back")}</span>
           </Link>
         </Reveal>
 
@@ -59,14 +83,14 @@ export default function BewerbungPage() {
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
             <ButtonLink href={SITE.resumeHref} size="lg">
               <Download className="h-4 w-4" aria-hidden="true" />
-              Download résumé
+              {t("downloadResume")}
             </ButtonLink>
             <ButtonLink
               href={SITE.schedulingHref}
               variant="secondary"
               size="lg"
             >
-              Schedule a call
+              {t("scheduleCall")}
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </ButtonLink>
           </div>
@@ -75,9 +99,7 @@ export default function BewerbungPage() {
         {/* Pitch */}
         <Reveal delay={0.15}>
           <section className="mt-20 border-t border-line pt-12">
-            <Eyebrow as="h2">
-              What I bring
-            </Eyebrow>
+            <Eyebrow as="h2">{t("whatIBring")}</Eyebrow>
             <ul className="mt-8 space-y-5">
               {BEWERBUNG.pitch.map((point) => (
                 <li
@@ -98,9 +120,7 @@ export default function BewerbungPage() {
         {/* Experience */}
         <Reveal delay={0.2}>
           <section className="mt-20 border-t border-line pt-12">
-            <Eyebrow as="h2">
-              Experience
-            </Eyebrow>
+            <Eyebrow as="h2">{t("experience")}</Eyebrow>
 
             <ol className="mt-8 space-y-10">
               {EXPERIENCE.map((job) => (
@@ -159,9 +179,7 @@ export default function BewerbungPage() {
         {/* Languages */}
         <Reveal delay={0.25}>
           <section className="mt-20 border-t border-line pt-12">
-            <Eyebrow as="h2">
-              Languages
-            </Eyebrow>
+            <Eyebrow as="h2">{t("languages")}</Eyebrow>
             <ul className="mt-8">
               {LANGUAGES.map((lang) => (
                 <li
@@ -180,11 +198,12 @@ export default function BewerbungPage() {
         <Reveal delay={0.3}>
           <section className="mt-20 border-t border-line pt-12">
             <h2 className="text-2xl font-medium tracking-[-0.025em] text-ink">
-              Let&apos;s talk.
+              {t("close")}
             </h2>
             <p className="mt-3 text-pretty text-body leading-[1.7] text-secondary">
-              Available for {SITE.availability.modes.join(", ").toLowerCase()}.
-              Email is the fastest way to reach me.
+              {t("availability", {
+                modes: SITE.availability.modes.join(", ").toLowerCase(),
+              })}
             </p>
             <div className="mt-7">
               <CopyEmail email={SITE.email} />

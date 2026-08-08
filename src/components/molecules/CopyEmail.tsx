@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
 
 /**
@@ -18,6 +19,7 @@ export function CopyEmail({
   email: string;
   tone?: "light" | "dark";
 }) {
+  const t = useTranslations("common");
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -62,7 +64,7 @@ export function CopyEmail({
         <Copy className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
       )}
       <span aria-live="polite" className="sr-only">
-        {copied ? "Email copied to clipboard" : ""}
+        {copied ? t("emailCopied") : ""}
       </span>
     </button>
   );

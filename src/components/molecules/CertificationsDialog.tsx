@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
@@ -30,6 +31,8 @@ export function CertificationsDialog({
   certifications: Certification[];
   onClose: () => void;
 }) {
+  const t = useTranslations("certifications");
+
   /* ── Scroll lock ─────────────────────────────────────────────── */
   useEffect(() => {
     if (!open) return;
@@ -105,23 +108,23 @@ export function CertificationsDialog({
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <Eyebrow as="p" size="xs">
-                    Credentials
+                    {t("credentials")}
                   </Eyebrow>
                   <h2
                     id="certifications-dialog-title"
                     className="mt-3 text-xl font-semibold leading-snug tracking-tight text-ink"
                   >
-                    Certifications
+                    {t("title")}
                   </h2>
                   <p className="mt-1.5 text-sm text-muted">
-                    {certifications.length} completed — each one verifiable.
+                    {t("subtitle", { count: certifications.length })}
                   </p>
                 </div>
 
                 <button
                   type="button"
                   onClick={onClose}
-                  aria-label="Close"
+                  aria-label={t("close")}
                   className={cn(
                     "-mr-2 -mt-1 shrink-0",
                     "grid h-9 w-9 place-items-center rounded-xl",

@@ -59,7 +59,10 @@ export function SectionHeading({
     >
       {eyebrow && (
         <Reveal>
-          <Eyebrow className={cn("mb-5", dark && "text-white/50")}>
+          {/* Colour comes from Eyebrow's own `dark` tone. This used to hand-set
+              `text-white/50` here too — the same value in two places, which is
+              exactly what drifts when the contrast floor is retuned. */}
+          <Eyebrow className="mb-5" tone={dark ? "dark" : "light"}>
             {eyebrow}
           </Eyebrow>
         </Reveal>

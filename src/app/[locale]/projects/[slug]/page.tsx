@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { localeAlternates, routing } from "@/i18n/routing";
 import { SiGithub } from "react-icons/si";
 import { cn } from "@/lib/utils";
 import { PageShell } from "@/components/layout/PageShell";
@@ -19,23 +21,30 @@ import {
   type ProjectImage,
 } from "@/data/projects";
 
+/** Every project in every locale — the cross product, not just the slugs. */
 export function generateStaticParams() {
-  return VISIBLE_PROJECTS.map((project) => ({ slug: project.slug }));
+  return routing.locales.flatMap((locale) =>
+    VISIBLE_PROJECTS.map((project) => ({ locale, slug: project.slug })),
+  );
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const project = getProjectBySlug(slug);
 
-  if (!project) return { title: "Project not found" };
+  if (!project) {
+    const t = await getTranslations({ locale, namespace: "caseStudy" });
+    return { title: t("notFound") };
+  }
 
   return {
     title: project.title,
     description: project.tagline,
+    alternates: localeAlternates(`/projects/${slug}`, locale),
     openGraph: { title: project.title, description: project.tagline },
   };
 }
@@ -119,9 +128,12 @@ function SidebarBox({
 export default async function ProjectCaseStudy({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations("caseStudy");
   const index = VISIBLE_PROJECTS.findIndex((p) => p.slug === slug);
 
   if (index === -1) notFound();
@@ -177,7 +189,7 @@ export default async function ProjectCaseStudy({
               className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-0.5"
               aria-hidden="true"
             />
-            <span className="link-underline">All projects</span>
+            <span className="link-underline">{t("allProjects")}</span>
           </Link>
         </Reveal>
 
@@ -201,14 +213,14 @@ export default async function ProjectCaseStudy({
             <div className="mt-9 flex flex-wrap gap-3">
               {live && (
                 <ButtonLink href={live} size="md">
-                  Visit site
+                  {t("visitSite")}
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                 </ButtonLink>
               )}
               {source && (
                 <ButtonLink href={source} variant="secondary" size="md">
                   <SiGithub className="h-4 w-4" aria-hidden="true" />
-                  Source code
+                  {t("sourceCode")}
                 </ButtonLink>
               )}
             </div>
@@ -244,7 +256,7 @@ export default async function ProjectCaseStudy({
 
         <div className="mt-24 space-y-20">
           {/* ---------------- 3. Overview + sidebar ---------------- */}
-          <Block title="Overview" prose={false}>
+          <Block title={t("overview")} prose={false}>
             <div className="grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-16">
               <div>
                 <Reveal>
@@ -272,7 +284,7 @@ export default async function ProjectCaseStudy({
 
               {/* Sidebar — stack, role, links. */}
               <Reveal delay={0.05} className="space-y-4">
-                <SidebarBox label="Stack">
+                <SidebarBox label={t("stack")}>
                   <ul className="flex flex-wrap gap-2">
                     {project.stack.map((tech) => {
                       const { Icon, label } = TECH[tech];
@@ -301,14 +313,14 @@ export default async function ProjectCaseStudy({
                   </ul>
                 </SidebarBox>
 
-                <SidebarBox label="My role">
+                <SidebarBox label={t("myRole")}>
                   <p className="text-pretty text-sm leading-[1.6] text-secondary">
                     {project.role}
                   </p>
                 </SidebarBox>
 
                 {(live || source) && (
-                  <SidebarBox label="Links">
+                  <SidebarBox label={t("links")}>
                     <ul className="space-y-2">
                       {live && (
                         <li>
@@ -318,7 +330,9 @@ export default async function ProjectCaseStudy({
                             rel="noopener noreferrer"
                             className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors hover:text-ink"
                           >
-                            <span className="link-underline">Live site</span>
+                            <span className="link-underline">
+                              {t("liveSite")}
+                            </span>
                             <ArrowUpRight
                               className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                               aria-hidden="true"
@@ -334,7 +348,9 @@ export default async function ProjectCaseStudy({
                             rel="noopener noreferrer"
                             className="group inline-flex items-center gap-1.5 text-sm text-secondary transition-colors hover:text-ink"
                           >
-                            <span className="link-underline">Source code</span>
+                            <span className="link-underline">
+                              {t("sourceCode")}
+                            </span>
                             <ArrowUpRight
                               className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                               aria-hidden="true"
@@ -351,7 +367,7 @@ export default async function ProjectCaseStudy({
 
           {/* ---------------- 4. Problem → Solution ---------------- */}
           {hasIntro && (
-            <Block title={project.problem ? "The problem" : "The approach"}>
+            <Block title={project.problem ? t("problem") : t("approach")}>
               <div className="space-y-10">
                 {project.problem && (
                   <Reveal>
@@ -365,7 +381,7 @@ export default async function ProjectCaseStudy({
                   <Reveal delay={0.05}>
                     {project.problem && (
                       <h3 className="text-body font-medium text-ink">
-                        The approach
+                        {t("approach")}
                       </h3>
                     )}
                     <p
@@ -388,7 +404,7 @@ export default async function ProjectCaseStudy({
            * has a rhythm instead of a left-aligned column of screenshots.
            */}
           {challenges.length > 0 && (
-            <Block title="What was hard" prose={false}>
+            <Block title={t("whatWasHard")} prose={false}>
               <div className="space-y-16 lg:space-y-24">
                 {challenges.map((item, i) => {
                   const image = pairImages[i];
@@ -443,7 +459,9 @@ export default async function ProjectCaseStudy({
                         {item.tradeoff && (
                           <details className="group/t mt-4 pl-5">
                             <summary className="cursor-pointer list-none text-sm text-muted transition-colors hover:text-secondary">
-                              <span className="link-underline">Trade-off</span>
+                              <span className="link-underline">
+                                {t("tradeoff")}
+                              </span>
                               <span className="ml-1.5 inline-block transition-transform duration-200 group-open/t:rotate-90">
                                 ›
                               </span>
@@ -463,14 +481,14 @@ export default async function ProjectCaseStudy({
 
           {/* ---------------- 5. Gallery — slideshow ---------------- */}
           {restImages.length > 0 && (
-            <Block title="More screens" prose={false}>
+            <Block title={t("moreScreens")} prose={false}>
               <Gallery images={restImages} />
             </Block>
           )}
 
           {/* ---------------- 6. Results ---------------- */}
           {metrics.length > 0 && (
-            <Block title="Results" prose={false}>
+            <Block title={t("results")} prose={false}>
               <RevealGroup
                 as="dl"
                 className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
@@ -508,7 +526,7 @@ export default async function ProjectCaseStudy({
             className="group flex items-center justify-between gap-6"
           >
             <span className="min-w-0">
-              <Eyebrow as="span">Next project</Eyebrow>
+              <Eyebrow as="span">{t("nextProject")}</Eyebrow>
               <span className="mt-4 flex items-center gap-4">
                 <span className="text-title font-medium tracking-[-0.025em] text-ink sm:text-display-sm">
                   {next.title}
