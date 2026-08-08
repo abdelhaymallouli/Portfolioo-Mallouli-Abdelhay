@@ -232,15 +232,21 @@ export interface Stat {
 
 export const STATS: Stat[] = [
   {
-    value: 130,
-    suffix: "+",
-    label: "Automated tests written",
-    note: "61 PHPUnit tests on AttendanceFlow, 69 on CampusOS",
+    value: 1,
+    prefix: "#",
+    label: "OFPPT Hackathon 2026",
+    note: "First place, building CampusOS with a team of four",
   },
   {
     value: 6,
     label: "Production integrations shipped",
     note: "Mattermost plugins automating HR operations at Pragmatic Minds",
+  },
+  {
+    value: 130,
+    suffix: "+",
+    label: "Automated tests written",
+    note: "61 PHPUnit tests on AttendanceFlow, 69 on CampusOS",
   },
   {
     value: 2,

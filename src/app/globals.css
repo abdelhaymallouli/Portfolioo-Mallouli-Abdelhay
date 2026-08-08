@@ -56,6 +56,9 @@
    * Three chromatic values, used as fills and surfaces only. None of them
    * clears AA as text on a light ground — `primary` is 1.4:1 on white — so
    * text on an accent fill is always ink, never the reverse.
+   *
+   * `primary` carries ink at 8.2:1, which is what lets the monogram tile, the
+   * scroll-to-top FAB and the button marker take ink glyphs.
    */
   --color-primary: #ffcc00; /* Yellow — primary fill */
   --color-dusty-green: #447e68;

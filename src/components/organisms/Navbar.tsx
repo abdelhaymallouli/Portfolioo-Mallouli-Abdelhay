@@ -7,6 +7,7 @@ import { ArrowUp, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Container } from "@/components/atoms/Container";
 import { ButtonLink } from "@/components/atoms/Button";
+import { Logo } from "@/components/atoms/Logo";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { NAV_LINKS, SECTION_IDS, SITE } from "@/data/content";
 
@@ -20,8 +21,8 @@ import { NAV_LINKS, SECTION_IDS, SITE } from "@/data/content";
  * At rest it is transparent so the hero shows through; past 8px of scroll it
  * gains a dark translucent fill and a blur. The dark ground is deliberate —
  * it separates the nav from a page that is otherwise entirely light, and it
- * lets the yellow CTA marker sit at full saturation without competing with
- * anything around it.
+ * lets the CTA marker sit at full saturation without competing with anything
+ * around it.
  */
 export function Navbar({
   trackSections = false,
@@ -121,13 +122,29 @@ export function Navbar({
           )}
         >
           <div className="flex h-16 items-center justify-between gap-8 px-4 sm:px-5">
-            {/* Wordmark */}
+            {/*
+             * Wordmark: the monogram in a brand-fill tile, with the full name
+             * beside it. The name is hidden below `sm` — at that width it was
+             * competing with the CTA for the same row — but the mark stays,
+             * so the bar is never anonymous.
+             */}
             <Link
               href="/"
               onClick={closeMenu}
-              className="shrink-0 text-body font-medium tracking-tight text-white"
+              aria-label={`${SITE.name} — home`}
+              /* `outline-accent`, matching every other focus ring on the site
+                 (globals.css). This was the one place the brand fill doubled
+                 as a focus indicator, which also put a yellow ring directly on
+                 the yellow logo tile — the one background it cannot show up
+                 against. */
+              className="group/logo flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
-              {SITE.name}
+              <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary transition-transform duration-200 ease-out group-hover/logo:-rotate-6">
+                <Logo className="h-[18px] w-[18px] text-ink" weight={2.6} />
+              </span>
+              <span className="hidden text-body font-medium tracking-tight text-white sm:inline">
+                {SITE.name}
+              </span>
             </Link>
 
             {/* Desktop nav */}

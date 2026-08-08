@@ -73,8 +73,12 @@ const PERSON_SCHEMA = {
 
 export const viewport: Viewport = {
   colorScheme: "light",
-  /* Matches --color-canvas so mobile browser chrome blends with the page. */
-  themeColor: "#f8fafc",
+  /*
+   * Matches --color-canvas so mobile browser chrome blends with the page.
+   * This read #f8fafc — a cool slate from an earlier palette — against a warm
+   * bone canvas, which is exactly the seam the comment claims it prevents.
+   */
+  themeColor: "#f0efec",
 };
 
 export default function RootLayout({

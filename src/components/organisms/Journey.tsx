@@ -32,6 +32,8 @@ type Milestone = {
   title: string;
   detail: string;
   meta: string;
+  /** Sort key — see `startsAt`. Not rendered. */
+  sortKey: number;
   tags?: string[];
   details?: string[];
   tech?: string[];
@@ -42,9 +44,49 @@ type Milestone = {
    Data
 ───────────────────────────────────────────────────────────────────── */
 
+/** Month names as they appear in the `period` strings, for `startsAt`. */
+const MONTHS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
+/**
+ * A sortable start date for a `period` string, as `year * 12 + month`.
+ *
+ * Periods are written two ways — "2024 — 2025" for an academic year and
+ * "July 2025 — August 2025" for a dated role — so the year alone cannot order
+ * them. The Pragmatic Minds internship (July 2025) and the second SOLICODE
+ * year (2025 — 2026) both yield "2025", and the sort was falling back to array
+ * order, which listed the internship after a programme it ran *during*.
+ *
+ * An undated period is an academic year, so it sorts to **September** rather
+ * than January: "2025 — 2026" begins that autumn, which is what places the
+ * July 2025 internship before it instead of after. Sorting those to January
+ * reproduces the original bug in a subtler form.
+ */
+const ACADEMIC_YEAR_START = 8; // September, zero-indexed.
+
+function startsAt(period: string): number {
+  const year = Number(period.match(/\d{4}/)?.[0] ?? 0);
+  const monthName = period.toLowerCase().match(/[a-zé]+/)?.[0] ?? "";
+  const monthIndex = MONTHS.indexOf(monthName);
+  return year * 12 + (monthIndex === -1 ? ACADEMIC_YEAR_START : monthIndex);
+}
+
 function buildMilestones(): Milestone[] {
   const education: Milestone[] = EDUCATION.map((entry) => ({
     year: entry.period.match(/\d{4}/)?.[0] ?? entry.period,
+    sortKey: startsAt(entry.period),
     kind: "Education" as const,
     title: entry.programme,
     detail: entry.detail ?? "",
@@ -57,6 +99,7 @@ function buildMilestones(): Milestone[] {
 
   const roles: Milestone[] = EXPERIENCE.map((job) => ({
     year: job.period.match(/\d{4}/)?.[0] ?? job.period,
+    sortKey: startsAt(job.period),
     kind: "Role" as const,
     title: job.role.replace(/\s*\((Internship|Remote)\)\s*/gi, "").trim(),
     detail: job.summary,
@@ -70,9 +113,11 @@ function buildMilestones(): Milestone[] {
   }));
 
   return [
-    ...[...education, ...roles].sort((a, b) => a.year.localeCompare(b.year)),
+    ...[...education, ...roles].sort((a, b) => a.sortKey - b.sortKey),
     {
       year: JOURNEY_OUTLOOK.year,
+      /* Always last — "Next" has no date to sort by. */
+      sortKey: Number.MAX_SAFE_INTEGER,
       kind: "Outlook" as const,
       title: JOURNEY_OUTLOOK.title,
       detail: JOURNEY_OUTLOOK.detail,
@@ -85,10 +130,19 @@ function buildMilestones(): Milestone[] {
    Design tokens per kind
 ───────────────────────────────────────────────────────────────────── */
 
-const KIND_STRIPE: Record<MilestoneKind, string> = {
-  Education: "bg-dusty-green",
-  Role:      "bg-ink",
-  Outlook:   "bg-line-strong",
+/*
+ * The left rail. A gradient that fades out toward the bottom rather than a
+ * flat bar — borrowed from the reference card, where the rail reads as a
+ * highlight on the edge instead of a block of colour bolted to it.
+ *
+ * The reference ran one teal→gold gradient on every card. Here the top colour
+ * is the kind's own accent, so the rail still does the job the flat stripe
+ * did: telling Education from Role at a glance, down a long timeline.
+ */
+const KIND_RAIL: Record<MilestoneKind, string> = {
+  Education: "from-dusty-green",
+  Role:      "from-ink",
+  Outlook:   "from-line-strong",
 };
 
 const KIND_DOT_RING: Record<MilestoneKind, string> = {
@@ -205,7 +259,13 @@ function JourneyCard({
     <li
       className={cn(
         "relative mb-8 last:mb-0",
-        "lg:mb-0 lg:flex lg:h-[24rem] lg:items-center",
+        /*
+         * Fixed height, not `min-h`. The spine places every dot at an equal
+         * fraction of the track (`yAt` in spineD), so rows must all be the
+         * same height or the dots drift off the curve. Raised from 24rem to
+         * fit the larger title and the new footer rule.
+         */
+        "lg:mb-0 lg:flex lg:h-[26rem] lg:items-center",
         left ? "lg:justify-start" : "lg:justify-end",
       )}
     >
@@ -223,7 +283,10 @@ function JourneyCard({
             "absolute top-1/2 z-20 hidden lg:block",
             "-translate-y-1/2 rounded-full",
             // Outer ring + glow
-            "h-4 w-4 ring-2 ring-offset-2 ring-offset-subtle shadow-[0_0_10px_2px_rgba(255,204,0,0.35)]",
+            /* Glow derived from the token via color-mix, not a literal — it
+               was a hard-coded rgba(255,204,0,…) that silently kept the old
+               yellow when the brand colour changed. */
+            "h-4 w-4 ring-2 ring-offset-2 ring-offset-subtle shadow-[0_0_10px_2px_color-mix(in_srgb,var(--color-primary)_35%,transparent)]",
             KIND_DOT_RING[milestone.kind],
             KIND_DOT_BG[milestone.kind],
             left ? "-right-2" : "-left-2",
@@ -239,22 +302,37 @@ function JourneyCard({
             milestone.kind === "Outlook" && "border-dashed",
           )}
         >
-          {/* Kind stripe — 3 px, visually crisp */}
+          {/*
+           * Left rail, inset from the corners and fading downward. Inset is
+           * what keeps it from fighting the card's radius — a full-height bar
+           * had to be squared off at the top to sit inside the rounded corner,
+           * which is why it read as a bolted-on stripe.
+           */}
           <span
             aria-hidden="true"
             className={cn(
-              "absolute inset-y-0 left-0 w-[3px] rounded-l-3xl",
-              KIND_STRIPE[milestone.kind],
+              "absolute inset-y-4 left-0 w-[3px] rounded-r-full bg-gradient-to-b to-transparent",
+              KIND_RAIL[milestone.kind],
             )}
           />
 
-          <div className="p-6 pl-7 sm:p-7 sm:pl-8">
+          {/*
+           * A single soft wash in the top-left, echoing the Hero's horizon
+           * glow. It only appears on hover, so a column of cards stays calm at
+           * rest and the one under the pointer lifts out of the stack.
+           */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full bg-primary/10 opacity-0 blur-3xl transition-opacity duration-300 group-hover/card:opacity-100"
+          />
+
+          <div className="relative p-6 pl-7 sm:p-7 sm:pl-8">
             {/* Header row: year pill + kind label */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span
                 className={cn(
                   "inline-flex items-center rounded-md px-2.5 py-0.5",
-                  "bg-ink font-mono text-[11px] font-bold tracking-[0.1em] text-primary",
+                  "bg-ink font-mono text-micro font-bold tracking-[0.1em] text-primary",
                 )}
               >
                 {milestone.year}
@@ -264,21 +342,31 @@ function JourneyCard({
               </Eyebrow>
             </div>
 
-            {/* Title */}
-            <h3 className="mt-4 text-lead font-semibold leading-snug tracking-tight text-ink">
+            {/*
+             * Title at `text-title`, up from `text-lead`. The reference gets
+             * most of its composure from one clear step between the title and
+             * everything under it; at 17px the title was the same weight as
+             * the body copy and the card had no focal point.
+             */}
+            <h3 className="mt-5 text-balance text-title font-semibold leading-[1.25] tracking-tight text-ink">
               {milestone.title}
             </h3>
 
-            {/* Meta */}
+            {/*
+             * Meta in mono rather than uppercase sans. The reference sets it
+             * in teal small-caps; teal is 4.1:1 on white here and fails AA at
+             * this size, so the distinction is carried by the mono face
+             * instead of by colour.
+             */}
             {milestone.meta && (
-              <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-muted">
+              <p className="mt-2 font-mono text-caption text-muted">
                 {milestone.meta}
               </p>
             )}
 
             {/* Summary */}
             {milestone.detail && (
-              <p className="mt-3 text-pretty text-body leading-[1.65] text-secondary">
+              <p className="mt-4 max-w-[46ch] text-pretty text-body leading-[1.65] text-secondary">
                 {milestone.detail}
               </p>
             )}
@@ -294,26 +382,42 @@ function JourneyCard({
               </ul>
             )}
 
-            {/* CTA */}
-            {hasMore && (
-              <button
-                type="button"
-                onClick={() => onOpen(milestone)}
-                className={cn(
-                  "mt-5 inline-flex items-center gap-1.5",
-                  "text-sm font-medium text-ink",
-                  "after:absolute after:inset-0 after:content-['']",
-                  "transition-colors hover:text-accent",
-                  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
-                )}
+            {/*
+             * Footer rule with the CTA left and the position right, from the
+             * reference. The index is the reason the rule earns its place:
+             * without it the row is one button and a lot of empty space.
+             */}
+            {/* `justify-end` keeps the index right-aligned on the Outlook
+                card, which has no button to sit opposite it. */}
+            <div className="mt-6 flex items-center justify-between gap-4 border-t border-line pt-4">
+              {hasMore && (
+                <button
+                  type="button"
+                  onClick={() => onOpen(milestone)}
+                  className={cn(
+                    "inline-flex items-center gap-1.5",
+                    "text-meta font-medium text-ink",
+                    "after:absolute after:inset-0 after:content-['']",
+                    "transition-colors hover:text-accent",
+                    "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+                  )}
+                >
+                  <span className="link-underline">See more</span>
+                  <Plus
+                    className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover/card:rotate-90"
+                    aria-hidden="true"
+                  />
+                </button>
+              )}
+
+              <span
+                aria-hidden="true"
+                className="ml-auto shrink-0 font-mono text-micro tabular-nums tracking-[0.05em] text-muted"
               >
-                <span className="link-underline">See more</span>
-                <Plus
-                  className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover/card:rotate-90"
-                  aria-hidden="true"
-                />
-              </button>
-            )}
+                {String(index + 1).padStart(2, "0")} /{" "}
+                {String(count).padStart(2, "0")}
+              </span>
+            </div>
           </div>
         </Card>
       </motion.div>
@@ -392,7 +496,7 @@ export function Journey() {
             >
               <SpinePath
                 count={milestones.length}
-                stroke="rgba(255,204,0,0.35)"
+                stroke="color-mix(in srgb, var(--color-primary) 35%, transparent)"
                 strokeWidth="6"
                 opacity={1}
               />
