@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { localeAlternates, routing } from "@/i18n/routing";
+import { localeAlternates, localisedPath, routing } from "@/i18n/routing";
 import { SiGithub } from "react-icons/si";
 import { cn } from "@/lib/utils";
 import { PageShell } from "@/components/layout/PageShell";
@@ -41,11 +41,35 @@ export async function generateMetadata({
     return { title: t("notFound") };
   }
 
+  /*
+   * The project's own cover as the share card, falling back to the site card.
+   *
+   * Declaring an `openGraph` block here replaces the inherited one wholesale
+   * rather than merging into it — which is why these pages shipped with no
+   * og:image at all, even though the root layout supplies one. A case study is
+   * the most-shared URL on a portfolio, so it is the worst page to unfurl blank.
+   */
+  const cover = project.cover?.src;
+
   return {
     title: project.title,
     description: project.tagline,
     alternates: localeAlternates(`/projects/${slug}`, locale),
-    openGraph: { title: project.title, description: project.tagline },
+    openGraph: {
+      title: project.title,
+      description: project.tagline,
+      url: localisedPath(`/projects/${slug}`, locale),
+      type: "article",
+      images: cover
+        ? [{ url: cover, alt: project.cover?.alt ?? project.title }]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.tagline,
+      images: cover ? [cover] : undefined,
+    },
   };
 }
 
