@@ -40,7 +40,9 @@ export default async function ProjectsPage({
   return (
     <PageShell>
       <PageHeader>
+        {/* `as="h1"` — this block is the page title, not a section heading. */}
         <SectionHeading
+          as="h1"
           eyebrow={t("count", { count: VISIBLE_PROJECTS.length })}
           title={t("title")}
           description={t("description")}

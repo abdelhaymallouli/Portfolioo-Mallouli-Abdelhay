@@ -74,7 +74,7 @@ export const EDUCATION: EducationEntry[] = [
     ],
     certificate: {
       name: "Certificate of Completion: Web Development",
-      url: "/certificates/Certificate_Solicode_Tangier_Recated.pdf",
+      url: "/certificates/Web_Developer_Certificate.pdf",
     },
   },
   {

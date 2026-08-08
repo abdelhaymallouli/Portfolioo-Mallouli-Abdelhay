@@ -34,8 +34,12 @@ export const SITE = {
   github: "https://github.com/abdelhaymallouli",
   linkedin: "https://www.linkedin.com/in/abdelhaymallouli",
 
-  /** Put the file at /public/resume.pdf, or change this path. */
-  resumeHref: "/resume.pdf",
+  /**
+   * Path from /public. The filename is the one that lands in the reader's
+   * Downloads folder, so it carries the full name rather than being a bare
+   * "resume.pdf" among a dozen others.
+   */
+  resumeHref: "/resume/Resume_Abdelhay_Mallouli.pdf",
   /** Booking link for the interview CTA. Cal.com, Calendly, etc. */
   schedulingHref: "https://cal.com/",
 

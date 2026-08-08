@@ -24,6 +24,15 @@ interface SectionHeadingProps {
    * section-title scale on the site.
    */
   tone?: "light" | "dark";
+  /**
+   * Heading level. `h2` is right for a section inside a page; pass `h1` where
+   * this block *is* the page title.
+   *
+   * /projects rendered its title through here and so shipped with no `<h1>` at
+   * all — the visual hierarchy was correct while the document outline started
+   * at level two.
+   */
+  as?: "h1" | "h2";
 }
 
 /**
@@ -45,6 +54,7 @@ export function SectionHeading({
   children,
   align = "left",
   tone = "light",
+  as: Heading = "h2",
 }: SectionHeadingProps) {
   const centered = align === "center";
   const dark = tone === "dark";
@@ -69,7 +79,7 @@ export function SectionHeading({
       )}
 
       <Reveal delay={0.04}>
-        <h2
+        <Heading
           className={cn(
             "max-w-[24ch] text-balance font-medium tracking-tight",
             "text-display-sm sm:text-display-md lg:text-display-lg",
@@ -78,7 +88,7 @@ export function SectionHeading({
           )}
         >
           {title}
-        </h2>
+        </Heading>
       </Reveal>
 
       {description && (

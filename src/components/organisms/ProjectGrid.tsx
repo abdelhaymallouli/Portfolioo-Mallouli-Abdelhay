@@ -66,13 +66,16 @@ function ProjectCard({ project }: { project: Project }) {
        * as a form rather than a link.
        */}
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="flex items-start justify-between gap-3 text-body font-medium text-ink">
+        {/* `h2`, not `h3`: these sit directly under the page `h1` with no
+            intervening section, and skipping a level breaks the outline for
+            screen readers stepping through by heading. */}
+        <h2 className="flex items-start justify-between gap-3 text-body font-medium text-ink">
           {project.title}
           <ArrowUpRight
             className="h-4 w-4 shrink-0 text-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
             aria-hidden="true"
           />
-        </h3>
+        </h2>
 
         <p className="mt-2 text-pretty text-sm leading-[1.6] text-secondary">
           {project.tagline}
