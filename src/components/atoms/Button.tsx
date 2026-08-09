@@ -130,8 +130,15 @@ export function ButtonLink({
     marked && MARKER_SIZES[size],
     className,
   );
-  const isExternal =
+  /*
+   * `next/link` only makes sense for an internal route. A protocol link and a
+   * static asset under `/public` both need a plain anchor — routing a PDF
+   * through the client router leaves the browser with nothing to render and
+   * prefetches a file nobody asked for yet.
+   */
+  const isProtocol =
     typeof href === "string" && /^(https?:|mailto:|tel:)/.test(href);
+  const isAsset = typeof href === "string" && /\.[a-z0-9]+$/i.test(href);
 
   const body = (
     <>
@@ -140,13 +147,20 @@ export function ButtonLink({
     </>
   );
 
-  if (isExternal) {
+  if (typeof href === "string" && (isProtocol || isAsset)) {
+    const newTab = href.startsWith("http");
     return (
       <a
         href={href}
         className={classes}
-        target={href.startsWith("http") ? "_blank" : undefined}
-        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+        // Callers hang behaviour off the click (the mobile sheet closes
+        // itself this way), so it has to survive the anchor branch too.
+        onClick={rest.onClick}
+        target={newTab ? "_blank" : undefined}
+        rel={newTab ? "noopener noreferrer" : undefined}
+        // A résumé should land in the visitor's downloads, not replace the
+        // page they were reading.
+        download={isAsset && !isProtocol ? "" : undefined}
       >
         {body}
       </a>
