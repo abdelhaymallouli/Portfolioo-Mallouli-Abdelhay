@@ -23,9 +23,9 @@ export const SITE = {
    */
   url: "https://abdelhaymallouli.com",
   /** Job title as you'd put it on a CV. */
-  role: "Full Stack Developer",
+  role: "Full Stack Web Developer & Custom Website Creation Specialist",
   /** Primary positioning line. Shown in metadata and the footer. */
-  positioning: "Considered builds, from schema to pixel.",
+  positioning: "Custom Web Development & Software Engineering Solutions.",
 
   email: "abdelhay.mallouli@gmail.com",
   phone: "+212 635 848 683",
@@ -46,7 +46,7 @@ export const SITE = {
   availability: {
     open: true,
     /** Engagement types you'll consider. */
-    modes: ["Full-time", "Contract", "Freelance"],
+    modes: ["Full-time", "Contract", "Freelance Web Development"],
   },
 } as const;
 
@@ -68,24 +68,22 @@ export const NAV_LINKS = [
 
 /* ------------------------------------------------------------------ *
  * HERO
- * The first screen. Keep the headline to one clear statement — resist
- * adding a second clause.
  * ------------------------------------------------------------------ */
 
 export const HERO = {
   /** Positioning line above the headline. Role and place, nothing more. */
   eyebrow: `${SITE.role} · ${SITE.location}`,
   /**
-   * The main statement. Client-facing, benefit-led — what working with you
-   * gets someone, not a claim about your title or years of experience.
+   * The main statement.
    */
   headline:
-    "Full-stack products that work the first time and hold up after.",
+    "Custom Web Development & High-Performance Website Creation.",
   /**
-   * Sits beside the headline. Three concrete outcomes, then what they rest on.
+   * Sits beside the headline.
    */
   intro:
-  "I write the tests before the feature, trace the data model before the interface, and ship code someone else can read six months from now. Attendance systems that can't be faked, dashboards that catch problems early — that discipline is why they still work.",  primaryCta: { label: "View projects", href: "/projects" },
+    "Specialized in custom website creation, full-stack web applications, and scalable backend architecture. Building high-performance web systems with React, Next.js, Laravel, and Go that scale seamlessly.",
+  primaryCta: { label: "View projects", href: "/projects" },
   secondaryCta: { label: "Download résumé", href: SITE.resumeHref },
 } as const;
 

@@ -44,63 +44,173 @@ export async function generateMetadata({
   const title = `${SITE.name} — ${t("role")}`;
   const description = t("description");
 
+  const keywords = [
+    "Web Development",
+    "Create Website",
+    "Web Development Company",
+    "Full Stack Developer",
+    "Software Developer",
+    "Custom Website Creation",
+    "Hire Web Developer",
+    "Web Application Development",
+    "React Developer",
+    "Next.js Developer",
+    "Laravel Developer",
+    "Go Developer",
+    "Website Creation Company",
+    "Full Stack Web Development",
+    "Custom Software Engineering",
+    "Frontend and Backend Developer",
+    "Tangier Web Developer",
+    "Morocco Software Engineer",
+  ];
+
   return {
-    /* Resolves every relative OG/canonical URL below against the real origin. */
     metadataBase: new URL(SITE.url),
     title: {
       default: title,
       template: `%s — ${SITE.name}`,
     },
     description,
-    /*
-     * `canonical` is this locale's own URL and `languages` advertises the
-     * alternates, so Google treats the two as translations of one page rather
-     * than as duplicate content.
-     *
-     * Note every child page must set its own — metadata merges downward, so a
-     * page that omits this inherits the home page's canonical and declares
-     * itself a duplicate of `/`.
-     */
+    keywords,
+    authors: [{ name: SITE.name, url: SITE.url }],
+    creator: SITE.name,
+    publisher: SITE.name,
+    category: "technology",
     alternates: localeAlternates("", locale),
     openGraph: {
       title,
       description,
       url: localisedPath("", locale),
-      siteName: SITE.name,
+      siteName: `${SITE.name} — Web Development & Custom Software`,
       type: "website",
       locale: OG_LOCALE[locale] ?? OG_LOCALE.en,
+      images: [
+        {
+          url: "/logo/Logo_Primary.png",
+          width: 1200,
+          height: 630,
+          alt: `${SITE.name} — Web Development & Custom Website Creation`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: ["/logo/Logo_Primary.png"],
     },
     robots: {
       index: true,
       follow: true,
-      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
   };
 }
 
 /**
- * Structured data describing the person this site is about.
- *
- * Emitted from the root layout so it appears on every route: search engines
- * treat the entity as site-wide, and a per-page copy would just be duplicated.
+ * Multi-entity JSON-LD structured data for Google & Search Engine indexing.
  */
-const PERSON_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE.name,
-  jobTitle: SITE.role,
-  email: `mailto:${SITE.email}`,
-  url: SITE.url,
-  address: { "@type": "PostalAddress", addressLocality: SITE.location },
-  sameAs: [SITE.github, SITE.linkedin],
-  /* Derived from LANGUAGES so this can't drift from what the site claims. */
-  knowsLanguage: LANGUAGES.map((language) => language.name),
-};
+const STRUCTURED_DATA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": `${SITE.url}/#person`,
+    name: SITE.name,
+    jobTitle: SITE.role,
+    description:
+      "Full Stack Web Developer & Software Engineer specializing in custom web development, website creation, Next.js, React, Laravel, and Go.",
+    email: `mailto:${SITE.email}`,
+    url: SITE.url,
+    telephone: SITE.phone,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Tangier",
+      addressCountry: "Morocco",
+    },
+    sameAs: [SITE.github, SITE.linkedin],
+    knowsAbout: [
+      "Web Development",
+      "Website Creation",
+      "Custom Software Development",
+      "Full Stack Web Development",
+      "React.js",
+      "Next.js",
+      "Laravel",
+      "Go",
+      "TypeScript",
+      "API Architecture",
+    ],
+    knowsLanguage: LANGUAGES.map((language) => language.name),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": `${SITE.url}/#organization`,
+    name: `${SITE.name} — Web Development & Custom Software Services`,
+    url: SITE.url,
+    logo: `${SITE.url}/logo/Logo_Primary.png`,
+    image: `${SITE.url}/logo/Logo_Primary.png`,
+    description:
+      "Professional web development services, custom website creation, and software engineering.",
+    telephone: SITE.phone,
+    email: SITE.email,
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Tangier",
+      addressCountry: "Morocco",
+    },
+    areaServed: "Worldwide",
+    serviceType: [
+      "Web Development",
+      "Website Creation",
+      "Custom Web Application Development",
+      "Full Stack Software Engineering",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Web Development Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Custom Website Creation",
+            description:
+              "High-performance website development tailored to business objectives.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Full Stack Web Application Development",
+            description:
+              "End-to-end web software development using Next.js, React, Laravel, and Go.",
+          },
+        },
+      ],
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE.url}/#website`,
+    url: SITE.url,
+    name: `${SITE.name} — Custom Web Development & Software Creation`,
+    publisher: {
+      "@id": `${SITE.url}/#person`,
+    },
+    inLanguage: ["en", "de"],
+  },
+];
 
 export const viewport: Viewport = {
   colorScheme: "light",
@@ -156,8 +266,8 @@ export default async function RootLayout({
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <script
           type="application/ld+json"
-          /* Serialised from a literal we control — no untrusted input. */
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_SCHEMA) }}
+          /* Serialised from structured literals we control — no untrusted input. */
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
         />
 
         <a
