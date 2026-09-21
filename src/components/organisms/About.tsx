@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { SiGithub } from "react-icons/si";
-import { FaLinkedin } from "react-icons/fa6";
+import { SiGithub, FaLinkedin } from "@/lib/icons";
 import { Mail } from "lucide-react";
 import { Container } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
@@ -47,7 +46,7 @@ export async function About() {
                   src={ABOUT.portrait.src}
                   alt={ABOUT.portrait.alt}
                   fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  sizes="(min-width: 1024px) 380px, (min-width: 640px) 480px, 100vw"
                   className="object-cover"
                 />
               ) : (

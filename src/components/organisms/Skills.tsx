@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/atoms/Container";
-import { Reveal } from "@/components/motion/Reveal";
+import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { TECH, type TechKey } from "@/lib/tech-icons";
 
 /**
@@ -73,11 +73,15 @@ export function Skills() {
         </Reveal>
 
         {/* Icon grid */}
-        <div className="mx-auto mt-8 flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-4 md:gap-x-10 md:gap-y-6">
-          {ICON_TECH.map((key, index) => {
+        <RevealGroup
+          as="div"
+          className="mx-auto mt-8 flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-4 md:gap-x-10 md:gap-y-6"
+          stagger={0.02}
+        >
+          {ICON_TECH.map((key) => {
             const { Icon, label } = TECH[key];
             return (
-              <Reveal key={key} delay={index * 0.02} offset={10}>
+              <RevealItem key={key}>
                 <div
                   className="group flex items-center gap-2.5 rounded-xl border border-line bg-card px-4 py-2.5 shadow-subtle/40 transition-all duration-300 hover:scale-105 hover:border-line-strong hover:shadow-lift"
                   style={{ perspective: "800px" }}
@@ -90,24 +94,28 @@ export function Skills() {
                     {label}
                   </span>
                 </div>
-              </Reveal>
+              </RevealItem>
             );
           })}
-        </div>
+        </RevealGroup>
 
         {/* Divider */}
         <div className="mx-auto mt-6 h-px max-w-3xl bg-gradient-to-r from-transparent via-line-strong to-transparent" />
 
         {/* Plain-text extras — tools without a logo mark */}
-        <div className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-3">
-          {TEXT_EXTRAS.map((extra, index) => (
-            <Reveal key={extra} delay={index * 0.015} offset={8}>
+        <RevealGroup
+          as="div"
+          className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-3"
+          stagger={0.015}
+        >
+          {TEXT_EXTRAS.map((extra) => (
+            <RevealItem key={extra}>
               <span className="rounded-full border border-line bg-card px-4 py-1.5 text-xs font-medium tracking-wide text-muted transition-colors duration-200 hover:border-line-strong hover:text-ink">
                 {extra}
               </span>
-            </Reveal>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </Container>
     </section>
   );

@@ -111,13 +111,13 @@ export const ABOUT = {
    *
    * The lead paragraph renders larger than the rest.
    */
-paragraphs: [
-  "I'm a full-stack developer based in Tangier. Most of the work I take on has real consequences attached — someone's attendance record, someone's exam eligibility, someone's risk score. That's a different kind of pressure than shipping another feature nobody depends on.",
-  "When a system decides whether someone gets to sit an exam, correct beats clever every time. So I don't start with the interface. I start with the data model, work out every way a feature could fail, and only write the front end once I trust what's underneath it.",
-  "A remote stretch of work for a team abroad changed how I write code. I couldn't walk over and explain a decision in person. The commit history had to do that instead, across a time zone and a language gap. I still write that way now, for whoever opens the file next.",
-  "Backend is where I stay longest, because that's where mistakes compound. Redraw an interface in an afternoon; live with a wrong schema for years. It's the same reason I've gone deep on running AI on infrastructure I control rather than just calling an API — the constraint of keeping sensitive data in-house is one I take seriously, even when it means a slower response.",
-  "I've turned down speed for correctness more than once. I'd rather hand you four systems I can explain line by line than twenty I'd rather not open again.",
-],
+  paragraphs: [
+    "I'm a full-stack developer based in Tangier. Most of the work I take on has real consequences attached — someone's attendance record, someone's exam eligibility, someone's risk score. That's a different kind of responsibility than shipping another feature nobody depends on.",
+    "When a system decides whether someone gets to sit an exam, correct beats clever every time. I don't start with the interface. I start with the data model, map out every failure mode, and only build the front end once I trust what's underneath it.",
+    "Working remotely for a team abroad changed how I write code. I couldn't explain decisions in person; the commit history had to speak for me across time zones and language barriers. I still write that way today — for whoever opens the file next.",
+    "Backend is where I stay longest because that's where mistakes compound. You can redesign an interface in an afternoon, but you live with a broken schema for years. It's the same reason I run AI on infrastructure I control rather than calling an external API — keeping sensitive data in-house is non-negotiable, even if response times are slightly slower.",
+    "I've chosen correctness over speed more than once. I'd rather hand you four systems I can explain line by line than twenty I'd rather not open again.",
+  ],
   /** Optional quick facts shown alongside the prose. */
   facts: [
     { label: "Based in", value: SITE.location },

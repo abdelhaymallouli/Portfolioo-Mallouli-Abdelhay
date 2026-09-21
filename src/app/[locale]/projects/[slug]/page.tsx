@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { localeAlternates, localisedPath, routing } from "@/i18n/routing";
-import { SiGithub } from "react-icons/si";
+import { SiGithub } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader } from "@/components/atoms/Container";
@@ -13,13 +14,16 @@ import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { ButtonLink } from "@/components/atoms/Button";
 import { Counter } from "@/components/motion/Counter";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
-import { Gallery } from "@/components/molecules/Gallery";
 import { TECH } from "@/lib/tech-icons";
 import {
   VISIBLE_PROJECTS,
   getProjectBySlug,
   type ProjectImage,
 } from "@/data/projects";
+
+const Gallery = dynamic(() =>
+  import("@/components/molecules/Gallery").then((mod) => mod.Gallery),
+);
 
 /** Every project in every locale — the cross product, not just the slugs. */
 export function generateStaticParams() {

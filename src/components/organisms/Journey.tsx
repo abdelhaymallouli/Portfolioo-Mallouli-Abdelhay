@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
 import { Plus } from "lucide-react";
 import {
   motion,
@@ -17,9 +18,16 @@ import { SectionHeading } from "@/components/atoms/SectionHeading";
 import { Card } from "@/components/atoms/Card";
 import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { Chip } from "@/components/atoms/Chip";
-import { MilestoneDialog } from "@/components/molecules/MilestoneDialog";
 import { EDUCATION, EXPERIENCE, JOURNEY_OUTLOOK } from "@/data/career";
 import { TECH } from "@/lib/tech-icons";
+
+const MilestoneDialog = dynamic(
+  () =>
+    import("@/components/molecules/MilestoneDialog").then(
+      (mod) => mod.MilestoneDialog,
+    ),
+  { ssr: false },
+);
 
 /* ─────────────────────────────────────────────────────────────────────
    Types
@@ -440,7 +448,7 @@ export function Journey() {
   const reduceMotion = useReducedMotion();
   const trackRef     = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<Milestone | null>(null);
-  const milestones   = buildMilestones();
+  const milestones   = useMemo(() => buildMilestones(), []);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,

@@ -1,4 +1,3 @@
-import type { IconType } from "react-icons";
 import {
   SiAlpinedotjs,
   SiChartdotjs,
@@ -25,8 +24,8 @@ import {
   SiTailwindcss,
   SiTypescript,
   SiVite,
-} from "react-icons/si";
-import { FaLinkedin } from "react-icons/fa6";
+  FaLinkedin,
+} from "@/lib/icons";
 
 /**
  * Central registry of technology icons.
@@ -73,7 +72,7 @@ export interface TechMeta {
   /** Human-readable label rendered next to the glyph. */
   label: string;
   /** The icon component itself. */
-  Icon: IconType;
+  Icon: React.ComponentType<{ className?: string }>;
   /** Official brand hex, used for hover accents. */
   brand: string;
 }

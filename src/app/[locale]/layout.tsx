@@ -3,11 +3,16 @@ import { Inter, DM_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import "../globals.css";
 import { localeAlternates, localisedPath, routing } from "@/i18n/routing";
 import { SITE } from "@/data/content";
 import { LANGUAGES } from "@/data/career";
-import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import dynamic from "next/dynamic";
+const SmoothScroll = dynamic(
+  () =>
+    import("@/components/providers/SmoothScroll").then(
+      (mod) => mod.SmoothScroll,
+    ),
+);
 
 /** Everything: display and body. Variable font, so no weight axis to declare. */
 const inter = Inter({
@@ -65,8 +70,10 @@ export async function generateMetadata({
     "Morocco Software Engineer",
   ];
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE.url;
+
   return {
-    metadataBase: new URL(SITE.url),
+    metadataBase: new URL(siteUrl),
     title: {
       default: title,
       template: `%s — ${SITE.name}`,

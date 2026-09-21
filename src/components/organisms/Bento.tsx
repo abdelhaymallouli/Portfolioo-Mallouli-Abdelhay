@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
 import { Plus } from "lucide-react";
 import { Container, Section } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
@@ -9,11 +10,17 @@ import { Card } from "@/components/atoms/Card";
 import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { Counter } from "@/components/motion/Counter";
 import { Reveal } from "@/components/motion/Reveal";
-import { CertificationsDialog } from "@/components/molecules/CertificationsDialog";
 import { TECH, type TechKey } from "@/lib/tech-icons";
 import { STATS } from "@/data/content";
 import { CERTIFICATIONS, LANGUAGES } from "@/data/career";
-import { motion } from "framer-motion";
+
+const CertificationsDialog = dynamic(
+  () =>
+    import("@/components/molecules/CertificationsDialog").then(
+      (mod) => mod.CertificationsDialog,
+    ),
+  { ssr: false },
+);
 
 /*
  * The three numbers, read from STATS rather than re-typed. The values were
@@ -268,14 +275,9 @@ export function Bento() {
                    * With the previous `min-w-full` the halves were stretched to
                    * the container and -50% no longer lined them up.
                    */}
-                  <motion.div
-                    className="flex w-max"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                      repeat: Infinity,
-                      ease: "linear",
-                      duration: 40,
-                    }}
+                  <div
+                    className="marquee-track"
+                    style={{ "--marquee-duration": "40s" } as React.CSSProperties}
                   >
                     {MARQUEE_TECH.map((key, i) => {
                       const { Icon, label } = TECH[key];
@@ -294,7 +296,7 @@ export function Bento() {
                         </div>
                       );
                     })}
-                  </motion.div>
+                  </div>
                 </div>
               </Card>
             </Reveal>

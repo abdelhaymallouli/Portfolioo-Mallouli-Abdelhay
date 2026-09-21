@@ -38,8 +38,11 @@ export function localisedPath(path: string, locale: string): string {
 export function localeAlternates(path: string, locale: string) {
   return {
     canonical: localisedPath(path, locale),
-    languages: Object.fromEntries(
-      routing.locales.map((alt) => [alt, localisedPath(path, alt)]),
-    ),
+    languages: {
+      ...Object.fromEntries(
+        routing.locales.map((alt) => [alt, localisedPath(path, alt)]),
+      ),
+      "x-default": localisedPath(path, routing.defaultLocale),
+    },
   };
 }

@@ -1,8 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { SiGithub } from "react-icons/si";
-import { FaLinkedin } from "react-icons/fa6";
+import { SiGithub, FaLinkedin } from "@/lib/icons";
 import { Container } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
 import { Eyebrow } from "@/components/atoms/Eyebrow";

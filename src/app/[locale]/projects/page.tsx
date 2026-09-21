@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader } from "@/components/atoms/Container";
 import { SectionHeading } from "@/components/atoms/SectionHeading";
-import { ProjectGrid } from "@/components/organisms/ProjectGrid";
 import { localeAlternates, routing } from "@/i18n/routing";
 import { VISIBLE_PROJECTS } from "@/data/projects";
+
+const ProjectGrid = dynamic(() =>
+  import("@/components/organisms/ProjectGrid").then((mod) => mod.ProjectGrid),
+);
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

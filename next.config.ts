@@ -6,17 +6,13 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
   images: {
-    /*
-     * AVIF first, WebP as the fallback. Order matters: the first format the
-     * browser's Accept header matches is the one served.
-     *
-     * The source screenshots are already WebP (recompressed from full-page
-     * PNG captures), so this is a second, request-time pass on top of that.
-     * AVIF encodes slower but lands ~20% under WebP, and the result is cached
-     * per format, so only the first request for a given size pays for it.
-     */
     formats: ["image/avif", "image/webp"],
+    deviceSizes: [380, 480, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
   },
 };
 

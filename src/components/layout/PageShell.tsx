@@ -1,7 +1,14 @@
 import type { ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/organisms/Navbar";
 import { Footer } from "@/components/organisms/Footer";
-import { ScrollProgress } from "@/components/motion/ScrollProgress";
+
+const ScrollProgress = dynamic(
+  () =>
+    import("@/components/motion/ScrollProgress").then(
+      (mod) => mod.ScrollProgress,
+    ),
+);
 
 /**
  * Shared chrome for every route: progress bar, nav, main landmark, footer.
