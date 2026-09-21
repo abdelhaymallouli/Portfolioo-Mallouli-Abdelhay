@@ -143,7 +143,7 @@ export function Navbar({
               className="group/logo flex shrink-0 items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary transition-transform duration-200 ease-out group-hover/logo:-rotate-6">
-                <Logo className="h-[18px] w-[18px] text-ink" weight={2.6} />
+                <Logo className="h-full w-full text-ink" />
               </span>
               <span className="hidden text-body font-medium tracking-tight text-white sm:inline">
                 {SITE.name}

@@ -1,24 +1,11 @@
 /**
- * The AM monogram.
+ * The AM brand logo mark.
  *
- * Drawn as geometry rather than set in a typeface. A monogram has to hold at
- * 16px in a browser tab and at 40px in the nav, and letterforms from a text
- * face — Inter included — lose their counters at the small end because they
- * are drawn for running prose, not for a single glyph pair.
- *
- * The construction: both letters are built from the same 3-stroke chevron
- * skeleton, the A pointing up and the M's shoulders pointing down, sharing one
- * middle stem. That shared stem is the whole idea — it ties the two letters
- * into one mark instead of two initials sitting next to each other, and it is
- * what keeps the silhouette readable when the counters disappear at 16px.
- *
- * Strokes, not fills: one `strokeWidth` controls the weight of the entire
- * mark, so it can be tuned for the tab favicon without redrawing anything.
+ * Drawn as crisp vector geometry (1000x1000 viewBox).
+ * Uses `currentColor` fill so it seamlessly adapts to its parent text color.
  */
 export function Logo({
   className,
-  /** Stroke weight in viewBox units. Heavier reads better at small sizes. */
-  weight = 2.4,
   title,
 }: {
   className?: string;
@@ -27,44 +14,16 @@ export function Logo({
 }) {
   return (
     <svg
-      viewBox="0 0 32 32"
-      fill="none"
+      viewBox="0 0 1000 1000"
+      fill="currentColor"
       className={className}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
     >
-      {/*
-       * A: apex at the top centre-left, with the crossbar raised above the
-       * optical centre so the counter doesn't fill in when the mark is scaled
-       * down to a favicon.
-       */}
-      <path
-        d="M4 25 L10.5 7 L17 25"
-        stroke="currentColor"
-        strokeWidth={weight}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M6.9 18.5 H14.1"
-        stroke="currentColor"
-        strokeWidth={weight}
-        strokeLinecap="round"
-      />
-
-      {/*
-       * M: drawn as one continuous stroke so the join at the vertex stays
-       * crisp. Its left stem is the A's right leg — the two letters overlap by
-       * design, which is what makes this a monogram rather than a lockup.
-       */}
-      <path
-        d="M15 25 V7 L21.5 17 L28 7 V25"
-        stroke="currentColor"
-        strokeWidth={weight}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M425.5,706l-1.56-84.81s-5.21-40.14-63.58-29.58a5.09,5.09,0,0,1-5.77-3.57c-1-3.38-1.76-8.27-.1-13a5.1,5.1,0,0,1,5-3.41c13.84.59,62.92.31,66-37.52,2.57-31.81,1.08-53.34-1.52-62.71-1.49-5.35-2-11-5.9-15-5.52-5.56-15-8.52-28.55,9.27-17.1,22.39-25,24-133.64,240.34H152.55L367,334.87c1.4-2.4,3.31-4.43,4.77-6.79,8.78-14.26,42.64-52.93,80.42-22.93C466.08,316.2,468,331.94,468,352.51V706l-42.53,0" />
+      <path d="M526.63,538.84c-.07-1.49-.16-3.08-.19-4.75.13-7.16.31-13.8.13-19.94v-1.36c-.62-20.32-.59-34.28,1.39-41.41,1.5-5.35,2-11,5.91-15,5.5-5.56,15-8.53,28.54,9.25,17.11,22.4,25.06,23.95,133.7,240.31H799.38L585,334.92c-1.39-2.41-3.32-4.44-4.79-6.82-8.76-14.25-42.63-52.92-80.4-22.91-13.9,11-15.85,26.79-15.85,47.34V706h42.52l.14-62.4V619.22Z" />
+      <circle cx="829.16" cy="687.59" r="18.29" />
     </svg>
   );
 }

@@ -26,11 +26,6 @@ const MARKER_GEOMETRY: Record<Size, string> = {
 
 /**
  * The accent marker inside a primary button.
- *
- * On hover it slides to the opposite end and rotates 180°, which turns the
- * button into its own affordance — the movement reads as "this goes somewhere"
- * without needing an arrow to appear. Motion is transform/position only, and
- * the global reduced-motion rule clamps it to nothing for users who opt out.
  */
 function Marker({ size }: { size: Size }) {
   return (
@@ -38,16 +33,11 @@ function Marker({ size }: { size: Size }) {
       aria-hidden="true"
       className={cn(
         "absolute inset-y-0 left-1 z-10 my-auto flex flex-col items-center justify-center",
-        "rounded-sm bg-primary transition-all duration-400 ease-out",
+        "rounded-sm bg-primary transition-all duration-700 ease-in-out",
         "group-hover/btn:rotate-180",
         MARKER_GEOMETRY[size],
       )}
     >
-      {/*
-       * A 5×4 dot matrix reading as a downward arrow — a texture at this
-       * size, not an icon. `1` marks a lit dot; the rest sit at 25% so the
-       * glyph reads as emerging from the grid rather than drawn on it.
-       */}
       <span className="flex flex-col gap-px">
         {ARROW_MATRIX.map((row, y) => (
           <span key={y} className="flex gap-px">
@@ -67,14 +57,6 @@ function Marker({ size }: { size: Size }) {
   );
 }
 
-/**
- * The primary action is solid black with an accent marker rather than an accent
- * fill: `--color-primary` is 1.5:1 against white and cannot legally carry text,
- * so the accent becomes a shape on a dark ground instead of a background.
- *
- * Secondary sits on `card` rather than `canvas` — on the warm ground a white
- * fill is what makes an outlined button read as a control instead of a box.
- */
 const VARIANTS: Record<Variant, string> = {
   primary: "border border-white/25 bg-black text-white",
   secondary:
@@ -98,8 +80,7 @@ const MARKER_SIZES: Record<Size, string> = {
 const BASE =
   "group/btn relative inline-flex cursor-pointer items-center justify-center gap-2 " +
   "rounded-lg font-medium tracking-tight whitespace-nowrap " +
-  "transition-all duration-200 ease-out " +
-  // Subtle press. No scale on the whole element — just a 1px settle.
+  "transition-all duration-700 ease-in-out " +
   "active:translate-y-px " +
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent " +
   "disabled:pointer-events-none disabled:opacity-40";
@@ -130,12 +111,7 @@ export function ButtonLink({
     marked && MARKER_SIZES[size],
     className,
   );
-  /*
-   * `next/link` only makes sense for an internal route. A protocol link and a
-   * static asset under `/public` both need a plain anchor — routing a PDF
-   * through the client router leaves the browser with nothing to render and
-   * prefetches a file nobody asked for yet.
-   */
+
   const isProtocol =
     typeof href === "string" && /^(https?:|mailto:|tel:)/.test(href);
   const isAsset = typeof href === "string" && /\.[a-z0-9]+$/i.test(href);
@@ -143,7 +119,14 @@ export function ButtonLink({
   const body = (
     <>
       {marked && <Marker size={size} />}
-      {children}
+      <span
+        className={cn(
+          "inline-flex items-center gap-2 transition-opacity duration-700 ease-in-out",
+          marked ? "text-white group-hover/btn:opacity-0" : "",
+        )}
+      >
+        {children}
+      </span>
     </>
   );
 
@@ -199,7 +182,14 @@ export function Button({
       {...rest}
     >
       {marked && <Marker size={size} />}
-      {children}
+      <span
+        className={cn(
+          "inline-flex items-center gap-2 transition-opacity duration-700 ease-in-out",
+          marked ? "text-white group-hover/btn:opacity-0" : "",
+        )}
+      >
+        {children}
+      </span>
     </button>
   );
 }

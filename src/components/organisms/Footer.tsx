@@ -58,7 +58,6 @@ export async function Footer() {
       links: [
         { label: t("evidence"), href: "/#credentials" },
         { label: t("journey"), href: "/#journey" },
-        { label: t("philosophy"), href: "/#philosophy" },
         { label: t("faq"), href: "/#faq" },
       ],
     },
